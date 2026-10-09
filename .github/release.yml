@@ -1,0 +1,17 @@
+# Groups GitHub's generated release notes by the labels the PR labeler adds.
+changelog:
+  categories:
+    - title: 💥 Breaking changes
+      labels: ['breaking change']
+    - title: ✨ New features
+      labels: [enhancement]
+    - title: 🐛 Fixes
+      labels: [bug]
+    - title: ⚡️ Performance
+      labels: [performance]
+    - title: 💄 Look and feel
+      labels: [style]
+    - title: 📝 Documentation
+      labels: [documentation]
+    - title: 🔧 Maintenance
+      labels: ['*']

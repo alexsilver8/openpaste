@@ -42,7 +42,14 @@ linux:
   category: Utility
   maintainer: Alexander Silver
   synopsis: Clipboard history manager
+  # Lets the desktop match OpenPaste's windows to its launcher (uses desktopName in package.json).
+  syncDesktopName: true
   target:
     - AppImage
     - deb
+deb:
+  # xdotool lets OpenPaste paste straight into the app you were using on X11.
+  recommends:
+    - libappindicator3-1
+    - xdotool
 publish: null
