@@ -1,4 +1,5 @@
 import {
+	memo,
 	useCallback,
 	useEffect,
 	useMemo,
@@ -38,7 +39,7 @@ interface EditorState {
 	pinItem?: string
 }
 
-export function ShelfApp({ active = true }: ShelfAppProps) {
+const ShelfApp = ({ active = true }: ShelfAppProps) => {
 	const [items, setItems] = useState<ClipView[]>([])
 	const [loaded, setLoaded] = useState(false)
 	const [boards, setBoards] = useState<Pinboard[]>([])
@@ -609,3 +610,5 @@ export function ShelfApp({ active = true }: ShelfAppProps) {
 		</div>
 	)
 }
+
+export default memo(ShelfApp)

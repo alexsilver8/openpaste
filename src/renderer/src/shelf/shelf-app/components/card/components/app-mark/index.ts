@@ -1,1 +1,1 @@
-export { AppMark } from './app-mark'
+export { default as AppMark } from './app-mark'

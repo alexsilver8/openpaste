@@ -1,1 +1,1 @@
-export { BoardEditor } from './board-editor'
+export { default as BoardEditor } from './board-editor'

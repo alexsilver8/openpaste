@@ -8,7 +8,7 @@ import { Body } from './components/body'
 import { meta } from './card.utils'
 import type { CardProps } from './card.props'
 
-export const Card = memo(function Card({
+const Card = ({
 	item,
 	index,
 	selected,
@@ -21,7 +21,7 @@ export const Card = memo(function Card({
 	onActivate,
 	onMenu,
 	onDragStart
-}: CardProps) {
+}: CardProps) => {
 	const band = item.source?.color ?? KIND_COLORS[item.kind]
 	const pinned = boards.filter((b) => item.pinboards.includes(b.id))
 	const label = item.title || kindLabel(item)
@@ -77,4 +77,6 @@ export const Card = memo(function Card({
 			</footer>
 		</div>
 	)
-})
+}
+
+export default memo(Card)

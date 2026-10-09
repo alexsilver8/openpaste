@@ -1,7 +1,8 @@
+import { memo } from 'react'
 import { PATHS } from './icon.constants'
 import type { IconProps } from './icon.props'
 
-export function Icon({ name, size = 16, ...rest }: IconProps) {
+const Icon = ({ name, size = 16, ...rest }: IconProps) => {
 	return (
 		<svg
 			width={size}
@@ -20,3 +21,5 @@ export function Icon({ name, size = 16, ...rest }: IconProps) {
 		</svg>
 	)
 }
+
+export default memo(Icon)

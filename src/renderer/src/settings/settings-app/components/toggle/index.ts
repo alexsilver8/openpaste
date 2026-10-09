@@ -1,1 +1,1 @@
-export { Toggle } from './toggle'
+export { default as Toggle } from './toggle'

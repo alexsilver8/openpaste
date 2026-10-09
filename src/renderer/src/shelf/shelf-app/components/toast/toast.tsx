@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import type { ToastProps } from './toast.props'
 
-export function Toast({ toast, onDismiss }: ToastProps) {
+const Toast = ({ toast, onDismiss }: ToastProps) => {
 	useEffect(() => {
 		const timer = setTimeout(onDismiss, 5000)
 		return () => clearTimeout(timer)
@@ -25,3 +25,5 @@ export function Toast({ toast, onDismiss }: ToastProps) {
 		</div>
 	)
 }
+
+export default memo(Toast)

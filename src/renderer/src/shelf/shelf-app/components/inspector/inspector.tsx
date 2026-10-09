@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useEffect, useRef, useState, type ReactNode } from 'react'
 import { kindLabel } from '@shared/classify'
 import type { ClipPayload } from '@shared/types'
 import { api } from '@renderer/api'
@@ -11,7 +11,7 @@ import { TEXT_KINDS } from './inspector.constants'
 import type { InspectorProps } from './inspector.props'
 
 /** A larger look at one item, with editing, renaming and pinboard membership. */
-export function Inspector({
+const Inspector = ({
 	item,
 	boards,
 	startEditing,
@@ -20,7 +20,7 @@ export function Inspector({
 	onPaste,
 	onCopy,
 	onDelete
-}: InspectorProps) {
+}: InspectorProps) => {
 	const [payload, setPayload] = useState<ClipPayload | null>(null)
 	const [editing, setEditing] = useState(!!startEditing && TEXT_KINDS.has(item.kind))
 	const [draft, setDraft] = useState('')
@@ -316,3 +316,5 @@ export function Inspector({
 		</section>
 	)
 }
+
+export default memo(Inspector)

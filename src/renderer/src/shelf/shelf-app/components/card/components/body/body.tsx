@@ -1,10 +1,11 @@
+import { memo } from 'react'
 import { describeColor } from '@renderer/lib/colors'
 import { fileExtension, fileName, hostOf } from '@renderer/lib/format'
 import { highlightCode, highlightMatches } from '@renderer/lib/highlight'
 import { Icon } from '@renderer/components/icon'
 import type { BodyProps } from './body.props'
 
-export function Body({ item, terms }: BodyProps) {
+const Body = ({ item, terms }: BodyProps) => {
 	switch (item.kind) {
 		case 'image':
 			return (
@@ -86,3 +87,5 @@ export function Body({ item, terms }: BodyProps) {
 			)
 	}
 }
+
+export default memo(Body)

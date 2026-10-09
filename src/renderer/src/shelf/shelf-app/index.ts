@@ -1,1 +1,1 @@
-export { ShelfApp } from './shelf-app'
+export { default as ShelfApp } from './shelf-app'

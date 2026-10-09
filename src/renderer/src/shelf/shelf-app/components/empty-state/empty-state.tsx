@@ -1,9 +1,10 @@
+import { memo } from 'react'
 import { formatAccelerator } from '@shared/accelerator'
 import { MOD } from '@renderer/env'
 import { platform } from '@renderer/env'
 import type { EmptyStateProps } from './empty-state.props'
 
-export function EmptyState({ reason, query, shortcut, boardName }: EmptyStateProps) {
+const EmptyState = ({ reason, query, shortcut, boardName }: EmptyStateProps) => {
 	let title: string
 	let hint: string
 	switch (reason) {
@@ -30,3 +31,5 @@ export function EmptyState({ reason, query, shortcut, boardName }: EmptyStatePro
 		</div>
 	)
 }
+
+export default memo(EmptyState)

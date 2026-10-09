@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 import {
 	DEFAULT_IGNORED_APPS,
 	DEFAULT_SETTINGS,
@@ -17,7 +17,7 @@ import { Section } from './components/section'
 import { THEMES } from './settings-app.constants'
 import type { SettingsAppProps } from './settings-app.props'
 
-export function SettingsApp({ embedded = false }: SettingsAppProps) {
+const SettingsApp = ({ embedded = false }: SettingsAppProps) => {
 	const [settings, setSettings] = useState<Settings | null>(null)
 	const [env, setEnv] = useState<AppEnv | null>(null)
 	const [permissions, setPermissions] = useState<Permissions>({ accessibility: null })
@@ -342,3 +342,5 @@ export function SettingsApp({ embedded = false }: SettingsAppProps) {
 		</div>
 	)
 }
+
+export default memo(SettingsApp)

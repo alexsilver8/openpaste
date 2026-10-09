@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import type { RowProps } from './row.props'
 
-export function Row({ label, note, children, htmlFor }: RowProps) {
+const Row = ({ label, note, children, htmlFor }: RowProps) => {
 	return (
 		<div className="row-setting">
 			<div className="row-setting-text">
@@ -13,3 +14,5 @@ export function Row({ label, note, children, htmlFor }: RowProps) {
 		</div>
 	)
 }
+
+export default memo(Row)

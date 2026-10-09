@@ -1,1 +1,1 @@
-export { DemoFrame } from './demo-frame'
+export { default as DemoFrame } from './demo-frame'

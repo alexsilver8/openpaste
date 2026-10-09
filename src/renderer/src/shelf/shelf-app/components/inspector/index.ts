@@ -1,1 +1,1 @@
-export { Inspector } from './inspector'
+export { default as Inspector } from './inspector'

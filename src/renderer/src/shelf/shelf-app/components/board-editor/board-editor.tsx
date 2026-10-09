@@ -1,10 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
 import { BOARD_COLORS } from './board-editor.constants'
 import type { BoardEditorProps } from './board-editor.props'
 
 /** Popover for creating, renaming, recoloring and deleting a pinboard. */
-export function BoardEditor({ anchor, board, onSave, onDelete, onClose }: BoardEditorProps) {
+const BoardEditor = ({ anchor, board, onSave, onDelete, onClose }: BoardEditorProps) => {
 	const [name, setName] = useState(board?.name ?? '')
 	const [color, setColor] = useState(board?.color ?? BOARD_COLORS[0])
 	const [confirmDelete, setConfirmDelete] = useState(false)
@@ -102,3 +102,5 @@ export function BoardEditor({ anchor, board, onSave, onDelete, onClose }: BoardE
 		document.body
 	)
 }
+
+export default memo(BoardEditor)

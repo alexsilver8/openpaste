@@ -1,2 +1,2 @@
-export { Icon } from './icon'
+export { default as Icon } from './icon'
 export type { IconName } from './icon.props'

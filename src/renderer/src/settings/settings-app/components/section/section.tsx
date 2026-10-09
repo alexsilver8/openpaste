@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import type { SectionProps } from './section.props'
 
-export function Section({ title, children }: SectionProps) {
+const Section = ({ title, children }: SectionProps) => {
 	return (
 		<section className="settings-section" aria-label={title}>
 			<h2>{title}</h2>
@@ -8,3 +9,5 @@ export function Section({ title, children }: SectionProps) {
 		</section>
 	)
 }
+
+export default memo(Section)

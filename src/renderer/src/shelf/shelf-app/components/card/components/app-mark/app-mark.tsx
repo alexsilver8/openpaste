@@ -1,7 +1,8 @@
+import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
 import type { AppMarkProps } from './app-mark.props'
 
-export function AppMark({ source, iconUrl }: AppMarkProps) {
+const AppMark = ({ source, iconUrl }: AppMarkProps) => {
 	if (iconUrl)
 		return (
 			<img className="app-mark" src={iconUrl} alt="" title={source?.name} draggable={false} />
@@ -13,3 +14,5 @@ export function AppMark({ source, iconUrl }: AppMarkProps) {
 		</span>
 	)
 }
+
+export default memo(AppMark)

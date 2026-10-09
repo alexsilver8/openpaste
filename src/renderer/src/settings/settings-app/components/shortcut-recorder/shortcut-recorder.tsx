@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { formatAccelerator, keyEventToAccelerator } from '@shared/accelerator'
 import { DEFAULT_SETTINGS } from '@shared/settings'
 import { api } from '@renderer/api'
@@ -6,7 +6,7 @@ import { platform } from '@renderer/env'
 import type { ShortcutRecorderProps } from './shortcut-recorder.props'
 
 /** Click, press a key combination, done. Esc cancels; Backspace restores the default. */
-export function ShortcutRecorder({ value, onChange }: ShortcutRecorderProps) {
+const ShortcutRecorder = ({ value, onChange }: ShortcutRecorderProps) => {
 	const [recording, setRecording] = useState(false)
 	const [error, setError] = useState<string | undefined>()
 
@@ -61,3 +61,5 @@ export function ShortcutRecorder({ value, onChange }: ShortcutRecorderProps) {
 		</div>
 	)
 }
+
+export default memo(ShortcutRecorder)

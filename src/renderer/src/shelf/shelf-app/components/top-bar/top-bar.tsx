@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { Icon } from '@renderer/components/icon'
 import { MOD } from '@renderer/env'
 import { DRAG_TYPE, KINDS } from './top-bar.constants'
 import type { TopBarProps } from './top-bar.props'
 
-export function TopBar(props: TopBarProps) {
+const TopBar = (props: TopBarProps) => {
 	const [dropTarget, setDropTarget] = useState<string | null>(null)
 	const { boards, board, kind } = props
 
@@ -139,3 +139,5 @@ export function TopBar(props: TopBarProps) {
 		</div>
 	)
 }
+
+export default memo(TopBar)

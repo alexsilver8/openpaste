@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Icon } from '@renderer/components/icon'
 import type { MenuEntry, MenuProps } from './menu.props'
@@ -7,7 +7,7 @@ import type { MenuEntry, MenuProps } from './menu.props'
  * A small in-window menu. The shelf is a short window, so the menu measures itself
  * and flips up or left to stay fully visible.
  */
-export function Menu({ x, y, entries, onClose, onDone, nested }: MenuProps): ReactNode {
+const Menu = ({ x, y, entries, onClose, onDone, nested }: MenuProps): ReactNode => {
 	const ref = useRef<HTMLDivElement>(null)
 	const [pos, setPos] = useState({ left: x, top: y })
 	const [active, setActive] = useState(-1)
@@ -148,3 +148,5 @@ export function Menu({ x, y, entries, onClose, onDone, nested }: MenuProps): Rea
 		document.body
 	)
 }
+
+export default memo(Menu)

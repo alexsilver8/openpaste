@@ -1,1 +1,1 @@
-export { ShortcutRecorder } from './shortcut-recorder'
+export { default as ShortcutRecorder } from './shortcut-recorder'

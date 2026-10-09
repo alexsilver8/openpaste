@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { ShelfApp } from '@renderer/shelf/shelf-app'
 import { SettingsApp } from '@renderer/settings/settings-app'
 import { Icon } from '@renderer/components/icon'
@@ -11,7 +11,7 @@ import { escapeHtml } from './demo-frame.utils'
  * The browser demo: a pretend desktop with a notes window, so you can copy text on
  * the page, open the shelf with the real shortcut and paste back into the note.
  */
-export function DemoFrame() {
+const DemoFrame = () => {
 	const [open, setOpen] = useState(false)
 	const [settingsOpen, setSettingsOpen] = useState(false)
 	const editorRef = useRef<HTMLDivElement>(null)
@@ -212,3 +212,5 @@ export function DemoFrame() {
 		</div>
 	)
 }
+
+export default memo(DemoFrame)

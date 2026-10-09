@@ -1,6 +1,7 @@
+import { memo } from 'react'
 import type { ToggleProps } from './toggle.props'
 
-export function Toggle({ id, checked, onChange }: ToggleProps) {
+const Toggle = ({ id, checked, onChange }: ToggleProps) => {
 	return (
 		<button
 			id={id}
@@ -14,3 +15,5 @@ export function Toggle({ id, checked, onChange }: ToggleProps) {
 		</button>
 	)
 }
+
+export default memo(Toggle)

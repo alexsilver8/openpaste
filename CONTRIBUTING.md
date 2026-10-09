@@ -54,9 +54,24 @@ card/
     └── body/
 ```
 
+A component is an arrow function, default-exported wrapped in `memo`, even when it doesn't need
+memoizing:
+
+```tsx
+const Card = ({ item, selected }: CardProps) => {
+	// …
+}
+
+export default memo(Card)
+```
+
 - Folder and file names are kebab-case (`top-bar/top-bar.tsx`); the component itself keeps its
   PascalCase name (`TopBar`).
 - One component per file, and its file exports only that component.
+- The folder's `index.ts` re-exports it by name (`export { default as Card } from './card'`), so
+  other files import `{ Card }`.
+- `memo` skips re-renders when props haven't changed, so read outside values (the time, `window`,
+  …) in effects and event handlers, or pass them in as props, rather than while rendering.
 - Props go in `<name>.props.ts` as `<Name>Props`, along with any types that only describe a prop
   (like `MenuEntry` for `Menu`'s entries). A component with no props has no props file.
 - Top-level constants go in `<name>.constants.ts` (`.tsx` if they contain JSX), and helper

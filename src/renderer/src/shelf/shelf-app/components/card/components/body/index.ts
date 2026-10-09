@@ -1,1 +1,1 @@
-export { Body } from './body'
+export { default as Body } from './body'
