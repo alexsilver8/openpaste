@@ -1,5 +1,6 @@
+import { createColors } from 'picocolors'
 import { describe, expect, it } from 'vitest'
-import { checkFile, isComponentFile } from '../scripts/cleaner.mjs'
+import { checkFile, formatReport, isComponentFile } from '../scripts/cleaner.mjs'
 
 const CARD = 'src/renderer/src/shelf/shelf-app/components/card/card.tsx'
 
@@ -40,8 +41,10 @@ describe('no-types-in-components', () => {
 			expect.objectContaining({ line: 3, column: 1, rule: 'no-types-in-components' }),
 			expect.objectContaining({ line: 8, column: 2, rule: 'no-types-in-components' })
 		])
-		expect(checkFile(CARD, source)[0].message).toContain('interface Hover')
-		expect(checkFile(CARD, source)[0].message).toContain('card.props.ts')
+		expect(checkFile(CARD, source).map((p) => p.message)).toEqual([
+			'interface Hover',
+			'type Mode'
+		])
 	})
 
 	it('allows type imports and inline type annotations', () => {
@@ -66,5 +69,57 @@ describe('no-types-in-components', () => {
 		const source = 'export interface CardProps {\n\tselected: boolean\n}\n'
 
 		expect(checkFile(CARD.replace('card.tsx', 'card.props.ts'), source)).toEqual([])
+	})
+})
+
+describe('formatReport', () => {
+	const plain = createColors(false)
+
+	it('groups problems by file and explains each rule once', () => {
+		const problems = [
+			{
+				path: 'a/a.tsx',
+				line: 3,
+				column: 1,
+				rule: 'no-types-in-components',
+				message: 'interface Hover'
+			},
+			{
+				path: 'a/a.tsx',
+				line: 12,
+				column: 2,
+				rule: 'no-types-in-components',
+				message: 'type Mode'
+			},
+			{
+				path: 'b/b.tsx',
+				line: 7,
+				column: 1,
+				rule: 'no-types-in-components',
+				message: 'type Size'
+			}
+		]
+
+		expect(formatReport(problems, 40, plain)).toBe(
+			[
+				'',
+				'a/a.tsx',
+				'  3:1   ✖  interface Hover  no-types-in-components',
+				'  12:2  ✖  type Mode        no-types-in-components',
+				'',
+				'b/b.tsx',
+				'  7:1  ✖  type Size  no-types-in-components',
+				'',
+				'no-types-in-components',
+				"  Component files can't declare interfaces or types.",
+				'  Move them to another file. Props types go in <name>.props.ts.',
+				'',
+				'✖ 3 problems in 2 files (40 files checked)'
+			].join('\n')
+		)
+	})
+
+	it('says so when there are no problems', () => {
+		expect(formatReport([], 1, plain)).toBe('✔ No problems in 1 file.')
 	})
 })
