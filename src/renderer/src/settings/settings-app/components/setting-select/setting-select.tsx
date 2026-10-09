@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { SettingSelectProps } from './setting-select.props'
+import type { SettingSelectProps } from './setting-select.types'
 
 const SettingSelect = (props: SettingSelectProps) => {
 	const { id, setting, options, settings, onChange } = props

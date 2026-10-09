@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
-import type { IgnoredAppProps } from './ignored-app.props'
+import type { IgnoredAppProps } from './ignored-app.types'
 
 const IgnoredApp = (props: IgnoredAppProps) => {
 	const { app, onRemove } = props

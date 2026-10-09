@@ -10,7 +10,7 @@ describe('isComponentFile', () => {
 	})
 
 	it.each([
-		'src/renderer/src/shelf/shelf-app/components/card/card.props.ts',
+		'src/renderer/src/shelf/shelf-app/components/card/card.types.ts',
 		'src/renderer/src/shelf/shelf-app/components/card/card.utils.ts',
 		'src/renderer/src/components/icon/icon.constants.tsx',
 		'src/renderer/src/shelf/shelf-app/components/card/index.ts',
@@ -24,7 +24,7 @@ describe('isComponentFile', () => {
 describe('no-types-in-components', () => {
 	it('flags interfaces and types anywhere in a component file', () => {
 		const source = [
-			"import type { CardProps } from './card.props'",
+			"import type { CardProps } from './card.types'",
 			'',
 			'interface Hover {',
 			'	x: number',
@@ -50,7 +50,7 @@ describe('no-types-in-components', () => {
 	it('allows type imports and inline type annotations', () => {
 		const source = [
 			"import { memo, useState, type MouseEvent } from 'react'",
-			"import type { CardProps } from './card.props'",
+			"import type { CardProps } from './card.types'",
 			'',
 			'const Card = (props: CardProps) => {',
 			'	const [hover, setHover] = useState<{ x: number } | null>(null)',
@@ -65,10 +65,10 @@ describe('no-types-in-components', () => {
 		expect(checkFile(CARD, source)).toEqual([])
 	})
 
-	it('leaves props files alone', () => {
+	it('leaves types files alone', () => {
 		const source = 'export interface CardProps {\n\tselected: boolean\n}\n'
 
-		expect(checkFile(CARD.replace('card.tsx', 'card.props.ts'), source)).toEqual([])
+		expect(checkFile(CARD.replace('card.tsx', 'card.types.ts'), source)).toEqual([])
 	})
 })
 
@@ -112,7 +112,7 @@ describe('formatReport', () => {
 				'',
 				'no-types-in-components',
 				"  Component files can't declare interfaces or types.",
-				'  Move them to another file. Props types go in <name>.props.ts.',
+				'  Move them to <name>.types.ts, next to the component.',
 				'',
 				'✖ 3 problems in 2 files (40 files checked)'
 			].join('\n')

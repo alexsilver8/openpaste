@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { RowProps } from './row.props'
+import type { RowProps } from './row.types'
 
 const Row = (props: RowProps) => {
 	const { label, note, children, htmlFor } = props

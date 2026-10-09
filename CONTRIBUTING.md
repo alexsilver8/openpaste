@@ -61,7 +61,7 @@ Every React component in `src/renderer/src` has its own folder, named after it i
 ```
 card/
 ├── card.tsx            the component (Card), and nothing else
-├── card.props.ts       its props type (CardProps)
+├── card.types.ts       its types: props (CardProps) and any others
 ├── card.constants.ts   constants it uses
 ├── card.utils.ts       helper functions it uses
 ├── index.ts            exports the component, plus anything other folders need
@@ -109,8 +109,10 @@ export default memo(Card)
 - Don't write near-duplicate handlers. When several controls differ only in which value they
   change, make a component that takes the key instead: settings switches are
   `<SettingToggle setting="launchAtLogin" … />`, not one `handle…Change` per setting.
-- Props go in `<name>.props.ts` as `<Name>Props`, along with any types that only describe a prop
-  (like `MenuEntry` for `Menu`'s entries). A component with no props has no props file.
+- Every type a component needs goes in `<name>.types.ts`: its props as `<Name>Props`, the types
+  of its props (like `MenuEntry` for `Menu`'s entries) and any others, like the shape of a piece
+  of state. The component file itself declares no interfaces or types. A component with no types
+  has no types file.
 - Top-level constants go in `<name>.constants.ts` (`.tsx` if they contain JSX), and helper
   functions in `<name>.utils.ts`. Leave out the files a component doesn't need.
 - A component used only by one parent lives in that parent's `components/` folder. Components

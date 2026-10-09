@@ -18,7 +18,7 @@ import { SettingSelect } from './components/setting-select'
 import { SettingToggle } from './components/setting-toggle'
 import { ThemeOption } from './components/theme-option'
 import { THEMES } from './settings-app.constants'
-import type { SettingsAppProps } from './settings-app.props'
+import type { SettingsAppProps } from './settings-app.types'
 
 const SettingsApp = (props: SettingsAppProps) => {
 	const { embedded = false } = props

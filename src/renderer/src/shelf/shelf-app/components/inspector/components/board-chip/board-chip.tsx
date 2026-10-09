@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
-import type { BoardChipProps } from './board-chip.props'
+import type { BoardChipProps } from './board-chip.types'
 
 const BoardChip = (props: BoardChipProps) => {
 	const { board, pinned, onToggle } = props

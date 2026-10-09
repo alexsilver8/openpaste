@@ -3,7 +3,7 @@ import { formatAccelerator, keyEventToAccelerator } from '@shared/accelerator'
 import { DEFAULT_SETTINGS } from '@shared/settings'
 import { api } from '@renderer/api'
 import { platform } from '@renderer/env'
-import type { ShortcutRecorderProps } from './shortcut-recorder.props'
+import type { ShortcutRecorderProps } from './shortcut-recorder.types'
 
 /** Click, press a key combination, done. Esc cancels; Backspace restores the default. */
 const ShortcutRecorder = (props: ShortcutRecorderProps) => {

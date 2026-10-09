@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
-import type { MenuItemProps } from './menu-item.props'
+import type { MenuItemProps } from './menu-item.types'
 
 const MenuItem = (props: MenuItemProps) => {
 	const { entry, index, active, onHover, onRun } = props

@@ -10,7 +10,7 @@ import {
 import { createPortal } from 'react-dom'
 import { ColorSwatch } from './components/color-swatch'
 import { BOARD_COLORS } from './board-editor.constants'
-import type { BoardEditorProps } from './board-editor.props'
+import type { BoardEditorProps } from './board-editor.types'
 
 /** Popover for creating, renaming, recoloring and deleting a pinboard. */
 const BoardEditor = (props: BoardEditorProps) => {

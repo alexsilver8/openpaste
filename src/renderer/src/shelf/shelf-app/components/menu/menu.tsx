@@ -1,7 +1,7 @@
 import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { MenuItem } from './components/menu-item'
-import type { MenuEntry, MenuProps } from './menu.props'
+import type { MenuEntry, MenuProps } from './menu.types'
 
 /**
  * A small in-window menu. The shelf is a short window, so the menu measures itself

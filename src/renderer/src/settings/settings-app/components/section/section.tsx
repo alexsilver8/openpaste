@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { SectionProps } from './section.props'
+import type { SectionProps } from './section.types'
 
 const Section = (props: SectionProps) => {
 	const { title, children } = props

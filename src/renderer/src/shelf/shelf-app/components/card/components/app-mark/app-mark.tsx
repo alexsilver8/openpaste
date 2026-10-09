@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
-import type { AppMarkProps } from './app-mark.props'
+import type { AppMarkProps } from './app-mark.types'
 
 const AppMark = (props: AppMarkProps) => {
 	const { source, iconUrl } = props

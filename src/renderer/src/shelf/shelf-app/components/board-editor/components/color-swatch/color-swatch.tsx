@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { ColorSwatchProps } from './color-swatch.props'
+import type { ColorSwatchProps } from './color-swatch.types'
 
 const ColorSwatch = (props: ColorSwatchProps) => {
 	const { color, selected, onSelect } = props

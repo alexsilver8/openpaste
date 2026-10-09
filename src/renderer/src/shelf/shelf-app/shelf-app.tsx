@@ -24,21 +24,7 @@ import { Toast, type ToastState } from './components/toast'
 import { DRAG_TYPE, TopBar } from './components/top-bar'
 import { TEXT_KINDS } from './shelf-app.constants'
 import { prefersReducedMotion } from './shelf-app.utils'
-import type { ShelfAppProps } from './shelf-app.props'
-
-interface MenuState {
-	x: number
-	y: number
-	index: number
-	pinOnly?: boolean
-}
-
-interface EditorState {
-	anchor: DOMRect
-	board?: Pinboard
-	/** Pin this item to the new board once it's created. */
-	pinItem?: string
-}
+import type { EditorState, MenuState, ShelfAppProps } from './shelf-app.types'
 
 const ShelfApp = (props: ShelfAppProps) => {
 	const { active = true } = props

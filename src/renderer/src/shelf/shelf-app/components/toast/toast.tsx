@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react'
-import type { ToastProps } from './toast.props'
+import type { ToastProps } from './toast.types'
 
 const Toast = (props: ToastProps) => {
 	const { toast, onDismiss } = props

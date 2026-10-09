@@ -1,2 +1,2 @@
 export { default as Toast } from './toast'
-export type { ToastState } from './toast.props'
+export type { ToastState } from './toast.types'

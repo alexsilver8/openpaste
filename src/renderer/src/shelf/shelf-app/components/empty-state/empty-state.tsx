@@ -2,7 +2,7 @@ import { memo } from 'react'
 import { formatAccelerator } from '@shared/accelerator'
 import { MOD } from '@renderer/env'
 import { platform } from '@renderer/env'
-import type { EmptyStateProps } from './empty-state.props'
+import type { EmptyStateProps } from './empty-state.types'
 
 const EmptyState = (props: EmptyStateProps) => {
 	const { reason, query, shortcut, boardName } = props

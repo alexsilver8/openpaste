@@ -1,6 +1,6 @@
 import { memo, type DragEvent, type MouseEvent } from 'react'
 import { DRAG_TYPE } from './board-tab.constants'
-import type { BoardTabProps } from './board-tab.props'
+import type { BoardTabProps } from './board-tab.types'
 
 const BoardTab = (props: BoardTabProps) => {
 	const {

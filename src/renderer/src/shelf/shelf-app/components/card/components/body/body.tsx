@@ -3,7 +3,7 @@ import { describeColor } from '@renderer/lib/colors'
 import { fileExtension, fileName, hostOf } from '@renderer/lib/format'
 import { highlightCode, highlightMatches } from '@renderer/lib/highlight'
 import { Icon } from '@renderer/components/icon'
-import type { BodyProps } from './body.props'
+import type { BodyProps } from './body.types'
 
 const Body = (props: BodyProps) => {
 	const { item, terms } = props

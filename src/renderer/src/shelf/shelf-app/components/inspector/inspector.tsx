@@ -9,7 +9,7 @@ import { Icon } from '@renderer/components/icon'
 import { ENTER, MOD, SHIFT, isMod } from '@renderer/env'
 import { BoardChip } from './components/board-chip'
 import { TEXT_KINDS } from './inspector.constants'
-import type { InspectorProps } from './inspector.props'
+import type { InspectorProps } from './inspector.types'
 
 /** A larger look at one item, with editing, renaming and pinboard membership. */
 const Inspector = (props: InspectorProps) => {

@@ -6,7 +6,7 @@ import { MOD } from '@renderer/env'
 import { AppMark } from './components/app-mark'
 import { Body } from './components/body'
 import { meta } from './card.utils'
-import type { CardProps } from './card.props'
+import type { CardProps } from './card.types'
 
 const Card = (props: CardProps) => {
 	const {

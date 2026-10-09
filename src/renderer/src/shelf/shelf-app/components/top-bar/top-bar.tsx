@@ -4,7 +4,7 @@ import { MOD } from '@renderer/env'
 import { BoardTab } from './components/board-tab'
 import { KindOption } from './components/kind-option'
 import { KINDS } from './top-bar.constants'
-import type { TopBarProps } from './top-bar.props'
+import type { TopBarProps } from './top-bar.types'
 
 const TopBar = (props: TopBarProps) => {
 	const {

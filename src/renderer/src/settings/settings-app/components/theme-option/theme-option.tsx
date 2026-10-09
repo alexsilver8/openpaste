@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { ThemeOptionProps } from './theme-option.props'
+import type { ThemeOptionProps } from './theme-option.types'
 
 const ThemeOption = (props: ThemeOptionProps) => {
 	const { value, label, checked, onSelect } = props

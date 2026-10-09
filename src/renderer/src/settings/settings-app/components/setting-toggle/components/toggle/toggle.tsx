@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import type { ToggleProps } from './toggle.props'
+import type { ToggleProps } from './toggle.types'
 
 const Toggle = (props: ToggleProps) => {
 	const { id, checked, onChange } = props

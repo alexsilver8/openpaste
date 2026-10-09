@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { PATHS } from './icon.constants'
-import type { IconProps } from './icon.props'
+import type { IconProps } from './icon.types'
 
 const Icon = (props: IconProps) => {
 	const { name, size = 16, ...rest } = props

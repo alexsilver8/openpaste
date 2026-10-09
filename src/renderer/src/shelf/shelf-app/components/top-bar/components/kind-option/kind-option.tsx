@@ -1,6 +1,6 @@
 import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
-import type { KindOptionProps } from './kind-option.props'
+import type { KindOptionProps } from './kind-option.types'
 
 const KindOption = (props: KindOptionProps) => {
 	const { kind, icon, label, checked, onKind } = props

@@ -33,7 +33,7 @@ export const RULES = [
 	{
 		id: 'no-types-in-components',
 		description: "Component files can't declare interfaces or types.",
-		fix: 'Move them to another file. Props types go in <name>.props.ts.',
+		fix: 'Move them to <name>.types.ts, next to the component.',
 		appliesTo: isComponentFile,
 		check(sourceFile) {
 			const problems = []
