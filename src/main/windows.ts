@@ -167,6 +167,12 @@ export function openSettingsWindow(): BrowserWindow {
     height: 680,
     minWidth: 620,
     minHeight: 480,
+    // The content column is 660px wide; past this the window would just be empty space.
+    maxWidth: 820,
+    maxHeight: 900,
+    // Settings is a small utility window: the green button zooms instead of going full screen.
+    fullscreenable: false,
+    maximizable: false,
     show: false,
     title: 'OpenPaste Settings',
     backgroundColor: solidBackground(),
