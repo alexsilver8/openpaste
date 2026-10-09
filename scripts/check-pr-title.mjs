@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Checks a pull request title against the project's format:
  *

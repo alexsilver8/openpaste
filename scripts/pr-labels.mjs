@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Labels a pull request from its title and assigns it to the person who opened it.
  *
