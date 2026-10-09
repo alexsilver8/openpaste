@@ -119,6 +119,25 @@ export default memo(Card)
   used in several places live in `src/renderer/src/components/`.
 - Import a component's folder (`'./components/card'`), not the files inside it.
 
+### Shared components
+
+Use these from `@renderer/components` rather than styling the HTML element yourself. Both take an
+extra `className` for layout tweaks, and pass `ref` and any other prop of the element through.
+
+`Button`, like `<Button variant="primary" onClick={save}>Save</Button>`, is `type="button"` unless
+you pass `type="submit"`, so it never submits a form by accident:
+
+| `variant`      | Use it for                                    |
+| -------------- | --------------------------------------------- |
+| `default`      | Most actions (outlined)                       |
+| `primary`      | The main action in a form or panel            |
+| `quiet`        | Secondary actions like Cancel (no border)     |
+| `danger`       | A destructive action the person has confirmed |
+| `danger-quiet` | A destructive action before it's confirmed    |
+| `icon`         | An icon-only button; give it an `aria-label`  |
+
+`Input` is a text field: `<Input value={name} onChange={…} />`.
+
 ## Commits and pull requests
 
 `main` is protected: every change goes through a pull request, and two checks must pass before

@@ -1,6 +1,7 @@
 import { memo, useState, type MouseEvent } from 'react'
 import { Icon } from '@renderer/components/icon'
 import { MOD } from '@renderer/env'
+import { Button } from '@renderer/components/button'
 import { BoardTab } from './components/board-tab'
 import { KindOption } from './components/kind-option'
 import { KINDS } from './top-bar.constants'
@@ -117,16 +118,15 @@ const TopBar = (props: TopBarProps) => {
 						/>
 					))}
 				</div>
-				<button
-					type="button"
-					className="icon-button"
+				<Button
+					variant="icon"
 					aria-label="Settings"
 					title={`Settings (${MOD},)`}
 					onMouseDown={handleButtonMouseDown}
 					onClick={onSettings}
 				>
 					<Icon name="settings" size={17} />
-				</button>
+				</Button>
 			</div>
 		</div>
 	)

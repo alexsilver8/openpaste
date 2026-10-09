@@ -7,6 +7,7 @@ import { absoluteTime, formatBytes, formatCount, hostOf } from '@renderer/lib/fo
 import { highlightCode } from '@renderer/lib/highlight'
 import { Icon } from '@renderer/components/icon'
 import { ENTER, MOD, SHIFT, isMod } from '@renderer/env'
+import { Button } from '@renderer/components/button'
 import { BoardChip } from './components/board-chip'
 import { TEXT_KINDS } from './inspector.constants'
 import type { InspectorProps } from './inspector.types'
@@ -136,13 +137,9 @@ const Inspector = (props: InspectorProps) => {
 				<p className="inspector-link-host">{host}</p>
 				<p className="inspector-link-url">{item.url ?? text}</p>
 				{item.url && /^https?:/.test(item.url) && (
-					<button
-						type="button"
-						className="button"
-						onClick={() => api.openExternal(item.url!)}
-					>
+					<Button onClick={() => api.openExternal(item.url!)}>
 						<Icon name="external" size={15} /> Open in browser
-					</button>
+					</Button>
 				)}
 			</div>
 		)
@@ -207,14 +204,9 @@ const Inspector = (props: InspectorProps) => {
 						onBlur={saveTitle}
 						onKeyDown={handleTitleKeyDown}
 					/>
-					<button
-						type="button"
-						className="icon-button"
-						aria-label="Close"
-						onClick={onClose}
-					>
+					<Button variant="icon" aria-label="Close" onClick={onClose}>
 						<Icon name="close" />
-					</button>
+					</Button>
 				</div>
 				<dl className="inspector-details">
 					{details.map(([k, v]) => (
@@ -241,66 +233,36 @@ const Inspector = (props: InspectorProps) => {
 				<div className="inspector-actions">
 					{editing ? (
 						<>
-							<button
-								type="button"
-								className="button button--primary"
-								onClick={saveText}
-							>
+							<Button variant="primary" onClick={saveText}>
 								Save changes{' '}
 								<kbd>
 									{MOD}
 									{ENTER}
 								</kbd>
-							</button>
-							<button
-								type="button"
-								className="button"
-								onClick={() => setEditing(false)}
-							>
-								Cancel
-							</button>
+							</Button>
+							<Button onClick={() => setEditing(false)}>Cancel</Button>
 						</>
 					) : (
 						<>
-							<button
-								type="button"
-								className="button button--primary"
-								onClick={() => onPaste(false)}
-							>
+							<Button variant="primary" onClick={() => onPaste(false)}>
 								Paste <kbd>{ENTER}</kbd>
-							</button>
+							</Button>
 							{TEXT_KINDS.has(item.kind) && item.rich && (
-								<button
-									type="button"
-									className="button"
-									onClick={() => onPaste(true)}
-								>
+								<Button onClick={() => onPaste(true)}>
 									Paste as plain text{' '}
 									<kbd>
 										{SHIFT}
 										{ENTER}
 									</kbd>
-								</button>
+								</Button>
 							)}
-							<button type="button" className="button" onClick={onCopy}>
-								Copy
-							</button>
+							<Button onClick={onCopy}>Copy</Button>
 							{TEXT_KINDS.has(item.kind) && (
-								<button
-									type="button"
-									className="button"
-									onClick={() => setEditing(true)}
-								>
-									Edit
-								</button>
+								<Button onClick={() => setEditing(true)}>Edit</Button>
 							)}
-							<button
-								type="button"
-								className="button button--quiet button--danger"
-								onClick={onDelete}
-							>
+							<Button variant="danger-quiet" onClick={onDelete}>
 								Delete
-							</button>
+							</Button>
 						</>
 					)}
 				</div>

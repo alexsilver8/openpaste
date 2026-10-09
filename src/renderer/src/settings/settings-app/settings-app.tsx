@@ -9,6 +9,8 @@ import type { AppEnv, Permissions, Settings } from '@shared/types'
 import { api } from '@renderer/api'
 import { Icon } from '@renderer/components/icon'
 import { isMac } from '@renderer/env'
+import { Button } from '@renderer/components/button'
+import { Input } from '@renderer/components/input'
 import logoUrl from '@resources/icon.png'
 import { IgnoredApp } from './components/ignored-app'
 import { Row } from './components/row'
@@ -146,13 +148,9 @@ const SettingsApp = (props: SettingsAppProps) => {
 							macOS needs your permission before OpenPaste can press ⌘V for you. Turn
 							on OpenPaste under Privacy &amp; Security → Accessibility.
 						</p>
-						<button
-							type="button"
-							className="button"
-							onClick={() => api.openAccessibilitySettings()}
-						>
+						<Button onClick={() => api.openAccessibilitySettings()}>
 							Open Accessibility settings
-						</button>
+						</Button>
 					</div>
 				)}
 				<Row
@@ -228,25 +226,13 @@ const SettingsApp = (props: SettingsAppProps) => {
 								/>
 								Keep pinboards
 							</label>
-							<button
-								type="button"
-								className="button"
-								onClick={() => setConfirmClear(false)}
-							>
-								Cancel
-							</button>
-							<button
-								type="button"
-								className="button button--danger-solid"
-								onClick={handleClearConfirmClick}
-							>
+							<Button onClick={() => setConfirmClear(false)}>Cancel</Button>
+							<Button variant="danger" onClick={handleClearConfirmClick}>
 								Clear history
-							</button>
+							</Button>
 						</div>
 					) : (
-						<button type="button" className="button" onClick={handleClearClick}>
-							Clear history…
-						</button>
+						<Button onClick={handleClearClick}>Clear history…</Button>
 					)}
 				</Row>
 			</Section>
@@ -297,25 +283,23 @@ const SettingsApp = (props: SettingsAppProps) => {
 						))}
 					</ul>
 					<form className="add-app" onSubmit={handleAddAppSubmit}>
-						<input
-							className="text-input"
+						<Input
 							placeholder="App name, e.g. Keychain Access"
 							value={newApp}
 							onChange={(e) => setNewApp(e.currentTarget.value)}
 						/>
-						<button type="submit" className="button" disabled={!newApp.trim()}>
+						<Button type="submit" disabled={!newApp.trim()}>
 							Add app
-						</button>
+						</Button>
 						{settings.ignoredApps.join() !== DEFAULT_IGNORED_APPS.join() && (
-							<button
-								type="button"
-								className="button button--quiet"
+							<Button
+								variant="quiet"
 								onClick={() =>
 									update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
 								}
 							>
 								Restore defaults
-							</button>
+							</Button>
 						)}
 					</form>
 				</div>
@@ -327,13 +311,9 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="Free and open source under the MIT license. Your history never leaves this computer."
 				>
 					{env?.platform !== 'web' && (
-						<button
-							type="button"
-							className="button"
-							onClick={() => api.revealDataFolder()}
-						>
+						<Button onClick={() => api.revealDataFolder()}>
 							<Icon name="folder" size={15} /> Show data folder
-						</button>
+						</Button>
 					)}
 				</Row>
 			</Section>

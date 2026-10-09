@@ -4,6 +4,7 @@ import { SettingsApp } from '@renderer/settings/settings-app'
 import { Icon } from '@renderer/components/icon'
 import { isMod, platform } from '@renderer/env'
 import { demoBus, demoCapture, demoShow, type DemoPasteDetail } from '@renderer/demo/mockApi'
+import { Button } from '@renderer/components/button'
 import { SHORTCUT } from './demo-frame.constants'
 import { escapeHtml } from './demo-frame.utils'
 
@@ -201,14 +202,14 @@ const DemoFrame = () => {
 					onMouseDown={() => setSettingsOpen(false)}
 				>
 					<div className="demo-modal-panel" onMouseDown={(e) => e.stopPropagation()}>
-						<button
-							type="button"
-							className="icon-button demo-modal-close"
+						<Button
+							variant="icon"
+							className="demo-modal-close"
 							aria-label="Close settings"
 							onClick={() => setSettingsOpen(false)}
 						>
 							<Icon name="close" />
-						</button>
+						</Button>
 						<SettingsApp embedded />
 					</div>
 				</div>

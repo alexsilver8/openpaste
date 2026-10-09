@@ -8,6 +8,8 @@ import {
 	type SubmitEvent
 } from 'react'
 import { createPortal } from 'react-dom'
+import { Button } from '@renderer/components/button'
+import { Input } from '@renderer/components/input'
 import { ColorSwatch } from './components/color-swatch'
 import { BOARD_COLORS } from './board-editor.constants'
 import type { BoardEditorProps } from './board-editor.types'
@@ -73,9 +75,8 @@ const BoardEditor = (props: BoardEditorProps) => {
 			onKeyDown={(e) => e.stopPropagation()}
 			aria-label={board ? `Edit ${board.name}` : 'New pinboard'}
 		>
-			<input
+			<Input
 				autoFocus
-				className="text-input"
 				placeholder="Pinboard name"
 				maxLength={40}
 				value={name}
@@ -89,21 +90,20 @@ const BoardEditor = (props: BoardEditorProps) => {
 			</div>
 			<div className="popover-actions">
 				{board && onDelete && (
-					<button
-						type="button"
-						className={`button button--quiet${confirmDelete ? ' button--danger' : ''}`}
+					<Button
+						variant={confirmDelete ? 'danger-quiet' : 'quiet'}
 						onClick={() => (confirmDelete ? onDelete?.() : setConfirmDelete(true))}
 					>
 						{confirmDelete ? 'Delete pinboard' : 'Delete…'}
-					</button>
+					</Button>
 				)}
 				<span className="spacer" />
-				<button type="button" className="button button--quiet" onClick={onClose}>
+				<Button variant="quiet" onClick={onClose}>
 					Cancel
-				</button>
-				<button type="submit" className="button button--primary" disabled={!name.trim()}>
+				</Button>
+				<Button variant="primary" type="submit" disabled={!name.trim()}>
 					{board ? 'Save' : 'Create pinboard'}
-				</button>
+				</Button>
 			</div>
 			{confirmDelete && (
 				<p className="popover-note">
