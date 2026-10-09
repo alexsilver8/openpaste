@@ -1,5 +1,5 @@
 import type { SourceApp } from '@shared/types'
-import { Icon } from '../../../../../../components/Icon'
+import { Icon } from '@renderer/components/Icon'
 
 export function AppMark({ source, iconUrl }: { source?: SourceApp; iconUrl?: string }) {
 	if (iconUrl)

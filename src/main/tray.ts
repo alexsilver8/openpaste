@@ -1,10 +1,10 @@
 import { Menu, Tray, app, nativeImage } from 'electron'
 import { formatAccelerator } from '@shared/accelerator'
 import type { Settings } from '@shared/types'
-import trayTemplateIcon from '../../resources/trayTemplate.png?asset'
-import trayTemplateIcon2x from '../../resources/trayTemplate@2x.png?asset'
-import trayColorIcon from '../../resources/tray.png?asset'
-import trayColorIcon2x from '../../resources/tray@2x.png?asset'
+import trayTemplateIcon from '@resources/trayTemplate.png?asset'
+import trayTemplateIcon2x from '@resources/trayTemplate@2x.png?asset'
+import trayColorIcon from '@resources/tray.png?asset'
+import trayColorIcon2x from '@resources/tray@2x.png?asset'
 
 export interface TrayActions {
 	toggleShelf(): void

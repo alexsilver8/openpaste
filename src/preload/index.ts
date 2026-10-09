@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron'
-import type { OpenPasteAPI, OpenPasteEvent } from '../shared/types'
+import type { OpenPasteAPI, OpenPasteEvent } from '@shared/types'
 
 const invoke = <T>(channel: string, ...args: unknown[]): Promise<T> =>
 	ipcRenderer.invoke(channel, ...args) as Promise<T>

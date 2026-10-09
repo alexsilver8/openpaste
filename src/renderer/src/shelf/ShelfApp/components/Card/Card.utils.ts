@@ -1,5 +1,5 @@
 import type { ClipView } from '@shared/types'
-import { formatBytes, formatCount } from '../../../../lib/format'
+import { formatBytes, formatCount } from '@renderer/lib/format'
 
 export function meta(item: ClipView): string {
 	switch (item.kind) {

@@ -17,7 +17,7 @@ import {
 import type { Controller } from './controller'
 import { hasAccessibility } from './platform/paste-keys'
 import { nativeMaterial } from './windows'
-import dragIcon from '../../resources/drag.png?asset'
+import dragIcon from '@resources/drag.png?asset'
 
 /** How much text each card gets over IPC; the full content is fetched on demand. */
 const VIEW_PREVIEW_LIMIT = 1_000

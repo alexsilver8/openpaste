@@ -16,7 +16,8 @@
 		"skipLibCheck": true,
 		"paths": {
 			"@shared/*": ["./src/shared/*"],
-			"@renderer/*": ["./src/renderer/src/*"]
+			"@renderer/*": ["./src/renderer/src/*"],
+			"@resources/*": ["./resources/*"]
 		}
 	},
 	"include": ["src/renderer/src/**/*", "src/shared/**/*", "src/preload/*.d.ts"]

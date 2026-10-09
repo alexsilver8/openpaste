@@ -16,7 +16,8 @@
 		"allowJs": true,
 		"skipLibCheck": true,
 		"paths": {
-			"@shared/*": ["./src/shared/*"]
+			"@shared/*": ["./src/shared/*"],
+			"@resources/*": ["./resources/*"]
 		}
 	},
 	"include": [

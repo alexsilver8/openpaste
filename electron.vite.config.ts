@@ -5,7 +5,8 @@ import type { Plugin } from 'vite'
 
 const alias = {
 	'@shared': resolve(__dirname, 'src/shared'),
-	'@renderer': resolve(__dirname, 'src/renderer/src')
+	'@renderer': resolve(__dirname, 'src/renderer/src'),
+	'@resources': resolve(__dirname, 'resources')
 }
 
 /**

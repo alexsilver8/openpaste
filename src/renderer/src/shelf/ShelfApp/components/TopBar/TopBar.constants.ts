@@ -1,5 +1,5 @@
 import type { ClipKind } from '@shared/types'
-import type { IconName } from '../../../../components/Icon'
+import type { IconName } from '@renderer/components/Icon'
 
 export const DRAG_TYPE = 'application/x-openpaste-id'
 

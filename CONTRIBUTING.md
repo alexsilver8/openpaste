@@ -33,6 +33,9 @@ pnpm format
 - Platform-specific code lives in `src/main/platform/`. If you can only test on one OS, say which
   in the pull request so someone else can check the others.
 - React components follow the layout below.
+- Imports from outside the current folder use an alias, never `../`: `@renderer/…` for
+  `src/renderer/src`, `@shared/…` for `src/shared` and `@resources/…` for `resources`. Use `./`
+  only for files in the same folder or below it.
 - UI copy is sentence case and says what things do ("Paste as plain text", not "Submit").
 
 ## Component layout

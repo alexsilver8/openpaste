@@ -1,6 +1,6 @@
 import { formatAccelerator } from '@shared/accelerator'
-import { MOD } from '../../../../env'
-import { platform } from '../../../../env'
+import { MOD } from '@renderer/env'
+import { platform } from '@renderer/env'
 
 interface EmptyStateProps {
 	reason: 'history' | 'search' | 'board' | 'kind'

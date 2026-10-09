@@ -1,8 +1,8 @@
 import type { ClipView } from '@shared/types'
-import { describeColor } from '../../../../../../lib/colors'
-import { fileExtension, fileName, hostOf } from '../../../../../../lib/format'
-import { highlightCode, highlightMatches } from '../../../../../../lib/highlight'
-import { Icon } from '../../../../../../components/Icon'
+import { describeColor } from '@renderer/lib/colors'
+import { fileExtension, fileName, hostOf } from '@renderer/lib/format'
+import { highlightCode, highlightMatches } from '@renderer/lib/highlight'
+import { Icon } from '@renderer/components/Icon'
 
 export function Body({ item, terms }: { item: ClipView; terms: string[] }) {
 	switch (item.kind) {

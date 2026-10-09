@@ -1,4 +1,4 @@
-import type { OpenPasteAPI } from '../shared/types'
+import type { OpenPasteAPI } from '@shared/types'
 
 declare global {
 	interface Window {

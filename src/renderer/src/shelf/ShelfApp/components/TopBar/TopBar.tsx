@@ -1,7 +1,7 @@
 import { useState, type RefObject } from 'react'
 import type { ClipKind, Pinboard } from '@shared/types'
-import { Icon } from '../../../../components/Icon'
-import { MOD } from '../../../../env'
+import { Icon } from '@renderer/components/Icon'
+import { MOD } from '@renderer/env'
 import { DRAG_TYPE, KINDS } from './TopBar.constants'
 
 interface TopBarProps {
