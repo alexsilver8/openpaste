@@ -40,26 +40,30 @@ pnpm format
 
 ## Component layout
 
-Every React component in `src/renderer/src` has its own folder, named after it:
+Every React component in `src/renderer/src` has its own folder, named after it in kebab-case:
 
 ```
-Card/
-├── Card.tsx            the component, and nothing else
-├── Card.constants.ts   constants it uses
-├── Card.utils.ts       helper functions it uses
+card/
+├── card.tsx            the component (Card), and nothing else
+├── card.props.ts       its props type (CardProps)
+├── card.constants.ts   constants it uses
+├── card.utils.ts       helper functions it uses
 ├── index.ts            exports the component, plus anything other folders need
 └── components/         components only Card uses, each laid out the same way
-    ├── AppMark/
-    └── Body/
+    ├── app-mark/
+    └── body/
 ```
 
-- One component per file. A component's file exports that one component, plus any types other
-  files need.
-- Top-level constants go in `<Name>.constants.ts` (`.tsx` if they contain JSX), and helper
-  functions in `<Name>.utils.ts`. Leave out the files a component doesn't need.
+- Folder and file names are kebab-case (`top-bar/top-bar.tsx`); the component itself keeps its
+  PascalCase name (`TopBar`).
+- One component per file, and its file exports only that component.
+- Props go in `<name>.props.ts` as `<Name>Props`, along with any types that only describe a prop
+  (like `MenuEntry` for `Menu`'s entries). A component with no props has no props file.
+- Top-level constants go in `<name>.constants.ts` (`.tsx` if they contain JSX), and helper
+  functions in `<name>.utils.ts`. Leave out the files a component doesn't need.
 - A component used only by one parent lives in that parent's `components/` folder. Components
   used in several places live in `src/renderer/src/components/`.
-- Import a component's folder (`'./components/Card'`), not the files inside it.
+- Import a component's folder (`'./components/card'`), not the files inside it.
 
 ## Commits and pull requests
 

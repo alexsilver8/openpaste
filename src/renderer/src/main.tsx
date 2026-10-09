@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { isDemo, nativeMaterial, platform } from './env'
-import { ShelfApp } from './shelf/ShelfApp'
-import { SettingsApp } from './settings/SettingsApp'
+import { ShelfApp } from './shelf/shelf-app'
+import { SettingsApp } from './settings/settings-app'
 import './styles/base.css'
 import './styles/shelf.css'
 import './styles/settings.css'
@@ -16,7 +16,7 @@ async function boot(): Promise<void> {
 	if (isDemo) {
 		root.dataset.view = 'demo'
 		const [{ DemoFrame }] = await Promise.all([
-			import('./demo/DemoFrame'),
+			import('./demo/demo-frame'),
 			import('./styles/demo.css')
 		])
 		createRoot(container).render(

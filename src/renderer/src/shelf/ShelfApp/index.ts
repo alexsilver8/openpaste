@@ -1,1 +1,0 @@
-export { ShelfApp } from './ShelfApp'
