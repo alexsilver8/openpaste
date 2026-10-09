@@ -24,6 +24,7 @@ const EmptyState = ({ reason, query, shortcut, boardName }: EmptyStateProps) => 
 			title = 'Copy something and it shows up here'
 			hint = `Open this shelf from any app with ${formatAccelerator(shortcut, platform)}.`
 	}
+
 	return (
 		<div className="empty" role="status">
 			<p className="empty-title">{title}</p>

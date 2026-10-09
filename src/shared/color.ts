@@ -12,6 +12,7 @@ export function hexToRgb(hex: string): RGB | null {
 	let h = m[1]
 	if (h.length === 3 || h.length === 4) h = [...h.slice(0, 3)].map((c) => c + c).join('')
 	if (h.length !== 6 && h.length !== 8) return null
+
 	return {
 		r: parseInt(h.slice(0, 2), 16),
 		g: parseInt(h.slice(2, 4), 16),
@@ -24,6 +25,7 @@ export function rgbToHex({ r, g, b }: RGB): string {
 		Math.max(0, Math.min(255, Math.round(n)))
 			.toString(16)
 			.padStart(2, '0')
+
 	return `#${c(r)}${c(g)}${c(b)}`
 }
 
@@ -41,6 +43,7 @@ export function rgbToHsl({ r, g, b }: RGB): { h: number; s: number; l: number } 
 	if (max === rn) h = (gn - bn) / d + (gn < bn ? 6 : 0)
 	else if (max === gn) h = (bn - rn) / d + 2
 	else h = (rn - gn) / d + 4
+
 	return { h: Math.round(h * 60), s: Math.round(s * 100), l: Math.round(l * 100) }
 }
 
@@ -51,6 +54,7 @@ function hslToRgb(h: number, s: number, l: number): RGB {
 	const a = sn * Math.min(ln, 1 - ln)
 	const f = (n: number): number =>
 		ln - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
+
 	return { r: f(0) * 255, g: f(8) * 255, b: f(4) * 255 }
 }
 
@@ -58,8 +62,10 @@ function hslToRgb(h: number, s: number, l: number): RGB {
 export function luminance({ r, g, b }: RGB): number {
 	const ch = (v: number): number => {
 		const c = v / 255
+
 		return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
 	}
+
 	return 0.2126 * ch(r) + 0.7152 * ch(g) + 0.0722 * ch(b)
 }
 
@@ -72,6 +78,7 @@ export function readableOn(background: RGB): '#111114' | '#ffffff' {
 export function hashColor(name: string): string {
 	let h = 0
 	for (let i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) >>> 0
+
 	return rgbToHex(hslToRgb(h % 360, 52, 46))
 }
 
@@ -130,5 +137,6 @@ export function dominantColor(bgra: Uint8Array, width: number, height: number): 
 	const hsl = rgbToHsl(rgb)
 	const l = Math.min(Math.max(hsl.l, 30), 50)
 	const s = Math.min(hsl.s, 85)
+
 	return rgbToHex(hslToRgb(hsl.h, s, l))
 }

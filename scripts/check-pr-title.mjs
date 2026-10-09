@@ -69,6 +69,7 @@ export function checkTitle(title) {
 				error: `Use the emoji itself (${known.emoji}) rather than ${known.code}, since the title becomes a commit message and codes stay as text there.`
 			}
 		}
+
 		return {
 			ok: false,
 			error: 'Start the title with a gitmoji and a single space, like "✨ feat: …".'
@@ -121,6 +122,7 @@ function main() {
 
 	if (result.ok) {
 		console.log(`Title looks good: ${title}`)
+
 		return
 	}
 

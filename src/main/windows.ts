@@ -27,6 +27,7 @@ function loadRenderer(win: BrowserWindow, view: 'shelf' | 'settings'): void {
 function lockDown(win: BrowserWindow): void {
 	win.webContents.setWindowOpenHandler(({ url }) => {
 		if (/^https?:\/\//.test(url)) void shell.openExternal(url)
+
 		return { action: 'deny' }
 	})
 	win.webContents.on('will-navigate', (event, url) => {
@@ -164,6 +165,7 @@ export function openSettingsWindow(): BrowserWindow {
 		existing.show()
 		existing.focus()
 		if (isMac) app.focus({ steal: true })
+
 		return existing
 	}
 	const win = new BrowserWindow({
@@ -202,5 +204,6 @@ export function openSettingsWindow(): BrowserWindow {
 		if (isMac) app.dock?.hide()
 	})
 	settingsWindow = win
+
 	return win
 }

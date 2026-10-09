@@ -29,6 +29,7 @@ const BoardEditor = ({ anchor, board, onSave, onDelete, onClose }: BoardEditorPr
 		}
 		window.addEventListener('mousedown', onDown, true)
 		window.addEventListener('keydown', onKey, true)
+
 		return () => {
 			window.removeEventListener('mousedown', onDown, true)
 			window.removeEventListener('keydown', onKey, true)

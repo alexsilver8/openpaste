@@ -59,6 +59,7 @@ export function planLabels(title, current) {
 		if (result.breaking) wanted.push(BREAKING_LABEL)
 	}
 	const wantedNames = new Set(wanted.map((l) => l.name))
+
 	return {
 		add: wanted.filter((l) => !current.includes(l.name)),
 		remove: current.filter((name) => MANAGED.has(name) && !wantedNames.has(name))
@@ -148,6 +149,7 @@ function githubRequest(token, apiUrl = 'https://api.github.com') {
 		} catch {
 			data = text
 		}
+
 		return { status: res.status, data }
 	}
 }

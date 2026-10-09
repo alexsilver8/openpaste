@@ -171,6 +171,7 @@ export class HistoryStore extends EventEmitter {
 				}
 			}
 		}
+
 		return removed
 	}
 
@@ -186,6 +187,7 @@ export class HistoryStore extends EventEmitter {
 
 	findByHash(hash: string): ClipItem | undefined {
 		const id = this.byHash.get(hash)
+
 		return id ? this.items.get(id) : undefined
 	}
 
@@ -199,6 +201,7 @@ export class HistoryStore extends EventEmitter {
 		} catch {
 			// Older or partial items: fall back to what the index knows.
 			if (item.kind === 'file') return { text: item.files?.join('\n') }
+
 			return item.kind === 'image' ? null : { text: item.preview }
 		}
 	}
@@ -210,6 +213,7 @@ export class HistoryStore extends EventEmitter {
 				key = searchKey(item)
 				this.keys.set(item.id, key)
 			}
+
 			return key
 		})
 	}
@@ -236,6 +240,7 @@ export class HistoryStore extends EventEmitter {
 			}
 			this.keys.delete(existing.id)
 			this.changed()
+
 			return { item: existing, isNew: false }
 		}
 
@@ -260,6 +265,7 @@ export class HistoryStore extends EventEmitter {
 		this.items.set(item.id, item)
 		this.byHash.set(item.hash, item.id)
 		this.changed()
+
 		return { item, isNew: true }
 	}
 
@@ -299,6 +305,7 @@ export class HistoryStore extends EventEmitter {
 		}
 		this.keys.delete(id)
 		this.changed()
+
 		return item
 	}
 
@@ -314,6 +321,7 @@ export class HistoryStore extends EventEmitter {
 		timer.unref?.()
 		this.trash.push({ item, timer })
 		this.changed()
+
 		return true
 	}
 
@@ -330,6 +338,7 @@ export class HistoryStore extends EventEmitter {
 		if (dupe && dupe.id !== item.id) this.purge(dupe)
 		this.byHash.set(item.hash, item.id)
 		this.changed()
+
 		return item
 	}
 
@@ -352,6 +361,7 @@ export class HistoryStore extends EventEmitter {
 		}
 		this.boards.push(board)
 		this.boardsChanged()
+
 		return board
 	}
 
@@ -393,6 +403,7 @@ export class HistoryStore extends EventEmitter {
 		}
 		for (const item of doomed) this.purge(item)
 		if (doomed.size) this.changed()
+
 		return doomed.size
 	}
 

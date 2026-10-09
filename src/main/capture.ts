@@ -24,6 +24,7 @@ export function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Pr
 
 export function isSelf(info: AppInfo | null): boolean {
 	if (!info) return false
+
 	return info.pid === process.pid || info.name === app.getName() || info.name === 'OpenPaste'
 }
 
@@ -121,6 +122,7 @@ export class CaptureService {
 					})
 				: image
 		writeFileSync(join(imageDir, thumb), thumbImage.toPNG())
+
 		return { file, thumb, width, height, bytes: png.length }
 	}
 }

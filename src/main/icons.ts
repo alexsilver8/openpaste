@@ -25,6 +25,7 @@ export class AppIcons {
 			pending = this.load(info, key)
 			this.cache.set(key, pending)
 		}
+
 		return { name: info.name, id: info.id, ...(await pending) }
 	}
 
@@ -42,11 +43,13 @@ export class AppIcons {
 			if (image && !image.isEmpty()) {
 				const small = image.resize({ width: 16, height: 16, quality: 'good' })
 				const color = dominantColor(small.toBitmap(), 16, 16) ?? hashColor(info.name)
+
 				return { icon: file, color }
 			}
 		} catch {
 			/* fall back to a generated color */
 		}
+
 		return { color: hashColor(info.name) }
 	}
 }

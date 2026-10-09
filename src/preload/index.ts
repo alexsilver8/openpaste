@@ -34,6 +34,7 @@ const api: OpenPasteAPI = {
 			if (name === event) callback()
 		}
 		ipcRenderer.on('op:event', listener)
+
 		return () => {
 			ipcRenderer.removeListener('op:event', listener)
 		}

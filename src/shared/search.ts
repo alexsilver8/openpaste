@@ -52,6 +52,7 @@ export function parseQuery(input: string): ParsedQuery {
 		}
 		if (token) result.terms.push(token.toLowerCase())
 	}
+
 	return result
 }
 
@@ -82,6 +83,7 @@ export function matchesQuery(
 		const app = `${item.source?.name ?? ''} ${item.source?.id ?? ''}`.toLowerCase()
 		if (!query.apps.every((a) => app.includes(a))) return false
 	}
+
 	return query.terms.every((t) => key.includes(t))
 }
 
@@ -104,5 +106,6 @@ export function queryItems(
 		out.push(item)
 	}
 	out.sort((a, b) => b.usedAt - a.usedAt)
+
 	return options.limit && options.limit > 0 ? out.slice(0, options.limit) : out
 }

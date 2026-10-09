@@ -276,6 +276,7 @@ export function buildSamples(now: number): {
 		const text = s.text ?? ''
 		if (s.text)
 			payloads.set(id, { text: s.text, html: s.html ? `<p>${s.text}</p>` : undefined })
+
 		return {
 			id,
 			kind: s.kind,
@@ -307,5 +308,6 @@ export function buildSamples(now: number): {
 			pinboards: s.boards ?? []
 		}
 	})
+
 	return { items, payloads }
 }

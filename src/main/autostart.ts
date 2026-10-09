@@ -11,6 +11,7 @@ export function setLaunchAtLogin(enabled: boolean): void {
 		const file = join(dir, 'openpaste.desktop')
 		if (!enabled) {
 			rmSync(file, { force: true })
+
 			return
 		}
 		const exec = process.env.APPIMAGE || process.execPath
@@ -27,6 +28,7 @@ export function setLaunchAtLogin(enabled: boolean): void {
 				''
 			].join('\n')
 		)
+
 		return
 	}
 	app.setLoginItemSettings({ openAtLogin: enabled, args: ['--hidden'] })

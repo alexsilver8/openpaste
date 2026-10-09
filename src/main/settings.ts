@@ -29,6 +29,7 @@ export class SettingsStore extends EventEmitter {
 		this.value = sanitizeSettings({ ...previous, ...patch }, previous)
 		this.save()
 		this.emit('changed', this.get(), previous)
+
 		return this.get()
 	}
 

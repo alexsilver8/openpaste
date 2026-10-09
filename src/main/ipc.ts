@@ -30,6 +30,7 @@ export function toView(item: ClipItem): ClipView {
 	}
 	if (item.source?.icon)
 		view.iconUrl = `openpaste://icons/${encodeURIComponent(item.source.icon)}`
+
 	return view
 }
 
@@ -37,6 +38,7 @@ export function toView(item: ClipItem): ClipView {
 function trusted(event: IpcMainEvent | IpcMainInvokeEvent): boolean {
 	const url = event.senderFrame?.url ?? ''
 	const devUrl = process.env['ELECTRON_RENDERER_URL']
+
 	return url.startsWith('file://') || (!!devUrl && !app.isPackaged && url.startsWith(devUrl))
 }
 
@@ -45,6 +47,7 @@ const str = (value: unknown): string => (typeof value === 'string' ? value : '')
 function sanitizeQuery(raw: unknown): QueryOptions {
 	const q = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>
 	const kind = CLIP_KINDS.includes(q.kind as never) ? (q.kind as QueryOptions['kind']) : 'all'
+
 	return {
 		search: str(q.search).slice(0, 500),
 		pinboard: typeof q.pinboard === 'string' ? q.pinboard : null,
@@ -59,6 +62,7 @@ export function registerIpc(controller: Controller): void {
 	const handle = (channel: string, fn: (...args: unknown[]) => unknown): void => {
 		ipcMain.handle(channel, (event, ...args) => {
 			if (!trusted(event)) throw new Error('Untrusted sender')
+
 			return fn(...args)
 		})
 	}
@@ -97,6 +101,7 @@ export function registerIpc(controller: Controller): void {
 	handle('op:boards', () => store.listBoards())
 	handle('op:create-board', (input) => {
 		const i = (input && typeof input === 'object' ? input : {}) as Record<string, unknown>
+
 		return store.createBoard({ name: str(i.name), color: str(i.color) })
 	})
 	handle('op:update-board', (id, patch) => {

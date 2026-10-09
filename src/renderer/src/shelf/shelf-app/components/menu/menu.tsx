@@ -34,6 +34,7 @@ const Menu = ({ x, y, entries, onClose, onDone, nested }: MenuProps): ReactNode 
 		}
 		window.addEventListener('mousedown', onDown, true)
 		window.addEventListener('blur', onClose)
+
 		return () => {
 			window.removeEventListener('mousedown', onDown, true)
 			window.removeEventListener('blur', onClose)
@@ -78,6 +79,7 @@ const Menu = ({ x, y, entries, onClose, onDone, nested }: MenuProps): ReactNode 
 			}
 		}
 		window.addEventListener('keydown', onKey, true)
+
 		return () => window.removeEventListener('keydown', onKey, true)
 	})
 

@@ -30,6 +30,7 @@ const ShortcutRecorder = ({ value, onChange }: ShortcutRecorderProps) => {
 			setError(await onChange(accelerator))
 		}
 		window.addEventListener('keydown', onKey, true)
+
 		return () => {
 			window.removeEventListener('keydown', onKey, true)
 			api.setShortcutSuspended(false)

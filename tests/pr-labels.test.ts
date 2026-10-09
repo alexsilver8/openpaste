@@ -57,15 +57,19 @@ function fakeGitHub(options: { existingLabels?: string[]; assignable?: boolean }
 			const { name } = body as { name: string }
 			if (existing.has(name)) return { status: 422, data: {} }
 			existing.add(name)
+
 			return { status: 201, data: body }
 		}
 		if (method === 'POST' && path.endsWith('/assignees')) {
 			const { assignees } = body as { assignees: string[] }
 			const added = options.assignable === false ? [] : assignees.map((login) => ({ login }))
+
 			return { status: 201, data: { assignees: added } }
 		}
+
 		return { status: 200, data: {} }
 	}
+
 	return { calls, request }
 }
 

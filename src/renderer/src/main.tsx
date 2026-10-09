@@ -24,6 +24,7 @@ async function boot(): Promise<void> {
 				<DemoFrame />
 			</StrictMode>
 		)
+
 		return
 	}
 	const view = location.hash === '#settings' ? 'settings' : 'shelf'

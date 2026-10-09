@@ -28,6 +28,7 @@ function productionCsp(): Plugin {
 				"object-src 'none'",
 				"base-uri 'none'"
 			].join('; ')
+
 			return html.replace(
 				'<head>',
 				`<head>\n    <meta http-equiv="Content-Security-Policy" content="${csp}" />`

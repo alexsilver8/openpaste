@@ -28,6 +28,7 @@ export function run(file: string, args: string[], timeout = 1500): Promise<strin
 export function parseLsappinfo(output: string): AppInfo | null {
 	const name = /^"(.+?)"\s+ASN:/m.exec(output)?.[1]
 	if (!name) return null
+
 	return {
 		name,
 		id: /bundleID="([^"]+)"/.exec(output)?.[1],
@@ -61,6 +62,7 @@ async function frontMac(): Promise<AppInfo | null> {
 export function parseXprop(output: string): { className?: string; pid?: number } {
 	const cls = /WM_CLASS\([^)]*\)\s*=\s*"([^"]*)"(?:,\s*"([^"]*)")?/.exec(output)
 	const pid = /_NET_WM_PID\([^)]*\)\s*=\s*(\d+)/.exec(output)
+
 	return { className: cls?.[2] || cls?.[1], pid: pid ? Number(pid[1]) : undefined }
 }
 
@@ -76,6 +78,7 @@ async function frontLinux(): Promise<AppInfo | null> {
 		let name = className
 		if (!name && pid) name = (await readFile(`/proc/${pid}/comm`, 'utf8')).trim()
 		if (!name) return null
+
 		return { name, id: className?.toLowerCase(), pid, window }
 	} catch {
 		return null
@@ -88,6 +91,7 @@ export async function getFrontmostApp(helper: WinHelper | null): Promise<AppInfo
 			return frontMac()
 		case 'win32': {
 			const app = await helper?.front()
+
 			return app
 				? {
 						name: app.name,

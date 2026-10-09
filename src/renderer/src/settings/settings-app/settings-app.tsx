@@ -34,6 +34,7 @@ const SettingsApp = ({ embedded = false }: SettingsAppProps) => {
 		refreshPermissions()
 		window.addEventListener('focus', refreshPermissions)
 		const off = api.on('settings-changed', load)
+
 		return () => {
 			off()
 			window.removeEventListener('focus', refreshPermissions)
@@ -47,6 +48,7 @@ const SettingsApp = ({ embedded = false }: SettingsAppProps) => {
 	const update = useCallback(async (patch: Partial<Settings>): Promise<string | undefined> => {
 		const result = await api.setSettings(patch)
 		setSettings(result.settings)
+
 		return result.ok ? undefined : result.error
 	}, [])
 

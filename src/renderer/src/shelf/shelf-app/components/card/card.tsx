@@ -26,6 +26,7 @@ const Card = ({
 	const pinned = boards.filter((b) => item.pinboards.includes(b.id))
 	const label = item.title || kindLabel(item)
 	const wasSelected = useRef(false)
+
 	return (
 		<div
 			id={`card-${item.id}`}

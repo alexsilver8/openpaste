@@ -20,6 +20,7 @@ export function parseCssColor(value: string): (RGB & { a: number }) | null {
 	const m = /rgba?\(([^)]+)\)/.exec(resolved)
 	if (!m) return null
 	const [r, g, b, a = '1'] = m[1].split(',').map((s) => s.trim())
+
 	return { r: Number(r), g: Number(g), b: Number(b), a: Number(a) }
 }
 
@@ -36,6 +37,7 @@ export function describeColor(value: string): ColorInfo | null {
 	if (!c) return null
 	const hsl = rgbToHsl(c)
 	const alpha = c.a < 1 ? ` / ${Math.round(c.a * 100)}%` : ''
+
 	return {
 		css: value,
 		hex: rgbToHex(c).toUpperCase(),

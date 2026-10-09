@@ -37,6 +37,7 @@ export function highlightCode(source: string): ReactNode[] {
 		last = index + match[0].length
 	}
 	if (last < source.length) out.push(source.slice(last))
+
 	return out
 }
 
@@ -48,5 +49,6 @@ export function highlightMatches(text: string, terms: string[]): ReactNode[] {
 		`(${clean.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`,
 		'gi'
 	)
+
 	return text.split(pattern).map((part, i) => (i % 2 === 1 ? <mark key={i}>{part}</mark> : part))
 }

@@ -19,6 +19,7 @@ export function detectColor(text: string): string | null {
 	if (value.length < 4 || value.length > 80 || value.includes('\n')) return null
 	if (HEX_COLOR.test(value)) return value.toLowerCase()
 	if (FUNC_COLOR.test(value)) return value.replace(/\s+/g, ' ')
+
 	return null
 }
 
@@ -37,6 +38,7 @@ export function detectUrl(text: string): string | null {
 	try {
 		const url = new URL(candidate)
 		if (url.protocol === 'mailto:') return candidate
+
 		return url.hostname || url.protocol === 'file:' ? candidate : null
 	} catch {
 		return null
@@ -109,12 +111,14 @@ export function classifyText(text: string, sourceName?: string): TextClassificat
 	const url = detectUrl(text)
 	if (url) return { kind: 'link', url }
 	if (looksLikeCode(text, sourceName)) return { kind: 'code' }
+
 	return { kind: 'text' }
 }
 
 export function summarizeText(text: string): { preview: string; size: number; lines: number } {
 	let lines = 1
 	for (let i = 0; i < text.length; i++) if (text.charCodeAt(i) === 10) lines++
+
 	return { preview: text.slice(0, PREVIEW_LIMIT), size: text.length, lines }
 }
 
@@ -130,6 +134,7 @@ export const KIND_LABELS: Record<ClipKind, string> = {
 export function kindLabel(item: Pick<ClipItem, 'kind' | 'files' | 'rich'>): string {
 	if (item.kind === 'file' && (item.files?.length ?? 0) > 1) return 'Files'
 	if (item.kind === 'text' && item.rich) return 'Rich Text'
+
 	return KIND_LABELS[item.kind]
 }
 
@@ -144,5 +149,6 @@ export function cyrb53(input: string, seed = 0): string {
 	}
 	h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909)
 	h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909)
+
 	return (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36)
 }

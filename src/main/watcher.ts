@@ -80,6 +80,7 @@ export class ClipboardWatcher extends EventEmitter {
 	private exclusive<T>(task: () => Promise<T>): Promise<T> {
 		const run = this.queue.then(task, task)
 		this.queue = run.catch(() => undefined)
+
 		return run
 	}
 

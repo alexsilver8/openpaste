@@ -35,6 +35,7 @@ const Inspector = ({
 			setPayload(p)
 			setDraft(p?.text ?? item.preview)
 		})
+
 		return () => {
 			alive = false
 		}
@@ -82,6 +83,7 @@ const Inspector = ({
 			}
 		}
 		window.addEventListener('keydown', onKey, true)
+
 		return () => window.removeEventListener('keydown', onKey, true)
 	})
 
@@ -230,6 +232,7 @@ const Inspector = ({
 					<div className="inspector-boards" role="group" aria-label="Pinboards">
 						{boards.map((b) => {
 							const on = item.pinboards.includes(b.id)
+
 							return (
 								<button
 									key={b.id}

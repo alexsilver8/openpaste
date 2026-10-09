@@ -55,6 +55,7 @@ export function sha1(data: string | Buffer | Uint8Array): string {
 export async function readState(): Promise<ClipboardState> {
 	const items = await clipboard.read()
 	const types = [...new Set(items.flatMap((i) => i.types))]
+
 	return { types, items }
 }
 
@@ -63,6 +64,7 @@ async function getBlob(state: ClipboardState, type: string): Promise<Blob | null
 	if (!item) return null
 	try {
 		const value = await item.getType(type)
+
 		return value instanceof Blob ? value : null
 	} catch {
 		return null
@@ -71,6 +73,7 @@ async function getBlob(state: ClipboardState, type: string): Promise<Blob | null
 
 export async function getText(state: ClipboardState, type: string): Promise<string | undefined> {
 	const blob = await getBlob(state, type)
+
 	return blob ? await blob.text() : undefined
 }
 
@@ -82,6 +85,7 @@ export async function readImageBuffer(state: ClipboardState): Promise<Buffer | n
 	const type = imageType(state)
 	if (!type) return null
 	const blob = await getBlob(state, type)
+
 	return blob ? Buffer.from(await blob.arrayBuffer()) : null
 }
 
@@ -97,6 +101,7 @@ export async function isConcealed(state: ClipboardState): Promise<boolean> {
 			if (bytes && bytes.length >= 4 && bytes.every((b, i) => i >= 4 || b === 0)) return true
 		}
 	}
+
 	return false
 }
 
@@ -112,6 +117,7 @@ export function parseUriList(list: string | undefined): string[] {
 			/* skip malformed entries */
 		}
 	}
+
 	return files
 }
 
@@ -135,6 +141,7 @@ export async function readSnapshot(
 		const files = parseUriList(await getText(state, type))
 		if (files.length) {
 			if (options.captureFiles) snapshot.files = files
+
 			return snapshot
 		}
 	}
@@ -144,6 +151,7 @@ export async function readSnapshot(
 	if (snapshot.text !== undefined) {
 		snapshot.html = await getText(state, 'text/html')
 		snapshot.rtf = await getText(state, 'text/rtf')
+
 		return snapshot
 	}
 
@@ -157,6 +165,7 @@ export async function readSnapshot(
 			}
 		}
 	}
+
 	return snapshot
 }
 
@@ -171,6 +180,7 @@ export async function writeItem(
 		await clipboard.write([
 			new ClipboardItem({ 'image/png': new Blob([png], { type: 'image/png' }) })
 		])
+
 		return
 	}
 
@@ -179,12 +189,14 @@ export async function writeItem(
 		const entry: Record<string, string> = { 'text/plain': item.files.join('\n') }
 		if (!options.plain) entry['text/uri-list'] = uris
 		await clipboard.write([new ClipboardItem(entry)])
+
 		return
 	}
 
 	const text = payload?.text ?? item.preview
 	if (options.plain || (!payload?.html && !payload?.rtf)) {
 		await clipboard.writeText(text)
+
 		return
 	}
 	const entry: Record<string, string> = { 'text/plain': text }

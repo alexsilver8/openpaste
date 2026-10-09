@@ -32,11 +32,19 @@ pnpm format
 - Add or update tests in `tests/` when you change classification, search, settings or the store.
 - Platform-specific code lives in `src/main/platform/`. If you can only test on one OS, say which
   in the pull request so someone else can check the others.
-- React components follow the layout below.
+- Code follows the code style and component layout below.
+- UI copy is sentence case and says what things do ("Paste as plain text", not "Submit").
+
+## Code style
+
+- Indent with tabs, shown 4 wide. YAML can't use tabs, so it uses 4 spaces. `pnpm format`
+  (Prettier) takes care of this.
+- Leave a blank line above every `return` that isn't the first statement in its block, including
+  inside `if` blocks, `case`s and callbacks. A comment directly above the `return` stays with it,
+  and the blank line goes above the comment.
 - Imports from outside the current folder use an alias, never `../`: `@renderer/…` for
   `src/renderer/src`, `@shared/…` for `src/shared` and `@resources/…` for `resources`. Use `./`
   only for files in the same folder or below it.
-- UI copy is sentence case and says what things do ("Paste as plain text", not "Submit").
 
 ## Component layout
 

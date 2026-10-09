@@ -28,6 +28,7 @@ export function handleScheme(dirs: { images: string; icons: string }): void {
 		if (!root || !name || name !== basename(name) || name.startsWith('.')) {
 			return new Response('Not found', { status: 404 })
 		}
+
 		return net.fetch(pathToFileURL(join(root, name)).toString())
 	})
 }

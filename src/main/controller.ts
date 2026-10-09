@@ -61,6 +61,7 @@ export class Controller {
 		const imagePath = item.image ? join(this.store.imageDir, item.image.file) : undefined
 		await this.watcher.writeQuietly(() => writeItem(item, payload, { plain, imagePath }))
 		this.store.touch(id)
+
 		return true
 	}
 
@@ -83,6 +84,7 @@ export class Controller {
 				'Press Ctrl+V to paste. Install xdotool (X11) or wtype (Wayland) to let OpenPaste paste for you.'
 			)
 		}
+
 		return { outcome }
 	}
 
@@ -112,6 +114,7 @@ export class Controller {
 		if (patch.shortcut && patch.shortcut !== previous.shortcut && !this.shortcutSuspended) {
 			if (!this.registerShortcut(patch.shortcut)) {
 				this.registerShortcut(previous.shortcut)
+
 				return {
 					ok: false,
 					settings: previous,
@@ -120,6 +123,7 @@ export class Controller {
 			}
 		}
 		const next = this.settings.set(patch)
+
 		return { ok: true, settings: next }
 	}
 

@@ -74,6 +74,7 @@ export function sanitizeSettings(input: unknown, base: Settings = DEFAULT_SETTIN
 				)
 			].slice(0, 200)
 		: base.ignoredApps
+
 	return {
 		shortcut,
 		pasteDirectly: bool(raw.pasteDirectly, base.pasteDirectly),
@@ -101,8 +102,10 @@ export function isIgnoredApp(
 	if (!app) return false
 	const name = app.name?.toLowerCase() ?? ''
 	const id = app.id?.toLowerCase() ?? ''
+
 	return ignored.some((entry) => {
 		const e = entry.toLowerCase()
+
 		return e === name || e === id || (e.length > 3 && (name.includes(e) || id.includes(e)))
 	})
 }

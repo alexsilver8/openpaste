@@ -81,6 +81,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 
 	useEffect(() => {
 		const timer = setTimeout(() => setSearch(query), 60)
+
 		return () => clearTimeout(timer)
 	}, [query])
 
@@ -95,6 +96,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 			api.on('settings-changed', loadSettings)
 		]
 		const tick = setInterval(() => setNow(Date.now()), 30_000)
+
 		return () => {
 			offs.forEach((off) => off())
 			clearInterval(tick)
@@ -312,6 +314,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 				onSelect: () => remove(i)
 			}
 		)
+
 		return entries
 	}
 
@@ -330,6 +333,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 			if (e.key === 'Meta' || e.key === 'Control') {
 				clearTimeout(hintTimer)
 				hintTimer = setTimeout(() => setShowHints(true), 250)
+
 				return
 			}
 
@@ -412,6 +416,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 		window.addEventListener('keydown', onKeyDown)
 		window.addEventListener('keyup', onKeyUp)
 		window.addEventListener('blur', reset)
+
 		return () => {
 			clearTimeout(hintTimer)
 			window.removeEventListener('keydown', onKeyDown)
@@ -442,6 +447,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 				// Native drag so images and files drop into Finder, Explorer, chat apps…
 				e.preventDefault()
 				api.startDrag(item.id)
+
 				return
 			}
 			const payload = payloadCache.current.get(item.id)
@@ -516,6 +522,7 @@ const ShelfApp = ({ active = true }: ShelfAppProps) => {
 						<div className="row-inner" style={{ width: virtualizer.getTotalSize() }}>
 							{virtualizer.getVirtualItems().map((v) => {
 								const item = items[v.index]
+
 								return (
 									<div
 										key={item.id}

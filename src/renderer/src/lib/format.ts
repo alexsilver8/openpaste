@@ -13,6 +13,7 @@ export function formatBytes(bytes: number): string {
 		value /= 1024
 		unit++
 	}
+
 	return `${value >= 10 ? Math.round(value) : value.toFixed(1)} ${units[unit]}`
 }
 
@@ -32,6 +33,7 @@ export function relativeTime(timestamp: number, now = Date.now()): string {
 	if (then.getTime() >= today.getTime() - DAY) return 'Yesterday'
 	if (diff < 6 * DAY) return then.toLocaleDateString(undefined, { weekday: 'long' })
 	const sameYear = then.getFullYear() === new Date(now).getFullYear()
+
 	return then.toLocaleDateString(undefined, {
 		day: 'numeric',
 		month: 'short',
@@ -51,6 +53,7 @@ export function hostOf(url: string): { host: string; rest: string } {
 		const u = new URL(url)
 		if (u.protocol === 'mailto:') return { host: u.pathname, rest: 'Email address' }
 		const rest = `${u.pathname === '/' ? '' : u.pathname}${u.search}${u.hash}`
+
 		return { host: u.hostname.replace(/^www\./, '') || u.protocol, rest: decodeURI(rest) }
 	} catch {
 		return { host: url, rest: '' }
@@ -64,5 +67,6 @@ export function fileName(path: string): string {
 export function fileExtension(path: string): string {
 	const name = fileName(path)
 	const dot = name.lastIndexOf('.')
+
 	return dot > 0 ? name.slice(dot + 1).toLowerCase() : ''
 }

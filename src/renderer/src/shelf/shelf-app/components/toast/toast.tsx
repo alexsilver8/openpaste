@@ -4,8 +4,10 @@ import type { ToastProps } from './toast.props'
 const Toast = ({ toast, onDismiss }: ToastProps) => {
 	useEffect(() => {
 		const timer = setTimeout(onDismiss, 5000)
+
 		return () => clearTimeout(timer)
 	}, [toast.id, onDismiss])
+
 	return (
 		<div className="toast" role="status">
 			<span>{toast.message}</span>

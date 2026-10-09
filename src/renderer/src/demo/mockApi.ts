@@ -85,6 +85,7 @@ export function createMockApi(): OpenPasteAPI {
 	for (const item of seeded.items) items.set(item.id, item)
 	for (const [id, payload] of seeded.payloads) payloads.set(id, payload)
 	boards = [...SAMPLE_BOARDS]
+
 	return {
 		async getEnv() {
 			return { platform: 'web', version: '0.1.0', material: false }
@@ -95,6 +96,7 @@ export function createMockApi(): OpenPasteAPI {
 		async getPayload(id) {
 			const item = items.get(id)
 			if (!item) return null
+
 			return payloads.get(id) ?? (item.kind === 'image' ? null : { text: item.preview })
 		},
 		async paste(id, options) {
@@ -108,6 +110,7 @@ export function createMockApi(): OpenPasteAPI {
 			touch(id)
 			demoBus.dispatchEvent(new Event('hide'))
 			demoBus.dispatchEvent(new CustomEvent('paste', { detail }))
+
 			return { outcome: settings.pasteDirectly ? 'pasted' : 'copied' }
 		},
 		async copy(id) {
@@ -129,6 +132,7 @@ export function createMockApi(): OpenPasteAPI {
 			if (!item) return false
 			items.set(item.id, item)
 			emit('history-changed')
+
 			return true
 		},
 		async updateItem(id, patch) {
@@ -167,6 +171,7 @@ export function createMockApi(): OpenPasteAPI {
 			}
 			boards = [...boards, board]
 			emit('boards-changed')
+
 			return board
 		},
 		async updateBoard(id, patch) {
@@ -190,6 +195,7 @@ export function createMockApi(): OpenPasteAPI {
 		async setSettings(patch) {
 			settings = sanitizeSettings({ ...settings, ...patch }, settings)
 			emit('settings-changed')
+
 			return { ok: true, settings: { ...settings } }
 		},
 		async clearHistory({ keepPinned }) {
@@ -217,6 +223,7 @@ export function createMockApi(): OpenPasteAPI {
 			let set = listeners.get(event)
 			if (!set) listeners.set(event, (set = new Set()))
 			set.add(callback)
+
 			return () => set.delete(callback)
 		}
 	}

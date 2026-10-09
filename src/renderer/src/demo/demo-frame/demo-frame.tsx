@@ -80,6 +80,7 @@ const DemoFrame = () => {
 		demoBus.addEventListener('hide', onHide)
 		demoBus.addEventListener('open-settings', onSettings)
 		demoBus.addEventListener('paste', onPaste)
+
 		return () => {
 			demoBus.removeEventListener('show', onShow)
 			demoBus.removeEventListener('hide', onHide)
@@ -109,6 +110,7 @@ const DemoFrame = () => {
 		}
 		window.addEventListener('keydown', onKey, true)
 		document.addEventListener('copy', onCopy)
+
 		return () => {
 			window.removeEventListener('keydown', onKey, true)
 			document.removeEventListener('copy', onCopy)

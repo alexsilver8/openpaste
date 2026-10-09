@@ -65,6 +65,7 @@ function keyFromCode(code: string): string | null {
 	if (/^Digit[0-9]$/.test(code)) return code.slice(5)
 	if (/^Numpad[0-9]$/.test(code)) return `num${code.slice(6)}`
 	if (/^F([1-9]|1[0-9]|2[0-4])$/.test(code)) return code
+
 	return CODE_MAP[code] ?? null
 }
 
@@ -96,6 +97,7 @@ export function keyEventToAccelerator(event: KeyLike, platform: Platform): strin
 	if (!hasRealModifier && !isFunctionKey) return null
 
 	parts.push(key)
+
 	return parts.join('+')
 }
 
@@ -155,8 +157,10 @@ export function formatAccelerator(accelerator: string, platform: Platform): stri
 		const order = ['⌃', '⌥', '⇧', '⌘']
 		const mapped = parts.map((p) => MAC_SYMBOLS[p] ?? p.toUpperCase())
 		const mods = mapped.slice(0, -1).sort((a, b) => order.indexOf(a) - order.indexOf(b))
+
 		return [...mods, mapped[mapped.length - 1]].join('')
 	}
+
 	return parts.map((p) => PC_NAMES[p] ?? (p.length === 1 ? p.toUpperCase() : p)).join('+')
 }
 

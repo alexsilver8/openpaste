@@ -21,6 +21,7 @@ const TERMINALS =
 
 export function hasAccessibility(): boolean | null {
 	if (process.platform !== 'darwin') return null
+
 	return systemPreferences.isTrustedAccessibilityClient(false)
 }
 
@@ -37,11 +38,13 @@ export async function sendPasteKeystroke(
 			if (!systemPreferences.isTrustedAccessibilityClient(false)) {
 				// Shows the system prompt (once) that leads to Privacy & Security → Accessibility.
 				systemPreferences.isTrustedAccessibilityClient(true)
+
 				return 'no-permission'
 			}
 			await delay(70)
 			try {
 				await run('osascript', ['-l', 'JavaScript', '-e', JXA_CMD_V])
+
 				return 'pasted'
 			} catch {
 				try {
@@ -49,6 +52,7 @@ export async function sendPasteKeystroke(
 						'-e',
 						'tell application "System Events" to keystroke "v" using command down'
 					])
+
 					return 'pasted'
 				} catch {
 					return 'failed'
@@ -60,6 +64,7 @@ export async function sendPasteKeystroke(
 			if (!helper) return 'unsupported'
 			if (target?.window) await helper.activate(target.window)
 			await delay(40)
+
 			return (await helper.paste()) ? 'pasted' : 'failed'
 		}
 
@@ -102,11 +107,13 @@ export async function sendPasteKeystroke(
 			for (const [cmd, args] of attempts) {
 				try {
 					await run(cmd, args)
+
 					return 'pasted'
 				} catch {
 					/* try the next tool */
 				}
 			}
+
 			return 'unsupported'
 		}
 	}

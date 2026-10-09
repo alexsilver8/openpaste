@@ -134,6 +134,7 @@ export class WinHelper {
 	private async request(command: string, arg = '', timeout = 1500): Promise<string | null> {
 		if (!(await this.ready) || !this.proc) return null
 		const id = this.nextId++
+
 		return new Promise((resolve) => {
 			const timer = setTimeout(() => {
 				this.pending.delete(id)
@@ -163,6 +164,7 @@ export class WinHelper {
 
 	async activate(window: string): Promise<boolean> {
 		if (!/^\d+$/.test(window)) return false
+
 		return (await this.request('activate', window)) === 'true'
 	}
 

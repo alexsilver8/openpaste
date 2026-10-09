@@ -37,6 +37,7 @@ export function parseCommit(subject) {
 	const result = checkTitle(title)
 	if (!result.ok) return { title, pr, type: 'other', breaking: false, summary: title }
 	const { type, scope, breaking, summary } = result
+
 	return { title, pr, type, scope, breaking, summary }
 }
 
@@ -51,6 +52,7 @@ export const isReleaseCommit = (/** @type {Change} */ change) =>
 export function bumpFor(changes) {
 	if (changes.some((c) => c.breaking)) return 'major'
 	if (changes.some((c) => c.type === 'feat')) return 'minor'
+
 	return 'patch'
 }
 
@@ -58,6 +60,7 @@ export function bumpFor(changes) {
 function parseVersion(version) {
 	const m = SEMVER.exec(version)
 	if (!m) throw new Error(`"${version}" isn't a version like 1.2.3.`)
+
 	return m.slice(1).map(Number)
 }
 
@@ -65,6 +68,7 @@ function parseVersion(version) {
 export function compareVersions(a, b) {
 	const [x, y] = [parseVersion(a), parseVersion(b)]
 	for (let i = 0; i < 3; i++) if (x[i] !== y[i]) return x[i] - y[i]
+
 	return 0
 }
 
@@ -77,6 +81,7 @@ export function nextVersion(current, bump) {
 		if (compareVersions(bump, current) <= 0) {
 			throw new Error(`${bump} isn't newer than the current version, ${current}.`)
 		}
+
 		return bump
 	}
 	const [major, minor, patch] = parseVersion(current)
@@ -121,6 +126,7 @@ export function renderSection({ version, date, changes, repoUrl }) {
 		}
 		lines.push('')
 	}
+
 	return lines.join('\n').trimEnd() + '\n'
 }
 
@@ -133,6 +139,7 @@ export function renderSection({ version, date, changes, repoUrl }) {
 export function insertSection(changelog, section) {
 	const at = changelog.search(/^## /m)
 	if (at === -1) return `${changelog.trimEnd()}\n\n${section}`
+
 	return `${changelog.slice(0, at)}${section}\n${changelog.slice(at)}`
 }
 
@@ -150,6 +157,7 @@ export function extractReleaseNotes(changelog, version) {
 	if (!match) return null
 	const rest = changelog.slice(match.index + match[0].length)
 	const next = rest.search(/^## /m)
+
 	return (next === -1 ? rest : rest.slice(0, next)).trim()
 }
 
@@ -157,6 +165,7 @@ export function extractReleaseNotes(changelog, version) {
 export function setPackageVersion(text, version) {
 	const updated = text.replace(/("version"\s*:\s*")[^"]*(")/, `$1${version}$2`)
 	if (updated === text) throw new Error('Could not find the version in package.json.')
+
 	return updated
 }
 
@@ -179,6 +188,7 @@ const gh = (...args) => run('gh', args)
 function tagExists(tag) {
 	try {
 		git('rev-parse', '--verify', '--quiet', `refs/tags/${tag}`)
+
 		return true
 	} catch {
 		return false
@@ -195,6 +205,7 @@ function repoUrlFrom(pkg) {
 		const m = /github\.com[/:]([^/]+\/[^/.#]+)/.exec(value ?? '')
 		if (m) return `https://github.com/${m[1]}`
 	}
+
 	return undefined
 }
 
@@ -255,6 +266,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
 		.filter((c) => !isReleaseCommit(c))
 	if (!changes.length) {
 		log(`Nothing to release: no pull requests merged since ${lastTag}.`)
+
 		return { released: false }
 	}
 
@@ -282,10 +294,12 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
 
 	if (dryRun) {
 		log('Dry run: nothing was changed.')
+
 		return { released: false, version }
 	}
 	if (!yes && !(await confirm(`Open a release PR for ${tag}? (y/N) `))) {
 		log('Cancelled.')
+
 		return { released: false, version }
 	}
 
@@ -344,6 +358,7 @@ export async function main(argv = process.argv.slice(2), log = console.log) {
 			? `It merges by itself once its checks pass. Then GitHub builds and publishes ${tag}.`
 			: `Auto-merge isn't on for this repository, so merge it once its checks pass. Then GitHub builds and publishes ${tag}.`
 	)
+
 	return { released: true, version, url, autoMerge }
 }
 

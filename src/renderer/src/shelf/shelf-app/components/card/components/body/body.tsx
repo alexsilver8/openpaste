@@ -23,6 +23,7 @@ const Body = ({ item, terms }: BodyProps) => {
 			)
 		case 'color': {
 			const info = describeColor(item.color ?? item.preview)
+
 			return (
 				<div className="card-color" style={{ background: item.color, color: info?.ink }}>
 					<span className="card-color-hex">{info?.hex ?? item.preview}</span>
@@ -32,6 +33,7 @@ const Body = ({ item, terms }: BodyProps) => {
 		}
 		case 'link': {
 			const { host, rest } = hostOf(item.url ?? item.preview)
+
 			return (
 				<div className="card-link">
 					<span className="card-link-host">{highlightMatches(host, terms)}</span>
@@ -55,6 +57,7 @@ const Body = ({ item, terms }: BodyProps) => {
 			const files = item.files ?? []
 			if (files.length === 1) {
 				const ext = fileExtension(files[0])
+
 				return (
 					<div className="card-file card-file--single">
 						<span className="file-glyph">
@@ -67,6 +70,7 @@ const Body = ({ item, terms }: BodyProps) => {
 					</div>
 				)
 			}
+
 			return (
 				<ul className="card-file">
 					{files.slice(0, 5).map((f) => (
