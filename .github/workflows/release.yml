@@ -43,6 +43,11 @@ jobs:
       - name: Build installers
         shell: bash
         run: |
+          # Secrets that aren't set arrive as empty strings, which electron-builder treats as set
+          # (an empty CSC_LINK makes it try to load the project folder as a certificate).
+          for name in CSC_LINK CSC_KEY_PASSWORD APPLE_ID APPLE_APP_SPECIFIC_PASSWORD APPLE_TEAM_ID; do
+            if [ -z "${!name}" ]; then unset "$name"; fi
+          done
           args=(${{ matrix.target }} --publish never)
           # With no Developer ID certificate, ad-hoc sign macOS builds. Unsigned Apple Silicon apps
           # fail with "OpenPaste is damaged"; ad-hoc signed ones get the usual Open Anyway prompt.
