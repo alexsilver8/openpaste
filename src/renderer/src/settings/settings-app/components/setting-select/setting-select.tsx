@@ -1,15 +1,16 @@
-import { memo, type ChangeEvent } from 'react'
+import { memo } from 'react'
 import type { SettingSelectProps } from './setting-select.props'
 
 const SettingSelect = (props: SettingSelectProps) => {
 	const { id, setting, options, settings, onChange } = props
 
-	const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		onChange({ [setting]: Number(e.currentTarget.value) })
-	}
-
 	return (
-		<select id={id} className="select" value={settings[setting]} onChange={handleChange}>
+		<select
+			id={id}
+			className="select"
+			value={settings[setting]}
+			onChange={(e) => onChange({ [setting]: Number(e.currentTarget.value) })}
+		>
 			{options.map((o) => (
 				<option key={o.value} value={o.value}>
 					{o.label}

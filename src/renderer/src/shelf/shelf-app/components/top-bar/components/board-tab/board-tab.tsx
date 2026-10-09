@@ -13,13 +13,6 @@ const BoardTab = (props: BoardTabProps) => {
 		onDropTargetChange
 	} = props
 
-	const handleMouseDown = (e: MouseEvent<HTMLButtonElement>) => e.preventDefault()
-
-	const handleClick = () => onBoard(board.id)
-
-	const handleDoubleClick = (e: MouseEvent<HTMLButtonElement>) =>
-		onEditBoard(board, e.currentTarget.getBoundingClientRect())
-
 	const handleContextMenu = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault()
 		onEditBoard(board, e.currentTarget.getBoundingClientRect())
@@ -31,8 +24,6 @@ const BoardTab = (props: BoardTabProps) => {
 		e.dataTransfer.dropEffect = 'link'
 		onDropTargetChange(board.id)
 	}
-
-	const handleDragLeave = () => onDropTargetChange(null)
 
 	const handleDrop = (e: DragEvent<HTMLButtonElement>) => {
 		e.preventDefault()
@@ -48,12 +39,12 @@ const BoardTab = (props: BoardTabProps) => {
 			aria-selected={selected}
 			className={`board-tab${isDropTarget ? ' is-drop' : ''}`}
 			title="Double-click to rename"
-			onMouseDown={handleMouseDown}
-			onClick={handleClick}
-			onDoubleClick={handleDoubleClick}
+			onMouseDown={(e) => e.preventDefault()}
+			onClick={() => onBoard(board.id)}
+			onDoubleClick={(e) => onEditBoard(board, e.currentTarget.getBoundingClientRect())}
 			onContextMenu={handleContextMenu}
 			onDragOver={handleDragOver}
-			onDragLeave={handleDragLeave}
+			onDragLeave={() => onDropTargetChange(null)}
 			onDrop={handleDrop}
 		>
 			<span className="board-dot" style={{ background: board.color }} />

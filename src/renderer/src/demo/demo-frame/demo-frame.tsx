@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
+import { memo, useCallback, useEffect, useRef, useState } from 'react'
 import { ShelfApp } from '@renderer/shelf/shelf-app'
 import { SettingsApp } from '@renderer/settings/settings-app'
 import { Icon } from '@renderer/components/icon'
@@ -117,10 +117,6 @@ const DemoFrame = () => {
 		}
 	}, [open, settingsOpen, show, hide])
 
-	const handleShelfButtonClick = () => (open ? hide() : show())
-
-	const handleDeskMouseDown = () => open && hide()
-
 	const handleNoteBlur = () => {
 		const sel = window.getSelection()
 		if (sel?.rangeCount && editorRef.current?.contains(sel.anchorNode)) {
@@ -128,23 +124,21 @@ const DemoFrame = () => {
 		}
 	}
 
-	const handleModalMouseDown = () => setSettingsOpen(false)
-
-	const handleModalPanelMouseDown = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
-
-	const handleModalCloseClick = () => setSettingsOpen(false)
-
 	return (
 		<div className="demo">
 			<div className="demo-bar">
 				<span className="demo-bar-name">OpenPaste</span>
 				<span className="demo-bar-note">Browser demo of the desktop app</span>
-				<button type="button" className="demo-open" onClick={handleShelfButtonClick}>
+				<button
+					type="button"
+					className="demo-open"
+					onClick={() => (open ? hide() : show())}
+				>
 					{open ? 'Close shelf' : 'Open shelf'} <kbd>{SHORTCUT}</kbd>
 				</button>
 			</div>
 
-			<main className="demo-desk" onMouseDown={handleDeskMouseDown}>
+			<main className="demo-desk" onMouseDown={() => open && hide()}>
 				<article className="demo-window" aria-label="Notes window">
 					<div className="demo-window-bar">
 						<span className="demo-dots" aria-hidden="true">
@@ -204,14 +198,14 @@ const DemoFrame = () => {
 					className="demo-modal"
 					role="dialog"
 					aria-label="Settings"
-					onMouseDown={handleModalMouseDown}
+					onMouseDown={() => setSettingsOpen(false)}
 				>
-					<div className="demo-modal-panel" onMouseDown={handleModalPanelMouseDown}>
+					<div className="demo-modal-panel" onMouseDown={(e) => e.stopPropagation()}>
 						<button
 							type="button"
 							className="icon-button demo-modal-close"
 							aria-label="Close settings"
-							onClick={handleModalCloseClick}
+							onClick={() => setSettingsOpen(false)}
 						>
 							<Icon name="close" />
 						</button>

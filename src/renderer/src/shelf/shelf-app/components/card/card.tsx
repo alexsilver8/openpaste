@@ -1,4 +1,4 @@
-import { memo, useRef, type DragEvent, type MouseEvent } from 'react'
+import { memo, useRef } from 'react'
 import { kindLabel } from '@shared/classify'
 import { KIND_COLORS } from '@renderer/lib/colors'
 import { relativeTime } from '@renderer/lib/format'
@@ -38,12 +38,6 @@ const Card = (props: CardProps) => {
 		if (tapToPaste && wasSelected.current) onActivate(index)
 	}
 
-	const handleDoubleClick = () => onActivate(index)
-
-	const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => onMenu(index, e)
-
-	const handleDragStart = (e: DragEvent<HTMLDivElement>) => onDragStart(index, e)
-
 	return (
 		<div
 			id={`card-${item.id}`}
@@ -55,9 +49,9 @@ const Card = (props: CardProps) => {
 			draggable
 			onMouseDown={handleMouseDown}
 			onClick={handleClick}
-			onDoubleClick={handleDoubleClick}
-			onContextMenu={handleContextMenu}
-			onDragStart={handleDragStart}
+			onDoubleClick={() => onActivate(index)}
+			onContextMenu={(e) => onMenu(index, e)}
+			onDragStart={(e) => onDragStart(index, e)}
 		>
 			<header className="card-band">
 				<span className="card-band-text">

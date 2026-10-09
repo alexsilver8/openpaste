@@ -44,15 +44,13 @@ const ShortcutRecorder = (props: ShortcutRecorderProps) => {
 		setRecording((r) => !r)
 	}
 
-	const handleBlur = () => setRecording(false)
-
 	return (
 		<div className="shortcut">
 			<button
 				type="button"
 				className={`shortcut-button${recording ? ' is-recording' : ''}`}
 				onClick={handleClick}
-				onBlur={handleBlur}
+				onBlur={() => setRecording(false)}
 				aria-live="polite"
 			>
 				{recording ? 'Press a shortcut…' : <kbd>{formatAccelerator(value, platform)}</kbd>}

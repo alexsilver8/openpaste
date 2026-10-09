@@ -4,8 +4,6 @@ import type { ToggleProps } from './toggle.props'
 const Toggle = (props: ToggleProps) => {
 	const { id, checked, onChange } = props
 
-	const handleClick = () => onChange(!checked)
-
 	return (
 		<button
 			id={id}
@@ -13,7 +11,7 @@ const Toggle = (props: ToggleProps) => {
 			role="switch"
 			aria-checked={checked}
 			className="toggle"
-			onClick={handleClick}
+			onClick={() => onChange(!checked)}
 		>
 			<span className="toggle-knob" />
 		</button>

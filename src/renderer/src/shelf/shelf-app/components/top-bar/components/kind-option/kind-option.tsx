@@ -1,13 +1,9 @@
-import { memo, type MouseEvent } from 'react'
+import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
 import type { KindOptionProps } from './kind-option.props'
 
 const KindOption = (props: KindOptionProps) => {
 	const { kind, icon, label, checked, onKind } = props
-
-	const handleMouseDown = (e: MouseEvent<HTMLButtonElement>) => e.preventDefault()
-
-	const handleClick = () => onKind(kind)
 
 	return (
 		<button
@@ -17,8 +13,8 @@ const KindOption = (props: KindOptionProps) => {
 			aria-label={label}
 			title={label}
 			className="kind"
-			onMouseDown={handleMouseDown}
-			onClick={handleClick}
+			onMouseDown={(e) => e.preventDefault()}
+			onClick={() => onKind(kind)}
 		>
 			<Icon name={icon} size={15} />
 		</button>

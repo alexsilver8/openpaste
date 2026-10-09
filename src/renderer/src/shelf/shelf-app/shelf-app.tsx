@@ -497,20 +497,10 @@ const ShelfApp = (props: ShelfAppProps) => {
 	const boardName = boards.find((b) => b.id === board)?.name
 	const emptyReason = search ? 'search' : board ? 'board' : kind !== 'all' ? 'kind' : 'history'
 
-	const handleResume = () => {
-		api.setSettings({ paused: false })
-	}
-
-	const handleNewBoard = (anchor: DOMRect) => setEditor({ anchor })
-
-	const handleEditBoard = (b: Pinboard, anchor: DOMRect) => setEditor({ anchor, board: b })
-
 	const handleDropOnBoard = (boardId: string, itemId: string) => {
 		api.setPinned(itemId, boardId, true)
 		showToast(`Pinned to ${boards.find((b) => b.id === boardId)?.name ?? 'pinboard'}`)
 	}
-
-	const handleSettings = () => api.openSettings()
 
 	const handleRowWheel = (e: WheelEvent<HTMLDivElement>) => {
 		if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && scrollRef.current) {
@@ -522,18 +512,6 @@ const ShelfApp = (props: ShelfAppProps) => {
 		setInspect(null)
 		inputRef.current?.focus()
 	}
-
-	const handleInspectorPaste = (invert: boolean) => {
-		paste(index, invert)
-	}
-
-	const handleInspectorCopy = () => copy(index)
-
-	const handleInspectorDelete = () => remove(index)
-
-	const handleMenuClose = () => setMenu(null)
-
-	const handleBoardEditorClose = () => setEditor(null)
 
 	const handleBoardEditorSave = async (input: { name: string; color: string }) => {
 		if (!editor) return
@@ -566,11 +544,11 @@ const ShelfApp = (props: ShelfAppProps) => {
 				kind={kind}
 				onKind={setKind}
 				paused={settings.paused}
-				onResume={handleResume}
-				onNewBoard={handleNewBoard}
-				onEditBoard={handleEditBoard}
+				onResume={() => api.setSettings({ paused: false })}
+				onNewBoard={(anchor) => setEditor({ anchor })}
+				onEditBoard={(b, anchor) => setEditor({ anchor, board: b })}
 				onDropOnBoard={handleDropOnBoard}
-				onSettings={handleSettings}
+				onSettings={() => api.openSettings()}
 			/>
 
 			<div className={`shelf-body${inspected ? ' is-inspecting' : ''}`}>
@@ -633,9 +611,9 @@ const ShelfApp = (props: ShelfAppProps) => {
 						startEditing={inspect?.edit}
 						focusTitle={inspect?.title}
 						onClose={handleInspectorClose}
-						onPaste={handleInspectorPaste}
-						onCopy={handleInspectorCopy}
-						onDelete={handleInspectorDelete}
+						onPaste={(invert) => paste(index, invert)}
+						onCopy={() => copy(index)}
+						onDelete={() => remove(index)}
 					/>
 				)}
 
@@ -651,7 +629,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 							? pinEntries(items[menu.index], menu.index)
 							: menuEntries(menu.index)
 					}
-					onClose={handleMenuClose}
+					onClose={() => setMenu(null)}
 				/>
 			)}
 
@@ -659,7 +637,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 				<BoardEditor
 					anchor={editor.anchor}
 					board={editor.board}
-					onClose={handleBoardEditorClose}
+					onClose={() => setEditor(null)}
 					onSave={handleBoardEditorSave}
 					onDelete={editor.board ? handleBoardEditorDelete : undefined}
 				/>

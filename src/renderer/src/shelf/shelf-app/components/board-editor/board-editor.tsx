@@ -5,8 +5,7 @@ import {
 	useRef,
 	useState,
 	type KeyboardEvent,
-	type SubmitEvent,
-	type ChangeEvent
+	type SubmitEvent
 } from 'react'
 import { createPortal } from 'react-dom'
 import { ColorSwatch } from './components/color-swatch'
@@ -29,7 +28,7 @@ const BoardEditor = (props: BoardEditorProps) => {
 	}, [anchor.left])
 
 	useEffect(() => {
-		const onDown = (e: globalThis.MouseEvent): void => {
+		const onDown = (e: MouseEvent): void => {
 			if (!ref.current?.contains(e.target as Node)) onClose()
 		}
 		const onKey = (e: globalThis.KeyboardEvent): void => {
@@ -65,19 +64,13 @@ const BoardEditor = (props: BoardEditorProps) => {
 		}
 	}
 
-	const handleFormKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.stopPropagation()
-
-	const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => setName(e.currentTarget.value)
-
-	const handleDeleteClick = () => (confirmDelete ? onDelete?.() : setConfirmDelete(true))
-
 	return createPortal(
 		<form
 			ref={ref}
 			className="popover board-editor"
 			style={{ left, top: anchor.bottom + 8 }}
 			onSubmit={handleSubmit}
-			onKeyDown={handleFormKeyDown}
+			onKeyDown={(e) => e.stopPropagation()}
 			aria-label={board ? `Edit ${board.name}` : 'New pinboard'}
 		>
 			<input
@@ -86,7 +79,7 @@ const BoardEditor = (props: BoardEditorProps) => {
 				placeholder="Pinboard name"
 				maxLength={40}
 				value={name}
-				onChange={handleNameChange}
+				onChange={(e) => setName(e.currentTarget.value)}
 				onKeyDown={handleNameKeyDown}
 			/>
 			<div className="swatches" role="radiogroup" aria-label="Color">
@@ -99,7 +92,7 @@ const BoardEditor = (props: BoardEditorProps) => {
 					<button
 						type="button"
 						className={`button button--quiet${confirmDelete ? ' button--danger' : ''}`}
-						onClick={handleDeleteClick}
+						onClick={() => (confirmDelete ? onDelete?.() : setConfirmDelete(true))}
 					>
 						{confirmDelete ? 'Delete pinboard' : 'Delete…'}
 					</button>

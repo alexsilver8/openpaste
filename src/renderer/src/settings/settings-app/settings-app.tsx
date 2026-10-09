@@ -1,11 +1,11 @@
-import { memo, useCallback, useEffect, useState, type ChangeEvent, type SubmitEvent } from 'react'
+import { memo, useCallback, useEffect, useState, type SubmitEvent } from 'react'
 import {
 	DEFAULT_IGNORED_APPS,
 	DEFAULT_SETTINGS,
 	HISTORY_DAY_OPTIONS,
 	HISTORY_LIMIT_OPTIONS
 } from '@shared/settings'
-import type { AppEnv, Permissions, Settings, ThemeSetting } from '@shared/types'
+import type { AppEnv, Permissions, Settings } from '@shared/types'
 import { api } from '@renderer/api'
 import { Icon } from '@renderer/components/icon'
 import { isMac } from '@renderer/env'
@@ -72,21 +72,6 @@ const SettingsApp = (props: SettingsAppProps) => {
 		setNewApp('')
 	}
 
-	const handleThemeSelect = (theme: ThemeSetting) => {
-		update({ theme })
-	}
-
-	const handleIgnoredAppRemove = (app: string) => {
-		update({ ignoredApps: settings.ignoredApps.filter((a) => a !== app) })
-	}
-
-	const handleAccessibilityClick = () => api.openAccessibilitySettings()
-
-	const handleKeepPinnedChange = (e: ChangeEvent<HTMLInputElement>) =>
-		setKeepPinned(e.currentTarget.checked)
-
-	const handleClearCancelClick = () => setConfirmClear(false)
-
 	const handleClearConfirmClick = async () => {
 		await api.clearHistory({ keepPinned })
 		setConfirmClear(false)
@@ -102,15 +87,6 @@ const SettingsApp = (props: SettingsAppProps) => {
 		e.preventDefault()
 		addIgnoredApp()
 	}
-
-	const handleNewAppChange = (e: ChangeEvent<HTMLInputElement>) =>
-		setNewApp(e.currentTarget.value)
-
-	const handleResetIgnoredAppsClick = () => {
-		update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
-	}
-
-	const handleRevealDataFolderClick = () => api.revealDataFolder()
 
 	return (
 		<div className={`settings${embedded ? ' is-embedded' : ''}`}>
@@ -143,7 +119,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 								value={t.value}
 								label={t.label}
 								checked={settings.theme === t.value}
-								onSelect={handleThemeSelect}
+								onSelect={(theme) => update({ theme })}
 							/>
 						))}
 					</div>
@@ -170,7 +146,11 @@ const SettingsApp = (props: SettingsAppProps) => {
 							macOS needs your permission before OpenPaste can press ⌘V for you. Turn
 							on OpenPaste under Privacy &amp; Security → Accessibility.
 						</p>
-						<button type="button" className="button" onClick={handleAccessibilityClick}>
+						<button
+							type="button"
+							className="button"
+							onClick={() => api.openAccessibilitySettings()}
+						>
 							Open Accessibility settings
 						</button>
 					</div>
@@ -244,14 +224,14 @@ const SettingsApp = (props: SettingsAppProps) => {
 								<input
 									type="checkbox"
 									checked={keepPinned}
-									onChange={handleKeepPinnedChange}
+									onChange={(e) => setKeepPinned(e.currentTarget.checked)}
 								/>
 								Keep pinboards
 							</label>
 							<button
 								type="button"
 								className="button"
-								onClick={handleClearCancelClick}
+								onClick={() => setConfirmClear(false)}
 							>
 								Cancel
 							</button>
@@ -305,7 +285,15 @@ const SettingsApp = (props: SettingsAppProps) => {
 					</div>
 					<ul className="chips" aria-label="Ignored apps">
 						{settings.ignoredApps.map((app) => (
-							<IgnoredApp key={app} app={app} onRemove={handleIgnoredAppRemove} />
+							<IgnoredApp
+								key={app}
+								app={app}
+								onRemove={(app) =>
+									update({
+										ignoredApps: settings.ignoredApps.filter((a) => a !== app)
+									})
+								}
+							/>
 						))}
 					</ul>
 					<form className="add-app" onSubmit={handleAddAppSubmit}>
@@ -313,7 +301,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 							className="text-input"
 							placeholder="App name, e.g. Keychain Access"
 							value={newApp}
-							onChange={handleNewAppChange}
+							onChange={(e) => setNewApp(e.currentTarget.value)}
 						/>
 						<button type="submit" className="button" disabled={!newApp.trim()}>
 							Add app
@@ -322,7 +310,9 @@ const SettingsApp = (props: SettingsAppProps) => {
 							<button
 								type="button"
 								className="button button--quiet"
-								onClick={handleResetIgnoredAppsClick}
+								onClick={() =>
+									update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
+								}
 							>
 								Restore defaults
 							</button>
@@ -340,7 +330,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 						<button
 							type="button"
 							className="button"
-							onClick={handleRevealDataFolderClick}
+							onClick={() => api.revealDataFolder()}
 						>
 							<Icon name="folder" size={15} /> Show data folder
 						</button>

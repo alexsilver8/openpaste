@@ -5,14 +5,12 @@ import type { BoardChipProps } from './board-chip.props'
 const BoardChip = (props: BoardChipProps) => {
 	const { board, pinned, onToggle } = props
 
-	const handleClick = () => onToggle(board.id, !pinned)
-
 	return (
 		<button
 			type="button"
 			aria-pressed={pinned}
 			className={`chip${pinned ? ' is-on' : ''}`}
-			onClick={handleClick}
+			onClick={() => onToggle(board.id, !pinned)}
 		>
 			<span className="board-dot" style={{ background: board.color }} />
 			{board.name}

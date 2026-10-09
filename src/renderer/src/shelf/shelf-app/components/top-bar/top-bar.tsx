@@ -1,4 +1,4 @@
-import { memo, useState, type ChangeEvent, type MouseEvent } from 'react'
+import { memo, useState, type MouseEvent } from 'react'
 import { Icon } from '@renderer/components/icon'
 import { MOD } from '@renderer/env'
 import { BoardTab } from './components/board-tab'
@@ -26,16 +26,7 @@ const TopBar = (props: TopBarProps) => {
 
 	const [dropTarget, setDropTarget] = useState<string | null>(null)
 
-	const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => onQuery(e.currentTarget.value)
-
 	const handleButtonMouseDown = (e: MouseEvent<HTMLButtonElement>) => e.preventDefault()
-
-	const handleClearClick = () => onQuery('')
-
-	const handleHistoryClick = () => onBoard(null)
-
-	const handleNewBoardClick = (e: MouseEvent<HTMLButtonElement>) =>
-		onNewBoard(e.currentTarget.getBoundingClientRect())
 
 	return (
 		<div className="topbar">
@@ -49,7 +40,7 @@ const TopBar = (props: TopBarProps) => {
 					spellCheck={false}
 					autoComplete="off"
 					value={query}
-					onChange={handleQueryChange}
+					onChange={(e) => onQuery(e.currentTarget.value)}
 				/>
 				{query ? (
 					<button
@@ -57,7 +48,7 @@ const TopBar = (props: TopBarProps) => {
 						className="search-clear"
 						aria-label="Clear search"
 						onMouseDown={handleButtonMouseDown}
-						onClick={handleClearClick}
+						onClick={() => onQuery('')}
 					>
 						<Icon name="close" size={13} />
 					</button>
@@ -73,7 +64,7 @@ const TopBar = (props: TopBarProps) => {
 					aria-selected={board === null}
 					className="board-tab"
 					onMouseDown={handleButtonMouseDown}
-					onClick={handleHistoryClick}
+					onClick={() => onBoard(null)}
 				>
 					<Icon name="clock" size={14} />
 					History
@@ -96,7 +87,7 @@ const TopBar = (props: TopBarProps) => {
 					aria-label="New pinboard"
 					title="New pinboard"
 					onMouseDown={handleButtonMouseDown}
-					onClick={handleNewBoardClick}
+					onClick={(e) => onNewBoard(e.currentTarget.getBoundingClientRect())}
 				>
 					<Icon name="plus" size={15} />
 				</button>

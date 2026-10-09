@@ -5,12 +5,10 @@ import type { IgnoredAppProps } from './ignored-app.props'
 const IgnoredApp = (props: IgnoredAppProps) => {
 	const { app, onRemove } = props
 
-	const handleRemoveClick = () => onRemove(app)
-
 	return (
 		<li className="chip is-on">
 			{app}
-			<button type="button" aria-label={`Stop ignoring ${app}`} onClick={handleRemoveClick}>
+			<button type="button" aria-label={`Stop ignoring ${app}`} onClick={() => onRemove(app)}>
 				<Icon name="close" size={11} />
 			</button>
 		</li>

@@ -1,12 +1,4 @@
-import {
-	memo,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-	type ReactNode,
-	type MouseEvent
-} from 'react'
+import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { MenuItem } from './components/menu-item'
 import type { MenuEntry, MenuProps } from './menu.props'
@@ -39,7 +31,7 @@ const Menu = (props: MenuProps): ReactNode => {
 
 	useEffect(() => {
 		if (nested) return
-		const onDown = (e: globalThis.MouseEvent): void => {
+		const onDown = (e: MouseEvent): void => {
 			if (!(e.target as HTMLElement).closest('.menu')) onClose()
 		}
 		window.addEventListener('mousedown', onDown, true)
@@ -100,10 +92,6 @@ const Menu = (props: MenuProps): ReactNode => {
 		return () => window.removeEventListener('keydown', onKey, true)
 	})
 
-	const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => e.preventDefault()
-
-	const handleSubmenuClose = () => setOpenSub(null)
-
 	return createPortal(
 		<>
 			<div
@@ -111,7 +99,7 @@ const Menu = (props: MenuProps): ReactNode => {
 				className="menu"
 				role="menu"
 				style={{ left: pos.left, top: pos.top }}
-				onContextMenu={handleContextMenu}
+				onContextMenu={(e) => e.preventDefault()}
 			>
 				{entries.map((entry, i) =>
 					entry === 'separator' ? (
@@ -134,7 +122,7 @@ const Menu = (props: MenuProps): ReactNode => {
 					x={subPos.x}
 					y={subPos.y}
 					entries={(entries[openSub] as { submenu: MenuEntry[] }).submenu}
-					onClose={handleSubmenuClose}
+					onClose={() => setOpenSub(null)}
 					onDone={onDone ?? onClose}
 				/>
 			)}

@@ -88,17 +88,19 @@ export default memo(Card)
   other files import `{ Card }`.
 - `memo` skips re-renders when props haven't changed, so read outside values (the time, `window`,
   …) in effects and event handlers, or pass them in as props, rather than while rendering.
-- No functions written inside JSX props. Event handlers and callbacks are named `handle…`
-  functions declared in the component body above the JSX that uses them, like
-  `onClick={handleClick}`, never `onClick={() => …}`.
-- Type each handler's event with React's event type for that element, such as
+- A small handler, one expression, goes straight in the prop:
+  `onClick={() => setConfirmClear(false)}`. Anything bigger is a named `handle…` function declared
+  in the component body above the JSX that uses it, like `onClick={handleClearConfirmClick}`:
+  more than one statement, an `if`, or a handler several props share. A function written in a
+  prop never has a `{ … }` body.
+- Type a named handler's event with React's event type for that element, such as
   `MouseEvent<HTMLButtonElement>`, `ChangeEvent<HTMLInputElement>` or
-  `SubmitEvent<HTMLFormElement>`, and read the element through `e.currentTarget`. Never use
-  `FormEvent`, which React's types deprecate. In a file that also uses the browser's own event
-  types (in a `window.addEventListener` callback, say), write those as `globalThis.MouseEvent` so
-  they don't clash with React's.
-- When an item rendered in a `.map()` needs its own handlers, make it a sub-component (like
-  `BoardTab` in `top-bar/components/`) rather than writing handlers inside the loop.
+  `SubmitEvent<HTMLFormElement>`, and read the element through `e.currentTarget`. Inline handlers
+  are typed by their prop. Never use `FormEvent`, which React's types deprecate. In a file that
+  also uses the browser's own event types (in a `window.addEventListener` callback, say), write
+  those as `globalThis.MouseEvent` so they don't clash with React's.
+- When an item rendered in a `.map()` has handlers of its own, make it a sub-component (like
+  `BoardTab` in `top-bar/components/`).
 - Don't write near-duplicate handlers. When several controls differ only in which value they
   change, make a component that takes the key instead: settings switches are
   `<SettingToggle setting="launchAtLogin" … />`, not one `handle…Change` per setting.

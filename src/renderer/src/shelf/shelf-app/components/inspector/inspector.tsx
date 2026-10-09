@@ -1,12 +1,4 @@
-import {
-	memo,
-	useEffect,
-	useRef,
-	useState,
-	type ReactNode,
-	type ChangeEvent,
-	type KeyboardEvent
-} from 'react'
+import { memo, useEffect, useRef, useState, type ReactNode, type KeyboardEvent } from 'react'
 import { kindLabel } from '@shared/classify'
 import type { ClipPayload } from '@shared/types'
 import { api } from '@renderer/api'
@@ -92,11 +84,6 @@ const Inspector = (props: InspectorProps) => {
 	const text = payload?.text ?? item.preview
 	const color = item.kind === 'color' ? describeColor(item.color ?? item.preview) : null
 
-	const handleDraftChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
-		setDraft(e.currentTarget.value)
-
-	const handleOpenLinkClick = () => api.openExternal(item.url!)
-
 	let content: ReactNode
 	if (editing) {
 		content = (
@@ -105,7 +92,7 @@ const Inspector = (props: InspectorProps) => {
 				className="inspector-editor"
 				value={draft}
 				spellCheck={item.kind === 'text'}
-				onChange={handleDraftChange}
+				onChange={(e) => setDraft(e.currentTarget.value)}
 			/>
 		)
 	} else if (item.kind === 'image') {
@@ -149,7 +136,11 @@ const Inspector = (props: InspectorProps) => {
 				<p className="inspector-link-host">{host}</p>
 				<p className="inspector-link-url">{item.url ?? text}</p>
 				{item.url && /^https?:/.test(item.url) && (
-					<button type="button" className="button" onClick={handleOpenLinkClick}>
+					<button
+						type="button"
+						className="button"
+						onClick={() => api.openExternal(item.url!)}
+					>
 						<Icon name="external" size={15} /> Open in browser
 					</button>
 				)}
@@ -193,26 +184,12 @@ const Inspector = (props: InspectorProps) => {
 		if (item.rich) details.push(['Format', 'Rich text (formatting kept)'])
 	}
 
-	const handlePinToggle = (boardId: string, pinned: boolean) => {
-		api.setPinned(item.id, boardId, pinned)
-	}
-
-	const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
-
 	const handleTitleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			saveTitle()
 			;(e.target as HTMLInputElement).blur()
 		}
 	}
-
-	const handleCancelEditClick = () => setEditing(false)
-
-	const handlePasteClick = () => onPaste(false)
-
-	const handlePastePlainClick = () => onPaste(true)
-
-	const handleEditClick = () => setEditing(true)
 
 	return (
 		<section className="inspector" aria-label="Item details">
@@ -226,7 +203,7 @@ const Inspector = (props: InspectorProps) => {
 						aria-label="Name"
 						value={title}
 						maxLength={120}
-						onChange={handleTitleChange}
+						onChange={(e) => setTitle(e.currentTarget.value)}
 						onBlur={saveTitle}
 						onKeyDown={handleTitleKeyDown}
 					/>
@@ -254,7 +231,9 @@ const Inspector = (props: InspectorProps) => {
 								key={b.id}
 								board={b}
 								pinned={item.pinboards.includes(b.id)}
-								onToggle={handlePinToggle}
+								onToggle={(boardId, pinned) =>
+									api.setPinned(item.id, boardId, pinned)
+								}
 							/>
 						))}
 					</div>
@@ -276,7 +255,7 @@ const Inspector = (props: InspectorProps) => {
 							<button
 								type="button"
 								className="button"
-								onClick={handleCancelEditClick}
+								onClick={() => setEditing(false)}
 							>
 								Cancel
 							</button>
@@ -286,7 +265,7 @@ const Inspector = (props: InspectorProps) => {
 							<button
 								type="button"
 								className="button button--primary"
-								onClick={handlePasteClick}
+								onClick={() => onPaste(false)}
 							>
 								Paste <kbd>{ENTER}</kbd>
 							</button>
@@ -294,7 +273,7 @@ const Inspector = (props: InspectorProps) => {
 								<button
 									type="button"
 									className="button"
-									onClick={handlePastePlainClick}
+									onClick={() => onPaste(true)}
 								>
 									Paste as plain text{' '}
 									<kbd>
@@ -307,7 +286,11 @@ const Inspector = (props: InspectorProps) => {
 								Copy
 							</button>
 							{TEXT_KINDS.has(item.kind) && (
-								<button type="button" className="button" onClick={handleEditClick}>
+								<button
+									type="button"
+									className="button"
+									onClick={() => setEditing(true)}
+								>
 									Edit
 								</button>
 							)}

@@ -5,10 +5,6 @@ import type { MenuItemProps } from './menu-item.props'
 const MenuItem = (props: MenuItemProps) => {
 	const { entry, index, active, onHover, onRun } = props
 
-	const handleMouseEnter = () => onHover(index)
-
-	const handleClick = () => onRun(index)
-
 	return (
 		<button
 			type="button"
@@ -18,8 +14,8 @@ const MenuItem = (props: MenuItemProps) => {
 			aria-haspopup={entry.submenu ? 'menu' : undefined}
 			disabled={entry.disabled}
 			className={`menu-item${entry.danger ? ' is-danger' : ''}${active ? ' is-active' : ''}`}
-			onMouseEnter={handleMouseEnter}
-			onClick={handleClick}
+			onMouseEnter={() => onHover(index)}
+			onClick={() => onRun(index)}
 		>
 			<span className="menu-icon">
 				{entry.swatch ? (
