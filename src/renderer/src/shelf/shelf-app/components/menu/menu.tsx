@@ -1,6 +1,14 @@
-import { memo, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import {
+	memo,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+	type ReactNode,
+	type MouseEvent
+} from 'react'
 import { createPortal } from 'react-dom'
-import { Icon } from '@renderer/components/icon'
+import { MenuItem } from './components/menu-item'
 import type { MenuEntry, MenuProps } from './menu.props'
 
 /**
@@ -31,7 +39,7 @@ const Menu = (props: MenuProps): ReactNode => {
 
 	useEffect(() => {
 		if (nested) return
-		const onDown = (e: MouseEvent): void => {
+		const onDown = (e: globalThis.MouseEvent): void => {
 			if (!(e.target as HTMLElement).closest('.menu')) onClose()
 		}
 		window.addEventListener('mousedown', onDown, true)
@@ -63,6 +71,13 @@ const Menu = (props: MenuProps): ReactNode => {
 		;(onDone ?? onClose)()
 	}
 
+	const handleItemHover = (index: number) => {
+		setActive(index)
+		const entry = entries[index]
+		if (entry !== 'separator' && entry.submenu) openSubmenu(index)
+		else setOpenSub(null)
+	}
+
 	useEffect(() => {
 		if (openSub !== null) return // an open submenu owns the keyboard
 		const onKey = (e: KeyboardEvent): void => {
@@ -85,6 +100,10 @@ const Menu = (props: MenuProps): ReactNode => {
 		return () => window.removeEventListener('keydown', onKey, true)
 	})
 
+	const handleContextMenu = (e: MouseEvent<HTMLDivElement>) => e.preventDefault()
+
+	const handleSubmenuClose = () => setOpenSub(null)
+
 	return createPortal(
 		<>
 			<div
@@ -92,49 +111,20 @@ const Menu = (props: MenuProps): ReactNode => {
 				className="menu"
 				role="menu"
 				style={{ left: pos.left, top: pos.top }}
-				onContextMenu={(e) => e.preventDefault()}
+				onContextMenu={handleContextMenu}
 			>
 				{entries.map((entry, i) =>
 					entry === 'separator' ? (
 						<div key={`sep-${i}`} className="menu-sep" role="separator" />
 					) : (
-						<button
+						<MenuItem
 							key={entry.label}
-							type="button"
-							data-index={i}
-							role={entry.checked === undefined ? 'menuitem' : 'menuitemcheckbox'}
-							aria-checked={entry.checked}
-							aria-haspopup={entry.submenu ? 'menu' : undefined}
-							disabled={entry.disabled}
-							className={`menu-item${entry.danger ? ' is-danger' : ''}${active === i ? ' is-active' : ''}`}
-							onMouseEnter={() => {
-								setActive(i)
-								if (entry.submenu) openSubmenu(i)
-								else setOpenSub(null)
-							}}
-							onClick={() => run(i)}
-						>
-							<span className="menu-icon">
-								{entry.swatch ? (
-									<span
-										className="board-dot board-dot--lg"
-										style={{ background: entry.swatch }}
-									/>
-								) : entry.icon ? (
-									<Icon name={entry.icon} size={15} />
-								) : null}
-							</span>
-							<span className="menu-label">{entry.label}</span>
-							{entry.checked && (
-								<Icon name="check" size={14} className="menu-check" />
-							)}
-							{entry.shortcut && (
-								<kbd className="menu-shortcut">{entry.shortcut}</kbd>
-							)}
-							{entry.submenu && (
-								<Icon name="chevron" size={13} className="menu-chevron" />
-							)}
-						</button>
+							entry={entry}
+							index={i}
+							active={active === i}
+							onHover={handleItemHover}
+							onRun={run}
+						/>
 					)
 				)}
 			</div>
@@ -144,7 +134,7 @@ const Menu = (props: MenuProps): ReactNode => {
 					x={subPos.x}
 					y={subPos.y}
 					entries={(entries[openSub] as { submenu: MenuEntry[] }).submenu}
-					onClose={() => setOpenSub(null)}
+					onClose={handleSubmenuClose}
 					onDone={onDone ?? onClose}
 				/>
 			)}

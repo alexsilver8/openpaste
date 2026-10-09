@@ -1,8 +1,6 @@
 import type { ClipKind } from '@shared/types'
 import type { IconName } from '@renderer/components/icon'
 
-export const DRAG_TYPE = 'application/x-openpaste-id'
-
 export const KINDS: { kind: ClipKind | 'all'; icon: IconName; label: string }[] = [
 	{ kind: 'all', icon: 'all', label: 'All types' },
 	{ kind: 'text', icon: 'text', label: 'Text' },

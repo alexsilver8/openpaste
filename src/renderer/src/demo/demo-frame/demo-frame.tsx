@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react'
+import { memo, useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
 import { ShelfApp } from '@renderer/shelf/shelf-app'
 import { SettingsApp } from '@renderer/settings/settings-app'
 import { Icon } from '@renderer/components/icon'
@@ -117,21 +117,34 @@ const DemoFrame = () => {
 		}
 	}, [open, settingsOpen, show, hide])
 
+	const handleShelfButtonClick = () => (open ? hide() : show())
+
+	const handleDeskMouseDown = () => open && hide()
+
+	const handleNoteBlur = () => {
+		const sel = window.getSelection()
+		if (sel?.rangeCount && editorRef.current?.contains(sel.anchorNode)) {
+			savedRange.current = sel.getRangeAt(0).cloneRange()
+		}
+	}
+
+	const handleModalMouseDown = () => setSettingsOpen(false)
+
+	const handleModalPanelMouseDown = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
+
+	const handleModalCloseClick = () => setSettingsOpen(false)
+
 	return (
 		<div className="demo">
 			<div className="demo-bar">
 				<span className="demo-bar-name">OpenPaste</span>
 				<span className="demo-bar-note">Browser demo of the desktop app</span>
-				<button
-					type="button"
-					className="demo-open"
-					onClick={() => (open ? hide() : show())}
-				>
+				<button type="button" className="demo-open" onClick={handleShelfButtonClick}>
 					{open ? 'Close shelf' : 'Open shelf'} <kbd>{SHORTCUT}</kbd>
 				</button>
 			</div>
 
-			<main className="demo-desk" onMouseDown={() => open && hide()}>
+			<main className="demo-desk" onMouseDown={handleDeskMouseDown}>
 				<article className="demo-window" aria-label="Notes window">
 					<div className="demo-window-bar">
 						<span className="demo-dots" aria-hidden="true">
@@ -147,12 +160,7 @@ const DemoFrame = () => {
 						contentEditable
 						suppressContentEditableWarning
 						spellCheck={false}
-						onBlur={() => {
-							const sel = window.getSelection()
-							if (sel?.rangeCount && editorRef.current?.contains(sel.anchorNode)) {
-								savedRange.current = sel.getRangeAt(0).cloneRange()
-							}
-						}}
+						onBlur={handleNoteBlur}
 					>
 						<p>
 							<strong>Try it.</strong> Select a few words anywhere on this page and
@@ -196,14 +204,14 @@ const DemoFrame = () => {
 					className="demo-modal"
 					role="dialog"
 					aria-label="Settings"
-					onMouseDown={() => setSettingsOpen(false)}
+					onMouseDown={handleModalMouseDown}
 				>
-					<div className="demo-modal-panel" onMouseDown={(e) => e.stopPropagation()}>
+					<div className="demo-modal-panel" onMouseDown={handleModalPanelMouseDown}>
 						<button
 							type="button"
 							className="icon-button demo-modal-close"
 							aria-label="Close settings"
-							onClick={() => setSettingsOpen(false)}
+							onClick={handleModalCloseClick}
 						>
 							<Icon name="close" />
 						</button>

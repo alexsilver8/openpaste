@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import { memo, useEffect, type MouseEvent } from 'react'
 import type { ToastProps } from './toast.props'
 
 const Toast = (props: ToastProps) => {
@@ -10,6 +10,13 @@ const Toast = (props: ToastProps) => {
 		return () => clearTimeout(timer)
 	}, [toast.id, onDismiss])
 
+	const handleActionMouseDown = (e: MouseEvent<HTMLButtonElement>) => e.preventDefault()
+
+	const handleActionClick = () => {
+		toast.action?.run()
+		onDismiss()
+	}
+
 	return (
 		<div className="toast" role="status">
 			<span>{toast.message}</span>
@@ -17,11 +24,8 @@ const Toast = (props: ToastProps) => {
 				<button
 					type="button"
 					className="toast-action"
-					onMouseDown={(e) => e.preventDefault()}
-					onClick={() => {
-						toast.action?.run()
-						onDismiss()
-					}}
+					onMouseDown={handleActionMouseDown}
+					onClick={handleActionClick}
 				>
 					{toast.action.label}
 				</button>

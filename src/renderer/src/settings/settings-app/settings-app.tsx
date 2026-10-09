@@ -1,19 +1,21 @@
-import { memo, useCallback, useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState, type ChangeEvent, type SubmitEvent } from 'react'
 import {
 	DEFAULT_IGNORED_APPS,
 	DEFAULT_SETTINGS,
 	HISTORY_DAY_OPTIONS,
 	HISTORY_LIMIT_OPTIONS
 } from '@shared/settings'
-import type { AppEnv, Permissions, Settings } from '@shared/types'
+import type { AppEnv, Permissions, Settings, ThemeSetting } from '@shared/types'
 import { api } from '@renderer/api'
 import { Icon } from '@renderer/components/icon'
 import { isMac } from '@renderer/env'
 import logoUrl from '@resources/icon.png'
+import { IgnoredApp } from './components/ignored-app'
 import { Row } from './components/row'
 import { ShortcutRecorder } from './components/shortcut-recorder'
 import { Toggle } from './components/toggle'
 import { Section } from './components/section'
+import { ThemeOption } from './components/theme-option'
 import { THEMES } from './settings-app.constants'
 import type { SettingsAppProps } from './settings-app.props'
 
@@ -65,6 +67,62 @@ const SettingsApp = (props: SettingsAppProps) => {
 		setNewApp('')
 	}
 
+	const handleThemeSelect = (theme: ThemeSetting) => void update({ theme })
+
+	const handleIgnoredAppRemove = (app: string) =>
+		void update({ ignoredApps: settings.ignoredApps.filter((a) => a !== app) })
+
+	const handleLaunchAtLoginChange = (v: boolean) => void update({ launchAtLogin: v })
+
+	const handlePasteDirectlyChange = (v: boolean) => void update({ pasteDirectly: v })
+
+	const handleAccessibilityClick = () => api.openAccessibilitySettings()
+
+	const handlePlainTextByDefaultChange = (v: boolean) => void update({ plainTextByDefault: v })
+
+	const handleHistoryDaysChange = (e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) =>
+		void update({ historyDays: Number(e.target.value) })
+
+	const handleHistoryLimitChange = (e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) =>
+		void update({ historyLimit: Number(e.target.value) })
+
+	const handleCaptureImagesChange = (v: boolean) => void update({ captureImages: v })
+
+	const handleCaptureFilesChange = (v: boolean) => void update({ captureFiles: v })
+
+	const handleKeepPinnedChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+		setKeepPinned(e.target.checked)
+
+	const handleClearCancelClick = () => setConfirmClear(false)
+
+	const handleClearConfirmClick = async () => {
+		await api.clearHistory({ keepPinned })
+		setConfirmClear(false)
+		setCleared(true)
+	}
+
+	const handleClearClick = () => {
+		setCleared(false)
+		setConfirmClear(true)
+	}
+
+	const handlePausedChange = (v: boolean) => void update({ paused: v })
+
+	const handleIgnoreConcealedChange = (v: boolean) => void update({ ignoreConcealed: v })
+
+	const handleAddAppSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		addIgnoredApp()
+	}
+
+	const handleNewAppChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+		setNewApp(e.target.value)
+
+	const handleResetIgnoredAppsClick = () =>
+		void update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
+
+	const handleRevealDataFolderClick = () => api.revealDataFolder()
+
 	return (
 		<div className={`settings${embedded ? ' is-embedded' : ''}`}>
 			{!embedded && <div className="titlebar" aria-hidden="true" />}
@@ -84,21 +142,19 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<Toggle
 						id="s-login"
 						checked={settings.launchAtLogin}
-						onChange={(v) => void update({ launchAtLogin: v })}
+						onChange={handleLaunchAtLoginChange}
 					/>
 				</Row>
 				<Row label="Appearance">
 					<div className="segmented" role="radiogroup" aria-label="Appearance">
 						{THEMES.map((t) => (
-							<button
+							<ThemeOption
 								key={t.value}
-								type="button"
-								role="radio"
-								aria-checked={settings.theme === t.value}
-								onClick={() => void update({ theme: t.value })}
-							>
-								{t.label}
-							</button>
+								value={t.value}
+								label={t.label}
+								checked={settings.theme === t.value}
+								onSelect={handleThemeSelect}
+							/>
 						))}
 					</div>
 				</Row>
@@ -113,7 +169,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<Toggle
 						id="s-direct"
 						checked={settings.pasteDirectly}
-						onChange={(v) => void update({ pasteDirectly: v })}
+						onChange={handlePasteDirectlyChange}
 					/>
 				</Row>
 				{isMac && settings.pasteDirectly && permissions.accessibility === false && (
@@ -123,11 +179,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 							macOS needs your permission before OpenPaste can press ⌘V for you. Turn
 							on OpenPaste under Privacy &amp; Security → Accessibility.
 						</p>
-						<button
-							type="button"
-							className="button"
-							onClick={() => api.openAccessibilitySettings()}
-						>
+						<button type="button" className="button" onClick={handleAccessibilityClick}>
 							Open Accessibility settings
 						</button>
 					</div>
@@ -140,7 +192,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<Toggle
 						id="s-plain"
 						checked={settings.plainTextByDefault}
-						onChange={(v) => void update({ plainTextByDefault: v })}
+						onChange={handlePlainTextByDefaultChange}
 					/>
 				</Row>
 			</Section>
@@ -155,7 +207,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 						id="s-days"
 						className="select"
 						value={settings.historyDays}
-						onChange={(e) => void update({ historyDays: Number(e.target.value) })}
+						onChange={handleHistoryDaysChange}
 					>
 						{HISTORY_DAY_OPTIONS.map((o) => (
 							<option key={o.value} value={o.value}>
@@ -169,7 +221,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 						id="s-limit"
 						className="select"
 						value={settings.historyLimit}
-						onChange={(e) => void update({ historyLimit: Number(e.target.value) })}
+						onChange={handleHistoryLimitChange}
 					>
 						{HISTORY_LIMIT_OPTIONS.map((o) => (
 							<option key={o.value} value={o.value}>
@@ -182,7 +234,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<Toggle
 						id="s-images"
 						checked={settings.captureImages}
-						onChange={(v) => void update({ captureImages: v })}
+						onChange={handleCaptureImagesChange}
 					/>
 				</Row>
 				<Row
@@ -193,7 +245,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<Toggle
 						id="s-files"
 						checked={settings.captureFiles}
-						onChange={(v) => void update({ captureFiles: v })}
+						onChange={handleCaptureFilesChange}
 					/>
 				</Row>
 				<Row
@@ -208,38 +260,27 @@ const SettingsApp = (props: SettingsAppProps) => {
 								<input
 									type="checkbox"
 									checked={keepPinned}
-									onChange={(e) => setKeepPinned(e.target.checked)}
+									onChange={handleKeepPinnedChange}
 								/>
 								Keep pinboards
 							</label>
 							<button
 								type="button"
 								className="button"
-								onClick={() => setConfirmClear(false)}
+								onClick={handleClearCancelClick}
 							>
 								Cancel
 							</button>
 							<button
 								type="button"
 								className="button button--danger-solid"
-								onClick={async () => {
-									await api.clearHistory({ keepPinned })
-									setConfirmClear(false)
-									setCleared(true)
-								}}
+								onClick={handleClearConfirmClick}
 							>
 								Clear history
 							</button>
 						</div>
 					) : (
-						<button
-							type="button"
-							className="button"
-							onClick={() => {
-								setCleared(false)
-								setConfirmClear(true)
-							}}
-						>
+						<button type="button" className="button" onClick={handleClearClick}>
 							Clear history…
 						</button>
 					)}
@@ -252,11 +293,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="Nothing new is recorded until you turn this off."
 					htmlFor="s-paused"
 				>
-					<Toggle
-						id="s-paused"
-						checked={settings.paused}
-						onChange={(v) => void update({ paused: v })}
-					/>
+					<Toggle id="s-paused" checked={settings.paused} onChange={handlePausedChange} />
 				</Row>
 				<Row
 					label="Skip passwords"
@@ -266,7 +303,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<Toggle
 						id="s-concealed"
 						checked={settings.ignoreConcealed}
-						onChange={(v) => void update({ ignoreConcealed: v })}
+						onChange={handleIgnoreConcealedChange}
 					/>
 				</Row>
 				<div className="row-setting row-setting--stack">
@@ -278,36 +315,15 @@ const SettingsApp = (props: SettingsAppProps) => {
 					</div>
 					<ul className="chips" aria-label="Ignored apps">
 						{settings.ignoredApps.map((app) => (
-							<li key={app} className="chip is-on">
-								{app}
-								<button
-									type="button"
-									aria-label={`Stop ignoring ${app}`}
-									onClick={() =>
-										void update({
-											ignoredApps: settings.ignoredApps.filter(
-												(a) => a !== app
-											)
-										})
-									}
-								>
-									<Icon name="close" size={11} />
-								</button>
-							</li>
+							<IgnoredApp key={app} app={app} onRemove={handleIgnoredAppRemove} />
 						))}
 					</ul>
-					<form
-						className="add-app"
-						onSubmit={(e) => {
-							e.preventDefault()
-							addIgnoredApp()
-						}}
-					>
+					<form className="add-app" onSubmit={handleAddAppSubmit}>
 						<input
 							className="text-input"
 							placeholder="App name, e.g. Keychain Access"
 							value={newApp}
-							onChange={(e) => setNewApp(e.target.value)}
+							onChange={handleNewAppChange}
 						/>
 						<button type="submit" className="button" disabled={!newApp.trim()}>
 							Add app
@@ -316,9 +332,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 							<button
 								type="button"
 								className="button button--quiet"
-								onClick={() =>
-									void update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
-								}
+								onClick={handleResetIgnoredAppsClick}
 							>
 								Restore defaults
 							</button>
@@ -336,7 +350,7 @@ const SettingsApp = (props: SettingsAppProps) => {
 						<button
 							type="button"
 							className="button"
-							onClick={() => api.revealDataFolder()}
+							onClick={handleRevealDataFolderClick}
 						>
 							<Icon name="folder" size={15} /> Show data folder
 						</button>

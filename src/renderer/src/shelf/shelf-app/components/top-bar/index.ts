@@ -1,2 +1,2 @@
 export { default as TopBar } from './top-bar'
-export { DRAG_TYPE } from './top-bar.constants'
+export { DRAG_TYPE } from './components/board-tab'

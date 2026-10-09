@@ -1,5 +1,15 @@
-import { memo, useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
+import {
+	memo,
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+	type KeyboardEvent,
+	type SubmitEvent,
+	type ChangeEvent
+} from 'react'
 import { createPortal } from 'react-dom'
+import { ColorSwatch } from './components/color-swatch'
 import { BOARD_COLORS } from './board-editor.constants'
 import type { BoardEditorProps } from './board-editor.props'
 
@@ -19,10 +29,10 @@ const BoardEditor = (props: BoardEditorProps) => {
 	}, [anchor.left])
 
 	useEffect(() => {
-		const onDown = (e: MouseEvent): void => {
+		const onDown = (e: globalThis.MouseEvent): void => {
 			if (!ref.current?.contains(e.target as Node)) onClose()
 		}
-		const onKey = (e: KeyboardEvent): void => {
+		const onKey = (e: globalThis.KeyboardEvent): void => {
 			if (e.key === 'Escape') {
 				e.preventDefault()
 				e.stopPropagation()
@@ -38,19 +48,37 @@ const BoardEditor = (props: BoardEditorProps) => {
 		}
 	}, [onClose])
 
-	const submit = (e: FormEvent): void => {
-		e.preventDefault()
+	const save = (): void => {
 		if (!name.trim()) return
 		onSave({ name: name.trim(), color })
 	}
+
+	const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		save()
+	}
+
+	const handleNameKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			e.preventDefault()
+			save()
+		}
+	}
+
+	const handleFormKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.stopPropagation()
+
+	const handleNameChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+		setName(e.target.value)
+
+	const handleDeleteClick = () => (confirmDelete ? onDelete?.() : setConfirmDelete(true))
 
 	return createPortal(
 		<form
 			ref={ref}
 			className="popover board-editor"
 			style={{ left, top: anchor.bottom + 8 }}
-			onSubmit={submit}
-			onKeyDown={(e) => e.stopPropagation()}
+			onSubmit={handleSubmit}
+			onKeyDown={handleFormKeyDown}
 			aria-label={board ? `Edit ${board.name}` : 'New pinboard'}
 		>
 			<input
@@ -59,23 +87,12 @@ const BoardEditor = (props: BoardEditorProps) => {
 				placeholder="Pinboard name"
 				maxLength={40}
 				value={name}
-				onChange={(e) => setName(e.target.value)}
-				onKeyDown={(e) => {
-					if (e.key === 'Enter') submit(e)
-				}}
+				onChange={handleNameChange}
+				onKeyDown={handleNameKeyDown}
 			/>
 			<div className="swatches" role="radiogroup" aria-label="Color">
 				{BOARD_COLORS.map((c) => (
-					<button
-						key={c}
-						type="button"
-						role="radio"
-						aria-checked={c === color}
-						aria-label={c}
-						className={`swatch${c === color ? ' is-selected' : ''}`}
-						style={{ background: c }}
-						onClick={() => setColor(c)}
-					/>
+					<ColorSwatch key={c} color={c} selected={c === color} onSelect={setColor} />
 				))}
 			</div>
 			<div className="popover-actions">
@@ -83,7 +100,7 @@ const BoardEditor = (props: BoardEditorProps) => {
 					<button
 						type="button"
 						className={`button button--quiet${confirmDelete ? ' button--danger' : ''}`}
-						onClick={() => (confirmDelete ? onDelete() : setConfirmDelete(true))}
+						onClick={handleDeleteClick}
 					>
 						{confirmDelete ? 'Delete pinboard' : 'Delete…'}
 					</button>

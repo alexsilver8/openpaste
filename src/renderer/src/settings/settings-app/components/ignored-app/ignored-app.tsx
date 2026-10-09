@@ -1,0 +1,20 @@
+import { memo } from 'react'
+import { Icon } from '@renderer/components/icon'
+import type { IgnoredAppProps } from './ignored-app.props'
+
+const IgnoredApp = (props: IgnoredAppProps) => {
+	const { app, onRemove } = props
+
+	const handleRemoveClick = () => onRemove(app)
+
+	return (
+		<li className="chip is-on">
+			{app}
+			<button type="button" aria-label={`Stop ignoring ${app}`} onClick={handleRemoveClick}>
+				<Icon name="close" size={11} />
+			</button>
+		</li>
+	)
+}
+
+export default memo(IgnoredApp)

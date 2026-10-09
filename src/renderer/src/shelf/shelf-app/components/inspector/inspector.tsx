@@ -1,4 +1,12 @@
-import { memo, useEffect, useRef, useState, type ReactNode } from 'react'
+import {
+	memo,
+	useEffect,
+	useRef,
+	useState,
+	type ReactNode,
+	type ChangeEvent,
+	type KeyboardEvent
+} from 'react'
 import { kindLabel } from '@shared/classify'
 import type { ClipPayload } from '@shared/types'
 import { api } from '@renderer/api'
@@ -7,6 +15,7 @@ import { absoluteTime, formatBytes, formatCount, hostOf } from '@renderer/lib/fo
 import { highlightCode } from '@renderer/lib/highlight'
 import { Icon } from '@renderer/components/icon'
 import { ENTER, MOD, SHIFT, isMod } from '@renderer/env'
+import { BoardChip } from './components/board-chip'
 import { TEXT_KINDS } from './inspector.constants'
 import type { InspectorProps } from './inspector.props'
 
@@ -53,7 +62,7 @@ const Inspector = (props: InspectorProps) => {
 
 	// Inspector keys take priority over the shelf's.
 	useEffect(() => {
-		const onKey = (e: KeyboardEvent): void => {
+		const onKey = (e: globalThis.KeyboardEvent): void => {
 			const target = e.target as HTMLElement
 			const typing = !!target.closest('.inspector') && target.matches('input, textarea')
 			if (e.key === 'Escape') {
@@ -83,6 +92,11 @@ const Inspector = (props: InspectorProps) => {
 	const text = payload?.text ?? item.preview
 	const color = item.kind === 'color' ? describeColor(item.color ?? item.preview) : null
 
+	const handleDraftChange = (e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>) =>
+		setDraft(e.target.value)
+
+	const handleOpenLinkClick = () => api.openExternal(item.url!)
+
 	let content: ReactNode
 	if (editing) {
 		content = (
@@ -91,7 +105,7 @@ const Inspector = (props: InspectorProps) => {
 				className="inspector-editor"
 				value={draft}
 				spellCheck={item.kind === 'text'}
-				onChange={(e) => setDraft(e.target.value)}
+				onChange={handleDraftChange}
 			/>
 		)
 	} else if (item.kind === 'image') {
@@ -135,11 +149,7 @@ const Inspector = (props: InspectorProps) => {
 				<p className="inspector-link-host">{host}</p>
 				<p className="inspector-link-url">{item.url ?? text}</p>
 				{item.url && /^https?:/.test(item.url) && (
-					<button
-						type="button"
-						className="button"
-						onClick={() => api.openExternal(item.url!)}
-					>
+					<button type="button" className="button" onClick={handleOpenLinkClick}>
 						<Icon name="external" size={15} /> Open in browser
 					</button>
 				)}
@@ -183,6 +193,27 @@ const Inspector = (props: InspectorProps) => {
 		if (item.rich) details.push(['Format', 'Rich text (formatting kept)'])
 	}
 
+	const handlePinToggle = (boardId: string, pinned: boolean) =>
+		void api.setPinned(item.id, boardId, pinned)
+
+	const handleTitleChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
+		setTitle(e.target.value)
+
+	const handleTitleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			saveTitle()
+			;(e.target as HTMLInputElement).blur()
+		}
+	}
+
+	const handleCancelEditClick = () => setEditing(false)
+
+	const handlePasteClick = () => onPaste(false)
+
+	const handlePastePlainClick = () => onPaste(true)
+
+	const handleEditClick = () => setEditing(true)
+
 	return (
 		<section className="inspector" aria-label="Item details">
 			<div className="inspector-main">{content}</div>
@@ -195,14 +226,9 @@ const Inspector = (props: InspectorProps) => {
 						aria-label="Name"
 						value={title}
 						maxLength={120}
-						onChange={(e) => setTitle(e.target.value)}
+						onChange={handleTitleChange}
 						onBlur={saveTitle}
-						onKeyDown={(e) => {
-							if (e.key === 'Enter') {
-								saveTitle()
-								;(e.target as HTMLInputElement).blur()
-							}
-						}}
+						onKeyDown={handleTitleKeyDown}
 					/>
 					<button
 						type="button"
@@ -223,23 +249,14 @@ const Inspector = (props: InspectorProps) => {
 				</dl>
 				{boards.length > 0 && (
 					<div className="inspector-boards" role="group" aria-label="Pinboards">
-						{boards.map((b) => {
-							const on = item.pinboards.includes(b.id)
-
-							return (
-								<button
-									key={b.id}
-									type="button"
-									aria-pressed={on}
-									className={`chip${on ? ' is-on' : ''}`}
-									onClick={() => void api.setPinned(item.id, b.id, !on)}
-								>
-									<span className="board-dot" style={{ background: b.color }} />
-									{b.name}
-									{on && <Icon name="check" size={12} />}
-								</button>
-							)
-						})}
+						{boards.map((b) => (
+							<BoardChip
+								key={b.id}
+								board={b}
+								pinned={item.pinboards.includes(b.id)}
+								onToggle={handlePinToggle}
+							/>
+						))}
 					</div>
 				)}
 				<div className="inspector-actions">
@@ -259,7 +276,7 @@ const Inspector = (props: InspectorProps) => {
 							<button
 								type="button"
 								className="button"
-								onClick={() => setEditing(false)}
+								onClick={handleCancelEditClick}
 							>
 								Cancel
 							</button>
@@ -269,7 +286,7 @@ const Inspector = (props: InspectorProps) => {
 							<button
 								type="button"
 								className="button button--primary"
-								onClick={() => onPaste(false)}
+								onClick={handlePasteClick}
 							>
 								Paste <kbd>{ENTER}</kbd>
 							</button>
@@ -277,7 +294,7 @@ const Inspector = (props: InspectorProps) => {
 								<button
 									type="button"
 									className="button"
-									onClick={() => onPaste(true)}
+									onClick={handlePastePlainClick}
 								>
 									Paste as plain text{' '}
 									<kbd>
@@ -290,11 +307,7 @@ const Inspector = (props: InspectorProps) => {
 								Copy
 							</button>
 							{TEXT_KINDS.has(item.kind) && (
-								<button
-									type="button"
-									className="button"
-									onClick={() => setEditing(true)}
-								>
+								<button type="button" className="button" onClick={handleEditClick}>
 									Edit
 								</button>
 							)}

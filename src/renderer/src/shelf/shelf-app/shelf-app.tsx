@@ -6,7 +6,8 @@ import {
 	useRef,
 	useState,
 	type DragEvent,
-	type MouseEvent
+	type MouseEvent,
+	type WheelEvent
 } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
 import { parseQuery } from '@shared/search'
@@ -476,6 +477,59 @@ const ShelfApp = (props: ShelfAppProps) => {
 	const boardName = boards.find((b) => b.id === board)?.name
 	const emptyReason = search ? 'search' : board ? 'board' : kind !== 'all' ? 'kind' : 'history'
 
+	const handleResume = () => void api.setSettings({ paused: false })
+
+	const handleNewBoard = (anchor: DOMRect) => setEditor({ anchor })
+
+	const handleEditBoard = (b: Pinboard, anchor: DOMRect) => setEditor({ anchor, board: b })
+
+	const handleDropOnBoard = (boardId: string, itemId: string) => {
+		void api.setPinned(itemId, boardId, true)
+		showToast(`Pinned to ${boards.find((b) => b.id === boardId)?.name ?? 'pinboard'}`)
+	}
+
+	const handleSettings = () => api.openSettings()
+
+	const handleRowWheel = (e: WheelEvent<HTMLDivElement>) => {
+		if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && scrollRef.current) {
+			scrollRef.current.scrollLeft += e.deltaY
+		}
+	}
+
+	const handleInspectorClose = () => {
+		setInspect(null)
+		inputRef.current?.focus()
+	}
+
+	const handleInspectorPaste = (invert: boolean) => void paste(index, invert)
+
+	const handleInspectorCopy = () => copy(index)
+
+	const handleInspectorDelete = () => remove(index)
+
+	const handleMenuClose = () => setMenu(null)
+
+	const handleBoardEditorClose = () => setEditor(null)
+
+	const handleBoardEditorSave = async (input: { name: string; color: string }) => {
+		if (!editor) return
+		if (editor.board) {
+			await api.updateBoard(editor.board.id, input)
+		} else {
+			const created = await api.createBoard(input)
+			if (editor.pinItem) await api.setPinned(editor.pinItem, created.id, true)
+			else setBoard(created.id)
+		}
+		setEditor(null)
+		inputRef.current?.focus()
+	}
+
+	const handleBoardEditorDelete = async () => {
+		if (!editor?.board) return
+		await api.deleteBoard(editor.board.id)
+		setEditor(null)
+	}
+
 	return (
 		<div className="shelf" ref={shelfRef}>
 			<TopBar
@@ -488,16 +542,11 @@ const ShelfApp = (props: ShelfAppProps) => {
 				kind={kind}
 				onKind={setKind}
 				paused={settings.paused}
-				onResume={() => void api.setSettings({ paused: false })}
-				onNewBoard={(anchor) => setEditor({ anchor })}
-				onEditBoard={(b, anchor) => setEditor({ anchor, board: b })}
-				onDropOnBoard={(boardId, itemId) => {
-					void api.setPinned(itemId, boardId, true)
-					showToast(
-						`Pinned to ${boards.find((b) => b.id === boardId)?.name ?? 'pinboard'}`
-					)
-				}}
-				onSettings={() => api.openSettings()}
+				onResume={handleResume}
+				onNewBoard={handleNewBoard}
+				onEditBoard={handleEditBoard}
+				onDropOnBoard={handleDropOnBoard}
+				onSettings={handleSettings}
 			/>
 
 			<div className={`shelf-body${inspected ? ' is-inspecting' : ''}`}>
@@ -515,11 +564,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 						role="listbox"
 						aria-label={boardName ?? 'Clipboard history'}
 						aria-activedescendant={selected ? `card-${selected.id}` : undefined}
-						onWheel={(e) => {
-							if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && scrollRef.current) {
-								scrollRef.current.scrollLeft += e.deltaY
-							}
-						}}
+						onWheel={handleRowWheel}
 					>
 						<div className="row-inner" style={{ width: virtualizer.getTotalSize() }}>
 							{virtualizer.getVirtualItems().map((v) => {
@@ -563,13 +608,10 @@ const ShelfApp = (props: ShelfAppProps) => {
 						boards={boards}
 						startEditing={inspect?.edit}
 						focusTitle={inspect?.title}
-						onClose={() => {
-							setInspect(null)
-							inputRef.current?.focus()
-						}}
-						onPaste={(invert) => void paste(index, invert)}
-						onCopy={() => copy(index)}
-						onDelete={() => remove(index)}
+						onClose={handleInspectorClose}
+						onPaste={handleInspectorPaste}
+						onCopy={handleInspectorCopy}
+						onDelete={handleInspectorDelete}
 					/>
 				)}
 
@@ -585,7 +627,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 							? pinEntries(items[menu.index], menu.index)
 							: menuEntries(menu.index)
 					}
-					onClose={() => setMenu(null)}
+					onClose={handleMenuClose}
 				/>
 			)}
 
@@ -593,27 +635,9 @@ const ShelfApp = (props: ShelfAppProps) => {
 				<BoardEditor
 					anchor={editor.anchor}
 					board={editor.board}
-					onClose={() => setEditor(null)}
-					onSave={async (input) => {
-						if (editor.board) {
-							await api.updateBoard(editor.board.id, input)
-						} else {
-							const created = await api.createBoard(input)
-							if (editor.pinItem)
-								await api.setPinned(editor.pinItem, created.id, true)
-							else setBoard(created.id)
-						}
-						setEditor(null)
-						inputRef.current?.focus()
-					}}
-					onDelete={
-						editor.board
-							? async () => {
-									await api.deleteBoard(editor.board!.id)
-									setEditor(null)
-								}
-							: undefined
-					}
+					onClose={handleBoardEditorClose}
+					onSave={handleBoardEditorSave}
+					onDelete={editor.board ? handleBoardEditorDelete : undefined}
 				/>
 			)}
 		</div>

@@ -85,6 +85,16 @@ export default memo(Card)
   other files import `{ Card }`.
 - `memo` skips re-renders when props haven't changed, so read outside values (the time, `window`,
   …) in effects and event handlers, or pass them in as props, rather than while rendering.
+- No functions written inside JSX props. Event handlers and callbacks are named `handle…`
+  functions declared in the component body above the JSX that uses them, like
+  `onClick={handleClick}`, never `onClick={() => …}`.
+- Type each handler's event with React's event type for that element, such as
+  `MouseEvent<HTMLButtonElement>`, `ChangeEvent<HTMLInputElement, HTMLInputElement>` or
+  `SubmitEvent<HTMLFormElement>`. Never use `FormEvent`, which React's types deprecate. In a file
+  that also uses the browser's own event types (in a `window.addEventListener` callback, say),
+  write those as `globalThis.MouseEvent` so they don't clash with React's.
+- When an item rendered in a `.map()` needs its own handlers, make it a sub-component (like
+  `BoardTab` in `top-bar/components/`) rather than writing handlers inside the loop.
 - Props go in `<name>.props.ts` as `<Name>Props`, along with any types that only describe a prop
   (like `MenuEntry` for `Menu`'s entries). A component with no props has no props file.
 - Top-level constants go in `<name>.constants.ts` (`.tsx` if they contain JSX), and helper
