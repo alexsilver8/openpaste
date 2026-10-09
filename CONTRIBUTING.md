@@ -43,7 +43,9 @@ it can merge:
 - `title`: the pull request title follows the format below
 
 Pull requests are squash-merged, and the title becomes the commit message on `main`, so the title
-matters more than the commits on your branch. Pull request titles and commit messages use
+matters more than the commits on your branch. The title also sets the pull request's label
+(`fix` → `bug`, `feat` → `enhancement`, `docs` → `documentation`, and the type's own name for the
+rest, plus `breaking change` for `!`), and whoever opens a pull request is assigned to it. Pull request titles and commit messages use
 [gitmoji](https://gitmoji.dev) with [Conventional Commits](https://www.conventionalcommits.org).
 Only emojis from the official gitmoji list are accepted, typed as the emoji itself (`✨`, not
 `:sparkles:`):
