@@ -35,6 +35,8 @@ a[data-asset]:hover{border-color:#111113 !important;color:#111113}
 .skip:focus{left:16px;top:16px;background:#ffffff;padding:10px 14px;z-index:10;border-radius:8px}
 @media (max-width: 760px){.deco,.float-chip,.nav-links{display:none !important}}
 </style>
+<link rel="stylesheet" href="assets/site.css?v=601aaaca91">
+<script src="assets/site.js?v=00c924b2ae" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -51,7 +53,7 @@ a[data-asset]:hover{border-color:#111113 !important;color:#111113}
 OpenPaste
 </a>
 <div style="display: flex; justify-content: flex-end; align-items: center; gap: 18px">
-<a href="https://github.com/alexsilver8/openpaste" style="text-decoration: none; color: #55555c">GitHub</a>
+<a data-js="gh-link" href="https://github.com/alexsilver8/openpaste" style="text-decoration: none; color: #55555c">GitHub</a>
 <a href="#download" style="text-decoration: none; color: #ffffff; background: #111113; border-radius: 999px; padding: 10px 18px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; font-weight: 500">Download</a>
 </div>
 </header>
@@ -64,6 +66,7 @@ OpenPaste
 <a id="hero-download" data-download-button href="#download" style="text-decoration: none; color: #ffffff; background: #111113; border-radius: 999px; padding: 12px 20px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; font-size: 15px; font-weight: 500"><span data-download-label>Download for macOS</span></a>
 <a href="demo/" style="text-decoration: none; color: #111113; background: #efeff2; border-radius: 999px; padding: 12px 20px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 500">Try it in your browser <span aria-hidden="true">↗</span></a>
 </div>
+<p style="margin: 20px auto 0; font-size: 14px; color: #6b6b72">Try it here: copy any text on this page, then press <button type="button" data-js="open-shelf" aria-label="Open the shelf" style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #111113; background: #ffffff; border: 1px solid #dcdce2; border-bottom-width: 3px; border-radius: 7px; padding: 3px 8px; cursor: pointer"><span class="shortcut">⇧⌘V</span></button></p>
 
 <div style="position: relative; max-width: 1040px; margin: 64px auto 0">
 <svg class="deco" aria-hidden="true" width="150" height="300" viewBox="0 0 120 240" fill="none" stroke="#1d1d22" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: -170px; bottom: 0"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M58 112 C46 104 38 92 36 78 C48 84 56 96 58 112 Z"></path><path d="M62 25 C58 14 60 6 62 2 C64 6 66 14 62 25 Z"></path><path d="M66 28 C76 22 84 22 88 24 C84 28 76 32 66 30 Z"></path><path d="M58 28 C48 22 40 22 36 24 C40 28 48 32 58 30 Z"></path><path d="M65 34 C72 42 74 50 74 54 C70 52 64 46 63 35 Z"></path><path d="M59 34 C52 42 50 50 50 54 C54 52 60 46 61 35 Z"></path><circle cx="62" cy="30" r="5" fill="#5b4cf5" stroke="#5b4cf5"></circle></svg>
@@ -71,7 +74,7 @@ OpenPaste
 <div style="background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 10px; box-shadow: 0 30px 60px rgba(17,17,19,0.08)">
 <img src="assets/screenshot.png" width="1440" height="873" alt="The OpenPaste shelf open below a notes window, with text, link, code, color and image cards" style="display: block; width: 100%; height: auto; border-radius: 10px">
 </div>
-<div class="float-chip" style="position: absolute; left: -48px; top: 26%; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 10px 30px rgba(17,17,19,0.10); text-align: left">
+<div class="float-chip" data-copy="#5B4CF5" style="position: absolute; left: -48px; top: 26%; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 10px 30px rgba(17,17,19,0.10); text-align: left">
 <span style="width: 32px; height: 32px; border-radius: 8px; background: #5b4cf5"></span>
 <span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Copied #5B4CF5</span><span style="font-size: 12px; color: #6b6b72">from Figma · just now</span></span>
 </div>
@@ -102,7 +105,7 @@ OpenPaste
 <svg class="deco" aria-hidden="true" width="190" height="270" viewBox="0 0 140 200" fill="none" stroke="#1d1d22" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 4%; bottom: 0"><path d="M70 198 C70 150 60 110 40 70"></path><path d="M70 198 C72 140 84 100 108 58"></path><path d="M70 198 C68 160 70 120 72 40"></path><path d="M62 140 C52 136 46 128 44 120"></path><path d="M78 130 C88 126 94 118 96 110"></path><path d="M71 100 C62 94 58 86 58 78"></path><path d="M72 80 C80 74 84 66 84 58"></path><circle cx="72" cy="36" r="4" fill="#5b4cf5"></circle><circle cx="108" cy="54" r="3.5" fill="#ffffff"></circle><circle cx="40" cy="66" r="3.5" fill="#f5d76e"></circle></svg>
 <h2 style="margin: 0 auto; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">A home for <em style="font-style: italic">everything</em><br>you copy</h2>
 <p style="margin: 22px auto 0; max-width: 560px; color: #3f4a42">Text, links, code, colors, images and files, each shown the way it looks, with the app it came from. Narrow it down with <code style="font-family: 'Geist Mono', monospace; font-size: 13px; background: #ffffff; border-radius: 6px; padding: 2px 6px">is:image</code> <code style="font-family: 'Geist Mono', monospace; font-size: 13px; background: #ffffff; border-radius: 6px; padding: 2px 6px">is:code</code> or <code style="font-family: 'Geist Mono', monospace; font-size: 13px; background: #ffffff; border-radius: 6px; padding: 2px 6px">app:slack</code>.</p>
-<div style="position: relative; max-width: 980px; margin: 56px auto 0; background: #f0f0f5; border: 1px solid rgba(24,24,27,0.08); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px rgba(29,60,40,0.12); text-align: left">
+<div data-js="shelf-inline" style="position: relative; max-width: 980px; margin: 56px auto 0; background: #f0f0f5; border: 1px solid rgba(24,24,27,0.08); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px rgba(29,60,40,0.12); text-align: left">
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-bottom: 12px; font-size: 13px; color: #52525b">
 <div style="display: flex; align-items: center; gap: 8px; width: 220px; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 9px; background: #ffffff; border: 2px solid #5b4cf5; color: #868692">
 <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
@@ -155,7 +158,7 @@ Search
 <section style="max-width: 1180px; margin: 0 auto; padding: 0 24px">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 1px; background: #ececf0; border: 1px solid #ececf0; border-top: 0">
 <div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div aria-hidden="true" style="position: relative; width: 260px; height: 200px">
+<div class="fan" aria-hidden="true" style="position: relative; width: 260px; height: 200px">
 <div style="position: absolute; left: 30px; top: 30px; width: 120px; height: 150px; border-radius: 10px; background: #ffffff; border: 1px solid #1d1d22; transform: rotate(-9deg); overflow: hidden"><div style="height: 30px; background: #5a1f5c"></div></div>
 <div style="position: absolute; left: 70px; top: 16px; width: 120px; height: 150px; border-radius: 10px; background: #ffffff; border: 1px solid #1d1d22; transform: rotate(-2deg); overflow: hidden"><div style="height: 30px; background: #1f6fe6"></div><div style="margin: 14px 12px 0; height: 6px; border-radius: 3px; background: #e4e4ea"></div><div style="margin: 8px 12px 0; width: 60%; height: 6px; border-radius: 3px; background: #e4e4ea"></div></div>
 <div style="position: absolute; left: 112px; top: 26px; width: 120px; height: 150px; border-radius: 10px; background: #5b4cf5; border: 1px solid #1d1d22; transform: rotate(7deg); overflow: hidden"><div style="height: 30px; background: #7b3fe4"></div><div style="position: absolute; left: 12px; bottom: 12px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #ffffff">#5B4CF5</div></div>
@@ -164,7 +167,7 @@ Search
 <p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">Text, rich text, links, code, colors, images and files, with the app each came from and when. Copy it again and it moves to the front.</p>
 </div>
 <div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div aria-hidden="true" style="width: 260px; height: 200px; display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding-bottom: 10px; box-sizing: border-box">
+<div data-js="bars" style="width: 260px; height: 200px; display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding-bottom: 10px; box-sizing: border-box">
 <span style="width: 30px; height: 96px; border-radius: 6px; background: #5b4cf5; border: 1px solid #1d1d22"></span>
 <span style="width: 30px; height: 150px; border-radius: 6px; background: #f5b642; border: 1px solid #1d1d22"></span>
 <span style="width: 30px; height: 120px; border-radius: 6px; background: #ffffff; border: 1px solid #1d1d22"></span>
@@ -174,7 +177,7 @@ Search
 <h3 style="margin: 24px 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 34px; line-height: 1.05">Shows it the way it <em style="font-style: italic">looks</em></h3>
 <p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">A copied color fills its card, images go edge to edge, links lead with the site name and code keeps its shape.</p>
 </div>
-<div style="grid-column: 1 / -1; background: #fbfbfa; padding: 64px 32px 72px; position: relative; overflow: hidden">
+<div data-js="journey" style="grid-column: 1 / -1; background: #fbfbfa; padding: 64px 32px 72px; position: relative; overflow: hidden">
 <svg class="deco" aria-hidden="true" viewBox="0 0 1100 220" preserveAspectRatio="none" fill="none" stroke="#1d1d22" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1 7" style="position: absolute; left: 0; top: 30px; width: 100%; height: 220px"><path d="M20 150 C140 40 240 40 320 110 C400 180 480 190 560 90 C640 -10 760 40 820 140 C880 220 980 170 1080 60"></path></svg>
 <div style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; gap: 20px">
 <div style="margin-top: 70px; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 8px 24px rgba(17,17,19,0.07)"><span style="width: 30px; height: 30px; border-radius: 8px; background: #efedff; color: #4a3be0; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 13px">1</span><span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Copy</span><span style="font-size: 12px; color: #6b6b72">a link in Slack</span></span></div>
@@ -186,24 +189,24 @@ Search
 </div>
 </section>
 
-<section style="max-width: 1180px; margin: 0 auto; padding: 120px 24px 0; text-align: center">
+<section id="search" style="max-width: 1180px; margin: 0 auto; padding: 120px 24px 0; text-align: center">
 <h2 style="margin: 0 auto; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">Finding made <em style="font-style: italic">effortless</em></h2>
 <p style="margin: 20px auto 0; max-width: 520px; color: #6b6b72">Start typing the moment the shelf opens. Search covers everything you've copied, and filters narrow it to one kind.</p>
 <div style="margin-top: 56px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; text-align: left">
 <div style="flex: 0 1 240px; min-width: 0; padding-top: 12px">
 <h3 style="margin: 0 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 28px">Filters</h3>
 <p style="margin: 0 0 20px; font-size: 14px; color: #6b6b72">Mix a filter with words: <code style="font-family: 'Geist Mono', monospace; font-size: 12.5px">is:link docs</code> finds links that mention docs.</p>
-<ul style="margin: 0; padding: 0; list-style: none; font-family: 'Geist Mono', monospace; font-size: 13.5px; color: #55555c; display: flex; flex-direction: column; gap: 2px">
-<li style="padding: 8px 12px; border-radius: 8px">Everything</li>
-<li style="padding: 8px 12px; border-radius: 8px; background: #efeff2; color: #111113">is:link</li>
-<li style="padding: 8px 12px; border-radius: 8px">is:image</li>
-<li style="padding: 8px 12px; border-radius: 8px">is:code</li>
-<li style="padding: 8px 12px; border-radius: 8px">is:color</li>
-<li style="padding: 8px 12px; border-radius: 8px">is:file</li>
-<li style="padding: 8px 12px; border-radius: 8px">app:slack</li>
+<ul data-js="filters" style="margin: 0; padding: 0; list-style: none; font-family: 'Geist Mono', monospace; font-size: 13.5px; color: #55555c; display: flex; flex-direction: column; gap: 2px">
+<li data-filter="" style="padding: 8px 12px; border-radius: 8px">Everything</li>
+<li data-filter="is:link" style="padding: 8px 12px; border-radius: 8px; background: #efeff2; color: #111113">is:link</li>
+<li data-filter="is:image" style="padding: 8px 12px; border-radius: 8px">is:image</li>
+<li data-filter="is:code" style="padding: 8px 12px; border-radius: 8px">is:code</li>
+<li data-filter="is:color" style="padding: 8px 12px; border-radius: 8px">is:color</li>
+<li data-filter="is:file" style="padding: 8px 12px; border-radius: 8px">is:file</li>
+<li data-filter="app:slack" style="padding: 8px 12px; border-radius: 8px">app:slack</li>
 </ul>
 </div>
-<div style="flex: 1 1 600px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 18px; box-shadow: 0 24px 60px rgba(17,17,19,0.07)">
+<div data-js="search-panel" style="flex: 1 1 600px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 18px; box-shadow: 0 24px 60px rgba(17,17,19,0.07)">
 <div style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border-radius: 10px; border: 2px solid #5b4cf5; font-family: 'Geist Mono', monospace; font-size: 14px; margin-bottom: 16px">
 <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#868692" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
 is:link docs
@@ -226,7 +229,7 @@ is:link docs
 <section style="max-width: 1180px; margin: 0 auto; padding: 96px 24px 0">
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 1px; background: #ececf0; border: 1px solid #ececf0">
 <div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div aria-hidden="true" style="position: relative; width: 280px; height: 200px">
+<div data-js="paste-demo" aria-hidden="true" style="position: relative; width: 280px; height: 200px">
 <div style="position: absolute; left: 10px; top: 20px; width: 200px; height: 140px; border-radius: 10px; background: #ffffff; border: 1px solid #1d1d22">
 <div style="display: flex; gap: 5px; padding: 9px 10px; border-bottom: 1px solid #1d1d22"><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #1d1d22"></span><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #1d1d22"></span><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #1d1d22"></span></div>
 <div style="margin: 16px 14px 0; height: 6px; border-radius: 3px; background: #e4e4ea"></div>
@@ -239,9 +242,9 @@ is:link docs
 <p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">Pick a card and OpenPaste puts it straight back into the app you were using. Hold Shift to leave the formatting behind.</p>
 </div>
 <div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
-<div aria-hidden="true" style="position: relative; width: 240px; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
-<svg width="96" height="150" viewBox="0 0 120 240" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -6px"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M62 25 C58 14 60 6 62 2 C64 6 66 14 62 25 Z"></path><path d="M66 28 C76 22 84 22 88 24 C84 28 76 32 66 30 Z"></path><path d="M58 28 C48 22 40 22 36 24 C40 28 48 32 58 30 Z"></path><circle cx="62" cy="30" r="5" fill="#f5b642"></circle></svg>
-<div style="width: 150px; height: 56px; border-radius: 12px; background: #8b80ff; border: 1px solid #1d1d22; border-bottom-width: 5px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 18px; color: #111113"><span class="shortcut">⇧⌘V</span></div>
+<div style="position: relative; width: 240px; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+<svg aria-hidden="true" width="96" height="150" viewBox="0 0 120 240" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -6px"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M62 25 C58 14 60 6 62 2 C64 6 66 14 62 25 Z"></path><path d="M66 28 C76 22 84 22 88 24 C84 28 76 32 66 30 Z"></path><path d="M58 28 C48 22 40 22 36 24 C40 28 48 32 58 30 Z"></path><circle cx="62" cy="30" r="5" fill="#f5b642"></circle></svg>
+<div data-js="open-shelf" style="width: 150px; height: 56px; border-radius: 12px; background: #8b80ff; border: 1px solid #1d1d22; border-bottom-width: 5px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 18px; color: #111113"><span class="shortcut">⇧⌘V</span></div>
 </div>
 <h3 style="margin: 24px 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 34px; line-height: 1.05">Simple for anyone. Fast for <em style="font-style: italic">keyboards</em>.</h3>
 <p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">Click and drag if you like, or never touch the mouse: arrows to move, <span class="mod">⌘</span>1–9 to paste one of the first nine, Tab to switch boards.</p>
@@ -259,26 +262,27 @@ is:link docs
 <section id="privacy" style="max-width: 1180px; margin: 0 auto; padding: 0 24px; text-align: center">
 <svg aria-hidden="true" width="360" height="190" viewBox="0 0 360 190" fill="none" stroke="#1d1d22" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="max-width: 100%; height: auto"><g transform="rotate(-6 80 95)"><rect x="20" y="40" width="120" height="96" rx="10" fill="#ffffff"></rect><path d="M20 66h120"></path><path d="M34 84h70M34 100h52"></path></g><g transform="rotate(5 280 100)"><rect x="220" y="52" width="120" height="96" rx="10" fill="#ffffff"></rect><path d="M220 78h120"></path><path d="M234 96h64M234 112h80"></path></g><path d="M142 98 C150 104 154 112 156 120" stroke-dasharray="1 6"></path><path d="M218 104 C210 110 206 116 204 122" stroke-dasharray="1 6"></path><path d="M162 104 v-16 a18 18 0 0 1 36 0 v16"></path><rect x="150" y="104" width="60" height="52" rx="9" fill="#efedff"></rect><circle cx="180" cy="126" r="5" fill="#5b4cf5" stroke="#5b4cf5"></circle><path d="M180 130 v10"></path><circle cx="300" cy="24" r="4" fill="#f5d76e"></circle><circle cx="56" cy="170" r="3.5" fill="#bfe3c8"></circle></svg>
 <h2 style="margin: 28px auto 0; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">Private <em style="font-style: italic">by default</em></h2>
-<p style="margin: 20px auto 0; max-width: 580px; color: #6b6b72">Your history never leaves your computer. No account, no cloud, nothing to sign in to.</p>
+<p style="margin: 20px auto 0; max-width: 640px; color: #6b6b72">Your history never leaves your computer. No account, no cloud, nothing to sign in to.</p>
 <div style="margin-top: 56px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; text-align: left">
 <div style="flex: 0 1 260px; min-width: 0; padding-top: 12px">
 <h3 style="margin: 0 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 28px">What it skips</h3>
 <p style="margin: 0 0 20px; font-size: 14px; color: #6b6b72">Some things should never be in a clipboard history. OpenPaste leaves them out.</p>
-<ul style="margin: 0; padding: 0; list-style: none; font-size: 14px; color: #55555c; display: flex; flex-direction: column; gap: 2px">
-<li style="padding: 8px 12px; border-radius: 8px; background: #efeff2; color: #111113">Password manager copies</li>
-<li style="padding: 8px 12px; border-radius: 8px">Apps on your ignore list</li>
-<li style="padding: 8px 12px; border-radius: 8px">Anything while paused</li>
-<li style="padding: 8px 12px; border-radius: 8px">Old, unpinned items</li>
+<ul data-js="privacy-links" style="margin: 0; padding: 0; list-style: none; font-size: 14px; color: #55555c; display: flex; flex-direction: column; gap: 2px">
+<li data-target="private" style="padding: 8px 12px; border-radius: 8px; background: #efeff2; color: #111113">Password manager copies</li>
+<li data-target="ignore" style="padding: 8px 12px; border-radius: 8px">Apps on your ignore list</li>
+<li data-target="capture" style="padding: 8px 12px; border-radius: 8px">Anything while paused</li>
+<li data-target="retention" style="padding: 8px 12px; border-radius: 8px">Old, unpinned items</li>
 </ul>
 </div>
 <div style="flex: 1 1 600px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: clamp(20px, 3vw, 32px); box-shadow: 0 24px 60px rgba(17,17,19,0.07)">
 <h4 style="margin: 0 0 4px; font-size: 18px; font-weight: 600">Privacy</h4>
 <p style="margin: 0 0 18px; font-size: 13px; color: #6b6b72">History is stored only on this computer, in a plain folder.</p>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Skip copies marked private by password managers</span><span style="width: 40px; height: 24px; border-radius: 999px; background: #5b4cf5; position: relative"><span style="position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #ffffff"></span></span></div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Ignore these apps</span><span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px"><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">1Password</span><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">Bitwarden</span><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">KeePassXC</span><span style="border: 1px dashed #c4c4cc; border-radius: 6px; padding: 2px 8px; color: #6b6b72">+ Add</span></span></div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Remove unpinned items after</span><span style="font-size: 13px; background: #efeff2; border-radius: 8px; padding: 5px 10px">30 days</span></div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Keep at most</span><span style="font-size: 13px; background: #efeff2; border-radius: 8px; padding: 5px 10px">2,000 items</span></div>
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">History folder</span><span style="font-size: 13px; color: #4a3be0">Open folder</span></div>
+<div data-row="capture" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Capture what you copy</span><span data-js="switch" data-setting="capture" style="width: 40px; height: 24px; border-radius: 999px; background: #5b4cf5; position: relative"><span style="position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #ffffff"></span></span></div>
+<div data-row="private" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Skip copies marked private by password managers</span><span data-js="switch" data-setting="skipPrivate" style="width: 40px; height: 24px; border-radius: 999px; background: #5b4cf5; position: relative"><span style="position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #ffffff"></span></span></div>
+<div data-row="ignore" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Ignore these apps</span><span data-js="chips" style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px"><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">1Password</span><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">Bitwarden</span><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">KeePassXC</span><span data-js="add-chip" style="border: 1px dashed #c4c4cc; border-radius: 6px; padding: 2px 8px; color: #6b6b72">+ Add</span></span></div>
+<div data-row="retention" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Remove unpinned items after</span><span data-js="select" data-options="7 days|30 days|90 days|1 year" style="font-size: 13px; background: #efeff2; border-radius: 8px; padding: 5px 10px">30 days</span></div>
+<div data-row="max" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Keep at most</span><span data-js="select" data-options="500 items|2,000 items|10,000 items" style="font-size: 13px; background: #efeff2; border-radius: 8px; padding: 5px 10px">2,000 items</span></div>
+<div data-row="folder" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">History folder</span><span data-js="open-folder" style="font-size: 13px; color: #4a3be0">Open folder</span></div>
 </div>
 </div>
 </section>
@@ -323,7 +327,7 @@ is:link docs
 <div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 14px">
 <div style="flex: 2 1 460px; min-width: 0; box-sizing: border-box; background: #e9f4ec; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
 <div><h3 style="margin: 0 0 6px; font-size: 20px; font-weight: 600">Search that understands kinds</h3><p style="margin: 0; font-size: 14px; color: #3f4a42">Type words, or ask for a kind of thing from a particular app.</p></div>
-<div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 13px">
+<div data-js="filter-chips" style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 13px">
 <span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:image</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:link</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:code</span><span style="background: #5b4cf5; color: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:color</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:file</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">app:figma</span>
 </div>
 </div>
@@ -339,6 +343,7 @@ is:link docs
 <img src="assets/icon.png" alt="" style="width: 56px; height: 56px; margin: 0 auto">
 <h2 style="margin: 22px auto 0; max-width: 680px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 72px); line-height: 0.98; letter-spacing: -0.015em">Built in the <em style="font-style: italic">open</em></h2>
 <p style="margin: 20px auto 0; max-width: 480px; font-size: 15px; color: #a1a1aa">OpenPaste is MIT licensed. Sync between computers, link previews and paste stacks are on the roadmap, and contributions are welcome.</p>
+<p data-js="gh-stats" style="margin: 14px auto 0; min-height: 20px; font-family: 'Geist Mono', monospace; font-size: 13px; color: #c9c4ff"></p>
 <a href="https://github.com/alexsilver8/openpaste" style="margin-top: 28px; text-decoration: none; color: #111113; background: #8b80ff; border-radius: 999px; padding: 12px 22px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; font-size: 15px; font-weight: 500">Contribute on GitHub</a>
 </div>
 </section>
@@ -380,59 +385,5 @@ is:link docs
 </footer>
 
 </div>
-<script>
-(function () {
-  var ua = navigator.userAgent || '';
-  var platform = ((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '').toLowerCase();
-  var mobile = /android|iphone|ipad|ipod/i.test(ua);
-  var os = mobile ? null
-    : (/mac/.test(platform) || /Macintosh/.test(ua)) ? 'mac'
-    : (/win/.test(platform) || /Windows/.test(ua)) ? 'win'
-    : (/linux|x11/.test(platform) || /Linux/.test(ua)) ? 'linux'
-    : null;
-
-  // Ctrl on Windows and Linux, the Command key on macOS.
-  if (os && os !== 'mac') {
-    document.querySelectorAll('.shortcut').forEach(function (el) { el.textContent = 'Ctrl+Shift+V'; });
-    document.querySelectorAll('.mod').forEach(function (el) { el.textContent = 'Ctrl+'; });
-  }
-
-  var asset = { mac: 'mac-arm', win: 'win' }[os];
-  var label = { mac: 'Download for macOS', win: 'Download for Windows', linux: 'Download for Linux' }[os] || 'Download';
-
-  function applyButtons() {
-    var link = asset && document.querySelector('[data-asset="' + asset + '"]');
-    document.querySelectorAll('[data-download-button]').forEach(function (btn) {
-      btn.href = link ? link.href : '#download';
-      var text = btn.querySelector('[data-download-label]');
-      if (text) text.textContent = label;
-    });
-  }
-  applyButtons();
-
-  // Follow the newest release, so this page never needs editing for a version bump.
-  var patterns = {
-    'mac-arm': /-arm64\.dmg$/,
-    'mac-intel': /^OpenPaste-[\d.]+\.dmg$/,
-    'win': /\.exe$/,
-    'appimage': /\.AppImage$/,
-    'deb': /_amd64\.deb$/
-  };
-  fetch('https://api.github.com/repos/alexsilver8/openpaste/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (release) {
-      if (!release || !release.assets) return;
-      var version = String(release.tag_name || '').replace(/^v/, '');
-      if (version) document.querySelectorAll('[data-version]').forEach(function (el) { el.textContent = version; });
-      Object.keys(patterns).forEach(function (key) {
-        var match = release.assets.find(function (a) { return patterns[key].test(a.name); });
-        var link = document.querySelector('[data-asset="' + key + '"]');
-        if (match && link) link.href = match.browser_download_url;
-      });
-      applyButtons();
-    })
-    .catch(function () { /* the built-in v1.0.0 links still work */ });
-})();
-</script>
 </body>
 </html>

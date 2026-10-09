@@ -3,6 +3,7 @@
 This branch is the published site for <https://openpaste.alexsilver.dev/>, served by GitHub Pages.
 
 - `index.html`: the landing page
+- `assets/site.js`, `assets/site.css`: the interactive layer (live shelf, search, the ⇧⌘V overlay, privacy controls)
 - `demo/`: the browser demo, built from `main` with `pnpm demo:build`
 - `assets/`: the icon, screenshot and social card
 
