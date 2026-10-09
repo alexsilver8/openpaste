@@ -85,13 +85,32 @@ copied from the file manager show up with the right card.
 
 ## Releasing
 
-Bump `version` in `package.json`, commit, then tag and push:
+Once the pull requests you want to ship are merged, run this from `main`:
 
 ```bash
-git tag v0.2.0
-git push --tags
+pnpm release
 ```
 
-The Release workflow builds installers for macOS, Windows and Linux and attaches them to a draft
-GitHub release. To sign builds, add `CSC_LINK` and `CSC_KEY_PASSWORD` (and for macOS
-notarization `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`) as repository secrets.
+It looks at the pull requests merged since the last release and picks the next version from their
+titles: a `!` makes it a major release, any `feat` a minor one, anything else a patch. It shows
+you the changelog it wrote and asks before going further. Then it bumps `package.json`, adds the
+section to `CHANGELOG.md`, and opens a release pull request with auto-merge turned on.
+
+When that pull request's checks pass, it merges by itself. The Release workflow then builds the
+installers on macOS, Windows and Linux and publishes the GitHub release with the changelog as its
+notes. It only publishes if all three builds succeed.
+
+Options:
+
+```bash
+pnpm release --dry-run   # show the version and changelog without changing anything
+pnpm release minor       # choose the bump yourself: patch, minor or major
+pnpm release 2.0.0       # or an exact version
+```
+
+If a build fails, fix it in a normal pull request. Merging the fix runs the Release workflow
+again, and it picks up where it left off because that version still hasn't been released. You can
+also re-run it from the Actions tab.
+
+To sign builds, add `CSC_LINK` and `CSC_KEY_PASSWORD` (and for macOS notarization `APPLE_ID`,
+`APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`) as repository secrets.

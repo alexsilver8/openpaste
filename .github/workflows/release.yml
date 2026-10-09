@@ -1,17 +1,51 @@
 name: Release
 
-# Push a tag like v1.0.0 to build installers for every platform and attach them to a
-# draft GitHub release. The tag must match the version in package.json.
+# Publishes a GitHub release whenever main has a package.json version that hasn't been released
+# yet. `pnpm release` opens the pull request that bumps the version; merging it lands here.
+# Builds run on macOS, Windows and Linux; the release is published only if all three succeed.
 # Without signing secrets, macOS builds are ad-hoc signed and Windows builds are unsigned.
 on:
   push:
-    tags: ['v*']
+    branches: [main]
+  # Re-run by hand from the Actions tab, for example after fixing a failed build.
+  workflow_dispatch:
 
 permissions:
   contents: write
 
+# One release at a time; a queued run sees the release already exists and does nothing.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+      release: ${{ steps.check.outputs.release }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if gh release view "v$version" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "v$version is already released, nothing to do."
+            echo "release=false" >> "$GITHUB_OUTPUT"
+          elif git ls-remote --exit-code --tags origin "refs/tags/v$version" > /dev/null; then
+            echo "::error title=Tag without a release::The v$version tag exists but has no release. Delete it (git push origin :refs/tags/v$version) and re-run this workflow."
+            exit 1
+          else
+            echo "Releasing v$version."
+            echo "release=true" >> "$GITHUB_OUTPUT"
+          fi
+
   build:
+    needs: version
+    if: needs.version.outputs.release == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -30,14 +64,6 @@ jobs:
           runtime: node@22
           cache: true
           require-lockfile: true
-      - name: Check the tag matches package.json
-        shell: bash
-        run: |
-          version=$(node -p "require('./package.json').version")
-          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
-            echo "::error title=Version mismatch::Tag $GITHUB_REF_NAME doesn't match package.json version $version. Bump the version, or tag v$version."
-            exit 1
-          fi
       - run: pnpm test
       - run: pnpm build
       - name: Build installers
@@ -71,15 +97,23 @@ jobs:
           if-no-files-found: error
 
   release:
-    needs: build
+    needs: [version, build]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - name: Write release notes from CHANGELOG.md
+        run: node scripts/release-notes.mjs "${{ needs.version.outputs.version }}" > release-notes.md
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
           merge-multiple: true
+      # Creates the tag on the commit that was built.
       - uses: softprops/action-gh-release@v2
         with:
-          draft: true
-          generate_release_notes: true
+          tag_name: v${{ needs.version.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: OpenPaste ${{ needs.version.outputs.version }}
+          body_path: release-notes.md
+          make_latest: true
           files: artifacts/*
+          fail_on_unmatched_files: true

@@ -63,7 +63,7 @@ Download the installer for your system from the
 | -------------------- | ----------------------------------------------------------------- |
 | macOS, Apple Silicon | `OpenPaste-<version>-arm64.dmg`                                   |
 | macOS, Intel         | `OpenPaste-<version>.dmg`                                         |
-| Windows              | `OpenPaste Setup <version>.exe`                                   |
+| Windows              | `OpenPaste.Setup.<version>.exe`                                   |
 | Linux                | `OpenPaste-<version>.AppImage` or `openpaste_<version>_amd64.deb` |
 
 Supported: macOS 13 or later, Windows 10 or later, and current 64-bit Linux desktops.
