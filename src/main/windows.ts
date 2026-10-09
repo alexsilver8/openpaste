@@ -39,6 +39,13 @@ function solidBackground(): string {
   return nativeTheme.shouldUseDarkColors ? '#1c1c20' : '#f3f3f5'
 }
 
+// Whether OpenPaste is the active macOS app. The shelf panel never activates it, but Settings does.
+let appIsActive = false
+if (isMac) {
+  app.on('did-become-active', () => (appIsActive = true))
+  app.on('did-resign-active', () => (appIsActive = false))
+}
+
 export function sendEvent(win: BrowserWindow | null | undefined, event: OpenPasteEvent): void {
   if (win && !win.isDestroyed()) win.webContents.send('op:event', event)
 }
@@ -69,7 +76,16 @@ export class Shelf {
       hasShadow: true,
       title: 'OpenPaste',
       backgroundColor: nativeMaterial ? '#00000000' : solidBackground(),
-      ...(isMac ? { vibrancy: 'popover' as const, visualEffectState: 'active' as const } : {}),
+      ...(isMac
+        ? {
+            // A non-activating panel: it floats over full-screen apps and takes the keyboard
+            // without making OpenPaste the active app, so macOS never switches Spaces.
+            type: 'panel',
+            hiddenInMissionControl: true,
+            vibrancy: 'popover' as const,
+            visualEffectState: 'active' as const
+          }
+        : {}),
       ...(isWin && nativeMaterial ? { backgroundMaterial: 'acrylic' as const } : {}),
       webPreferences: {
         preload: preloadPath(),
@@ -109,20 +125,22 @@ export class Shelf {
       height: SHELF_HEIGHT
     })
     sendEvent(this.win, 'shown')
+    // On macOS the panel becomes the key window without activating the app (no app.focus here:
+    // activating would pull you out of a full-screen app into another Space).
     this.win.show()
     this.win.focus()
-    if (isMac) app.focus({ steal: true })
   }
 
   /**
-   * Hides the shelf. With `restoreFocus`, macOS hands focus back to the previous
-   * app (Windows and Linux do this when the window disappears).
+   * Hides the shelf. The app you were using never stopped being active on macOS, so it gets
+   * the keyboard back by itself. The exception is when OpenPaste itself was active (say,
+   * right after closing Settings): then we step aside so the paste lands in the right app.
    */
   hide(options: { restoreFocus: boolean }): void {
     if (!this.win.isVisible()) return
     this.win.hide()
     const otherWindowsOpen = BrowserWindow.getAllWindows().some((w) => w !== this.win && w.isVisible())
-    if (isMac && options.restoreFocus && !otherWindowsOpen) app.hide()
+    if (isMac && options.restoreFocus && appIsActive && !otherWindowsOpen) app.hide()
   }
 
   setKeepOpen(keepOpen: boolean): void {
