@@ -16,6 +16,26 @@
 :root[data-view='settings'] .settings-header {
   -webkit-app-region: drag;
 }
+
+/*
+ * macOS: the window has no visible title bar, so this strip along the top (where the
+ * traffic lights sit) stands in for one. It stays put while the page scrolls, and
+ * content scrolls underneath it.
+ */
+.titlebar {
+  display: none;
+}
+:root[data-platform='darwin'][data-view='settings'] .titlebar {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px; /* matches the page's top padding, so there's no gap above the header */
+  z-index: 10;
+  background: var(--settings-bg);
+  -webkit-app-region: drag;
+}
 .settings.is-embedded {
   padding: 26px 24px 32px;
 }

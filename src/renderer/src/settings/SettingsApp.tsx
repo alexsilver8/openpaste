@@ -97,6 +97,7 @@ export function SettingsApp({ embedded = false }: { embedded?: boolean }) {
 
   return (
     <div className={`settings${embedded ? ' is-embedded' : ''}`}>
+      {!embedded && <div className="titlebar" aria-hidden="true" />}
       <header className="settings-header">
         <img className="settings-logo" src={logoUrl} alt="" />
         <div>
