@@ -37,7 +37,8 @@
     "dist": "pnpm build && electron-builder",
     "dist:mac": "pnpm build && electron-builder --mac",
     "dist:win": "pnpm build && electron-builder --win",
-    "dist:linux": "pnpm build && electron-builder --linux"
+    "dist:linux": "pnpm build && electron-builder --linux",
+    "release": "node scripts/release.mjs"
   },
   "engines": {
     "node": ">=22.12"
