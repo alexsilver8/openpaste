@@ -4,6 +4,7 @@ import type { Settings } from '@shared/types'
 import trayTemplateIcon from '../../resources/trayTemplate.png?asset'
 import trayTemplateIcon2x from '../../resources/trayTemplate@2x.png?asset'
 import trayColorIcon from '../../resources/tray.png?asset'
+import trayColorIcon2x from '../../resources/tray@2x.png?asset'
 
 export interface TrayActions {
   toggleShelf(): void
@@ -14,8 +15,9 @@ export interface TrayActions {
   quit(): void
 }
 
-// Referenced so the bundler copies the @2x variant next to the 1x template image.
+// Referenced so the @2x variants ship next to the 1x images; Electron picks them on HiDPI screens.
 void trayTemplateIcon2x
+void trayColorIcon2x
 
 export class AppTray {
   private tray: Tray

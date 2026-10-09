@@ -9,6 +9,8 @@ files:
   - resources/**
   - package.json
   - '!**/*.map'
+  # Full-size source artwork; the app uses the smaller icons generated from it.
+  - '!resources/logo.png'
 asarUnpack:
   - resources/**
 mac:
