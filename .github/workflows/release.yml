@@ -24,14 +24,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: pnpm/setup@v3
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
-      - run: npx electron-builder ${{ matrix.target }} --publish never
+          runtime: node@22
+          cache: true
+          require-lockfile: true
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm exec electron-builder ${{ matrix.target }} --publish never
         env:
           # Skip code signing when no certificate is configured.
           CSC_IDENTITY_AUTO_DISCOVERY: ${{ secrets.CSC_LINK && 'true' || 'false' }}

@@ -1,0 +1,8 @@
+# pnpm settings (https://pnpm.io/settings). OpenPaste is a single package, not a workspace.
+
+# Dependencies allowed to run install scripts. pnpm refuses to install while any
+# dependency's scripts are unreviewed, so new ones must be added here.
+allowBuilds:
+  esbuild: true
+  # Only used for Squirrel.Windows installers; OpenPaste builds NSIS installers.
+  electron-winstaller: false
