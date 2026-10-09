@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "postinstall": "install-electron",
     "dev": "electron-vite dev",
     "start": "electron-vite preview",
     "build": "electron-vite build",
@@ -17,14 +18,15 @@
     "format": "prettier --write .",
     "demo": "vite --config vite.demo.config.ts",
     "demo:build": "vite build --config vite.demo.config.ts",
-    "dist": "npm run build && electron-builder",
-    "dist:mac": "npm run build && electron-builder --mac",
-    "dist:win": "npm run build && electron-builder --win",
-    "dist:linux": "npm run build && electron-builder --linux"
+    "dist": "pnpm build && electron-builder",
+    "dist:mac": "pnpm build && electron-builder --mac",
+    "dist:win": "pnpm build && electron-builder --win",
+    "dist:linux": "pnpm build && electron-builder --linux"
   },
   "engines": {
     "node": ">=22.12"
   },
+  "packageManager": "pnpm@12.10.1",
   "devDependencies": {
     "@tanstack/react-virtual": "^3.14.13",
     "@types/node": "^24.19.1",

@@ -98,15 +98,16 @@ OpenPaste never records:
 
 ## Develop
 
-Requires Node.js 22.12 or newer.
+Requires Node.js 22.12 or newer and [pnpm](https://pnpm.io/installation) 12
+(`npm install -g pnpm` if you don't have it).
 
 ```bash
-npm install
-npm run dev          # the app with hot reload
-npm run demo         # just the shelf UI in a browser, with sample data
-npm test             # unit tests
-npm run typecheck
-npm run dist:mac     # or dist:win / dist:linux: installers in dist/
+pnpm install         # also downloads Electron
+pnpm dev             # the app with hot reload
+pnpm demo            # just the shelf UI in a browser, with sample data
+pnpm test            # unit tests
+pnpm typecheck
+pnpm dist:mac        # or dist:win / dist:linux: installers in dist/
 ```
 
 ### How it fits together

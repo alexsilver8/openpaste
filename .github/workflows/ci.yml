@@ -6,18 +6,19 @@ on:
   pull_request:
 
 jobs:
+  # "check" is a required status check on main; keep this job name in sync with the ruleset.
   check:
     runs-on: ubuntu-latest
-    env:
-      ELECTRON_SKIP_BINARY_DOWNLOAD: '1'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Installs Node 22 and the pnpm version from package.json, then runs
+      # `pnpm install --frozen-lockfile`.
+      - uses: pnpm/setup@v3
         with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm run typecheck
-      - run: npm test
-      - run: npm run build
-      - run: npm run demo:build
+          runtime: node@22
+          cache: true
+          require-lockfile: true
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm demo:build
