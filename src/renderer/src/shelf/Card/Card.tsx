@@ -1,7 +1,7 @@
 import { memo, useRef, type DragEvent, type MouseEvent } from 'react'
 import { kindLabel } from '@shared/classify'
 import type { ClipView, Pinboard, SourceApp } from '@shared/types'
-import { KIND_COLORS, describeColor } from '../lib/colors'
+import { KIND_COLORS, describeColor } from '../../lib/colors'
 import {
 	fileExtension,
 	fileName,
@@ -9,10 +9,10 @@ import {
 	formatCount,
 	hostOf,
 	relativeTime
-} from '../lib/format'
-import { highlightCode, highlightMatches } from '../lib/highlight'
-import { Icon } from '../lib/icons'
-import { MOD } from '../env'
+} from '../../lib/format'
+import { highlightCode, highlightMatches } from '../../lib/highlight'
+import { Icon } from '../../components/Icon'
+import { MOD } from '../../env'
 
 export const CARD_WIDTH = 232
 export const CARD_GAP = 14

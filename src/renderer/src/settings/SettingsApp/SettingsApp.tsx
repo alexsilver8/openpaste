@@ -6,11 +6,11 @@ import {
 	HISTORY_LIMIT_OPTIONS
 } from '@shared/settings'
 import type { AppEnv, Permissions, Settings, ThemeSetting } from '@shared/types'
-import { api } from '../api'
-import { Icon } from '../lib/icons'
-import { isMac } from '../env'
-import { ShortcutRecorder } from './ShortcutRecorder'
-import logoUrl from '../../../../resources/icon.png'
+import { api } from '../../api'
+import { Icon } from '../../components/Icon'
+import { isMac } from '../../env'
+import { ShortcutRecorder } from '../ShortcutRecorder'
+import logoUrl from '../../../../../resources/icon.png'
 
 function Row({
 	label,

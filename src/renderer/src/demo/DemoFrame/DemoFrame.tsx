@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { formatAccelerator } from '@shared/accelerator'
 import { DEFAULT_SETTINGS } from '@shared/settings'
-import { ShelfApp } from '../shelf/ShelfApp'
-import { SettingsApp } from '../settings/SettingsApp'
-import { Icon } from '../lib/icons'
-import { isMod, platform } from '../env'
-import { demoBus, demoCapture, demoShow, type DemoPasteDetail } from './mockApi'
+import { ShelfApp } from '../../shelf/ShelfApp'
+import { SettingsApp } from '../../settings/SettingsApp'
+import { Icon } from '../../components/Icon'
+import { isMod, platform } from '../../env'
+import { demoBus, demoCapture, demoShow, type DemoPasteDetail } from '../mockApi'
 
 const SHORTCUT = formatAccelerator(DEFAULT_SETTINGS.shortcut, platform)
 

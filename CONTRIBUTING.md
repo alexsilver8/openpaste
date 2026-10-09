@@ -32,6 +32,9 @@ pnpm format
 - Add or update tests in `tests/` when you change classification, search, settings or the store.
 - Platform-specific code lives in `src/main/platform/`. If you can only test on one OS, say which
   in the pull request so someone else can check the others.
+- Each React component in `src/renderer/src` has its own folder named after it, with an `index.ts`
+  that exports it, like `shelf/Card/Card.tsx` and `shelf/Card/index.ts`. Import the folder
+  (`'../Card'`), not the file inside it.
 - UI copy is sentence case and says what things do ("Paste as plain text", not "Submit").
 
 ## Commits and pull requests

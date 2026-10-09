@@ -1,7 +1,7 @@
 import { useState, type RefObject } from 'react'
 import type { ClipKind, Pinboard } from '@shared/types'
-import { Icon, type IconName } from '../lib/icons'
-import { MOD } from '../env'
+import { Icon, type IconName } from '../../components/Icon'
+import { MOD } from '../../env'
 
 export const DRAG_TYPE = 'application/x-openpaste-id'
 

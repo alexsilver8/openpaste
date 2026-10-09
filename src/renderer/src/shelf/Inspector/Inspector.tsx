@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { kindLabel } from '@shared/classify'
 import type { ClipPayload, ClipView, Pinboard } from '@shared/types'
-import { api } from '../api'
-import { describeColor } from '../lib/colors'
-import { absoluteTime, formatBytes, formatCount, hostOf } from '../lib/format'
-import { highlightCode } from '../lib/highlight'
-import { Icon } from '../lib/icons'
-import { ENTER, MOD, SHIFT, isMod } from '../env'
+import { api } from '../../api'
+import { describeColor } from '../../lib/colors'
+import { absoluteTime, formatBytes, formatCount, hostOf } from '../../lib/format'
+import { highlightCode } from '../../lib/highlight'
+import { Icon } from '../../components/Icon'
+import { ENTER, MOD, SHIFT, isMod } from '../../env'
 
 interface InspectorProps {
 	item: ClipView
