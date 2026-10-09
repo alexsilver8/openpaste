@@ -1,7 +1,9 @@
 import { memo } from 'react'
 import type { RowProps } from './row.props'
 
-const Row = ({ label, note, children, htmlFor }: RowProps) => {
+const Row = (props: RowProps) => {
+	const { label, note, children, htmlFor } = props
+
 	return (
 		<div className="row-setting">
 			<div className="row-setting-text">

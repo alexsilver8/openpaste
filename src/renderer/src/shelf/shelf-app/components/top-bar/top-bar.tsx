@@ -5,30 +5,46 @@ import { DRAG_TYPE, KINDS } from './top-bar.constants'
 import type { TopBarProps } from './top-bar.props'
 
 const TopBar = (props: TopBarProps) => {
+	const {
+		boards,
+		board,
+		kind,
+		inputRef,
+		query,
+		onQuery,
+		onBoard,
+		onEditBoard,
+		onDropOnBoard,
+		onNewBoard,
+		paused,
+		onResume,
+		onKind,
+		onSettings
+	} = props
+
 	const [dropTarget, setDropTarget] = useState<string | null>(null)
-	const { boards, board, kind } = props
 
 	return (
 		<div className="topbar">
 			<label className="search">
 				<Icon name="search" size={16} />
 				<input
-					ref={props.inputRef}
+					ref={inputRef}
 					type="text"
 					aria-label="Search clipboard history"
 					placeholder="Search"
 					spellCheck={false}
 					autoComplete="off"
-					value={props.query}
-					onChange={(e) => props.onQuery(e.target.value)}
+					value={query}
+					onChange={(e) => onQuery(e.target.value)}
 				/>
-				{props.query ? (
+				{query ? (
 					<button
 						type="button"
 						className="search-clear"
 						aria-label="Clear search"
 						onMouseDown={(e) => e.preventDefault()}
-						onClick={() => props.onQuery('')}
+						onClick={() => onQuery('')}
 					>
 						<Icon name="close" size={13} />
 					</button>
@@ -44,7 +60,7 @@ const TopBar = (props: TopBarProps) => {
 					aria-selected={board === null}
 					className="board-tab"
 					onMouseDown={(e) => e.preventDefault()}
-					onClick={() => props.onBoard(null)}
+					onClick={() => onBoard(null)}
 				>
 					<Icon name="clock" size={14} />
 					History
@@ -58,13 +74,13 @@ const TopBar = (props: TopBarProps) => {
 						className={`board-tab${dropTarget === b.id ? ' is-drop' : ''}`}
 						title="Double-click to rename"
 						onMouseDown={(e) => e.preventDefault()}
-						onClick={() => props.onBoard(b.id)}
+						onClick={() => onBoard(b.id)}
 						onDoubleClick={(e) =>
-							props.onEditBoard(b, e.currentTarget.getBoundingClientRect())
+							onEditBoard(b, e.currentTarget.getBoundingClientRect())
 						}
 						onContextMenu={(e) => {
 							e.preventDefault()
-							props.onEditBoard(b, e.currentTarget.getBoundingClientRect())
+							onEditBoard(b, e.currentTarget.getBoundingClientRect())
 						}}
 						onDragOver={(e) => {
 							if (!e.dataTransfer.types.includes(DRAG_TYPE)) return
@@ -77,7 +93,7 @@ const TopBar = (props: TopBarProps) => {
 							e.preventDefault()
 							setDropTarget(null)
 							const id = e.dataTransfer.getData(DRAG_TYPE)
-							if (id) props.onDropOnBoard(b.id, id)
+							if (id) onDropOnBoard(b.id, id)
 						}}
 					>
 						<span className="board-dot" style={{ background: b.color }} />
@@ -90,18 +106,18 @@ const TopBar = (props: TopBarProps) => {
 					aria-label="New pinboard"
 					title="New pinboard"
 					onMouseDown={(e) => e.preventDefault()}
-					onClick={(e) => props.onNewBoard(e.currentTarget.getBoundingClientRect())}
+					onClick={(e) => onNewBoard(e.currentTarget.getBoundingClientRect())}
 				>
 					<Icon name="plus" size={15} />
 				</button>
 			</nav>
 
 			<div className="topbar-end">
-				{props.paused && (
+				{paused && (
 					<button
 						type="button"
 						className="paused"
-						onClick={props.onResume}
+						onClick={onResume}
 						title="Resume capturing"
 					>
 						<Icon name="pause" size={13} />
@@ -119,7 +135,7 @@ const TopBar = (props: TopBarProps) => {
 							title={k.label}
 							className="kind"
 							onMouseDown={(e) => e.preventDefault()}
-							onClick={() => props.onKind(k.kind)}
+							onClick={() => onKind(k.kind)}
 						>
 							<Icon name={k.icon} size={15} />
 						</button>
@@ -131,7 +147,7 @@ const TopBar = (props: TopBarProps) => {
 					aria-label="Settings"
 					title={`Settings (${MOD},)`}
 					onMouseDown={(e) => e.preventDefault()}
-					onClick={props.onSettings}
+					onClick={onSettings}
 				>
 					<Icon name="settings" size={17} />
 				</button>

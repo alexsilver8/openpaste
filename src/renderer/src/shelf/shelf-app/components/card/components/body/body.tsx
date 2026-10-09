@@ -5,7 +5,9 @@ import { highlightCode, highlightMatches } from '@renderer/lib/highlight'
 import { Icon } from '@renderer/components/icon'
 import type { BodyProps } from './body.props'
 
-const Body = ({ item, terms }: BodyProps) => {
+const Body = (props: BodyProps) => {
+	const { item, terms } = props
+
 	switch (item.kind) {
 		case 'image':
 			return (

@@ -39,7 +39,9 @@ interface EditorState {
 	pinItem?: string
 }
 
-const ShelfApp = ({ active = true }: ShelfAppProps) => {
+const ShelfApp = (props: ShelfAppProps) => {
+	const { active = true } = props
+
 	const [items, setItems] = useState<ClipView[]>([])
 	const [loaded, setLoaded] = useState(false)
 	const [boards, setBoards] = useState<Pinboard[]>([])

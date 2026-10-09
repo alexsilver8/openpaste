@@ -2,7 +2,9 @@ import { memo } from 'react'
 import { PATHS } from './icon.constants'
 import type { IconProps } from './icon.props'
 
-const Icon = ({ name, size = 16, ...rest }: IconProps) => {
+const Icon = (props: IconProps) => {
+	const { name, size = 16, ...rest } = props
+
 	return (
 		<svg
 			width={size}

@@ -62,11 +62,13 @@ card/
     └── body/
 ```
 
-A component is an arrow function, default-exported wrapped in `memo`, even when it doesn't need
-memoizing:
+A component is an arrow function that takes `props` and destructures it on its first line, and
+it's default-exported wrapped in `memo`, even when it doesn't need memoizing:
 
 ```tsx
-const Card = ({ item, selected }: CardProps) => {
+const Card = (props: CardProps) => {
+	const { item, selected } = props
+
 	// …
 }
 
@@ -76,6 +78,9 @@ export default memo(Card)
 - Folder and file names are kebab-case (`top-bar/top-bar.tsx`); the component itself keeps its
   PascalCase name (`TopBar`).
 - One component per file, and its file exports only that component.
+- Props are read through that one `const { … } = props` line, followed by a blank line: no
+  destructuring in the parameter list and no `props.x`. Defaults go in the destructure
+  (`const { size = 16 } = props`).
 - The folder's `index.ts` re-exports it by name (`export { default as Card } from './card'`), so
   other files import `{ Card }`.
 - `memo` skips re-renders when props haven't changed, so read outside values (the time, `window`,

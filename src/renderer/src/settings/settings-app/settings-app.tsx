@@ -17,7 +17,9 @@ import { Section } from './components/section'
 import { THEMES } from './settings-app.constants'
 import type { SettingsAppProps } from './settings-app.props'
 
-const SettingsApp = ({ embedded = false }: SettingsAppProps) => {
+const SettingsApp = (props: SettingsAppProps) => {
+	const { embedded = false } = props
+
 	const [settings, setSettings] = useState<Settings | null>(null)
 	const [env, setEnv] = useState<AppEnv | null>(null)
 	const [permissions, setPermissions] = useState<Permissions>({ accessibility: null })

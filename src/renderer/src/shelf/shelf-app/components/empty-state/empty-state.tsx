@@ -4,7 +4,9 @@ import { MOD } from '@renderer/env'
 import { platform } from '@renderer/env'
 import type { EmptyStateProps } from './empty-state.props'
 
-const EmptyState = ({ reason, query, shortcut, boardName }: EmptyStateProps) => {
+const EmptyState = (props: EmptyStateProps) => {
+	const { reason, query, shortcut, boardName } = props
+
 	let title: string
 	let hint: string
 	switch (reason) {

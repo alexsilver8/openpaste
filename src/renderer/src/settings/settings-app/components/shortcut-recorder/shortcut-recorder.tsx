@@ -6,7 +6,9 @@ import { platform } from '@renderer/env'
 import type { ShortcutRecorderProps } from './shortcut-recorder.props'
 
 /** Click, press a key combination, done. Esc cancels; Backspace restores the default. */
-const ShortcutRecorder = ({ value, onChange }: ShortcutRecorderProps) => {
+const ShortcutRecorder = (props: ShortcutRecorderProps) => {
+	const { value, onChange } = props
+
 	const [recording, setRecording] = useState(false)
 	const [error, setError] = useState<string | undefined>()
 

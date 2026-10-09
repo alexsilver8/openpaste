@@ -11,16 +11,9 @@ import { TEXT_KINDS } from './inspector.constants'
 import type { InspectorProps } from './inspector.props'
 
 /** A larger look at one item, with editing, renaming and pinboard membership. */
-const Inspector = ({
-	item,
-	boards,
-	startEditing,
-	focusTitle,
-	onClose,
-	onPaste,
-	onCopy,
-	onDelete
-}: InspectorProps) => {
+const Inspector = (props: InspectorProps) => {
+	const { item, boards, startEditing, focusTitle, onClose, onPaste, onCopy, onDelete } = props
+
 	const [payload, setPayload] = useState<ClipPayload | null>(null)
 	const [editing, setEditing] = useState(!!startEditing && TEXT_KINDS.has(item.kind))
 	const [draft, setDraft] = useState('')

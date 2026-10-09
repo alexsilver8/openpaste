@@ -4,7 +4,9 @@ import { BOARD_COLORS } from './board-editor.constants'
 import type { BoardEditorProps } from './board-editor.props'
 
 /** Popover for creating, renaming, recoloring and deleting a pinboard. */
-const BoardEditor = ({ anchor, board, onSave, onDelete, onClose }: BoardEditorProps) => {
+const BoardEditor = (props: BoardEditorProps) => {
+	const { anchor, board, onSave, onDelete, onClose } = props
+
 	const [name, setName] = useState(board?.name ?? '')
 	const [color, setColor] = useState(board?.color ?? BOARD_COLORS[0])
 	const [confirmDelete, setConfirmDelete] = useState(false)

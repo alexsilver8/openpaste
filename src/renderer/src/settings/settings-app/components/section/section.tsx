@@ -1,7 +1,9 @@
 import { memo } from 'react'
 import type { SectionProps } from './section.props'
 
-const Section = ({ title, children }: SectionProps) => {
+const Section = (props: SectionProps) => {
+	const { title, children } = props
+
 	return (
 		<section className="settings-section" aria-label={title}>
 			<h2>{title}</h2>

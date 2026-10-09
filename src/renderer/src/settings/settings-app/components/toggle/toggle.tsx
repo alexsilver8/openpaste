@@ -1,7 +1,9 @@
 import { memo } from 'react'
 import type { ToggleProps } from './toggle.props'
 
-const Toggle = ({ id, checked, onChange }: ToggleProps) => {
+const Toggle = (props: ToggleProps) => {
+	const { id, checked, onChange } = props
+
 	return (
 		<button
 			id={id}

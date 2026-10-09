@@ -8,20 +8,22 @@ import { Body } from './components/body'
 import { meta } from './card.utils'
 import type { CardProps } from './card.props'
 
-const Card = ({
-	item,
-	index,
-	selected,
-	showHint,
-	tapToPaste,
-	boards,
-	terms,
-	now,
-	onSelect,
-	onActivate,
-	onMenu,
-	onDragStart
-}: CardProps) => {
+const Card = (props: CardProps) => {
+	const {
+		item,
+		index,
+		selected,
+		showHint,
+		tapToPaste,
+		boards,
+		terms,
+		now,
+		onSelect,
+		onActivate,
+		onMenu,
+		onDragStart
+	} = props
+
 	const band = item.source?.color ?? KIND_COLORS[item.kind]
 	const pinned = boards.filter((b) => item.pinboards.includes(b.id))
 	const label = item.title || kindLabel(item)

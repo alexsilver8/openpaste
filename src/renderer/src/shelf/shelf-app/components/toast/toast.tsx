@@ -1,7 +1,9 @@
 import { memo, useEffect } from 'react'
 import type { ToastProps } from './toast.props'
 
-const Toast = ({ toast, onDismiss }: ToastProps) => {
+const Toast = (props: ToastProps) => {
+	const { toast, onDismiss } = props
+
 	useEffect(() => {
 		const timer = setTimeout(onDismiss, 5000)
 

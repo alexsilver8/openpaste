@@ -2,7 +2,9 @@ import { memo } from 'react'
 import { Icon } from '@renderer/components/icon'
 import type { AppMarkProps } from './app-mark.props'
 
-const AppMark = ({ source, iconUrl }: AppMarkProps) => {
+const AppMark = (props: AppMarkProps) => {
+	const { source, iconUrl } = props
+
 	if (iconUrl)
 		return (
 			<img className="app-mark" src={iconUrl} alt="" title={source?.name} draggable={false} />
