@@ -1,4 +1,9 @@
+<img src="resources/icon.png" alt="" width="96" height="96" />
+
 # OpenPaste
+
+**[Download OpenPaste](https://github.com/alexsilver8/openpaste/releases/latest)** for macOS,
+Windows or Linux. Free and open source.
 
 An open-source clipboard manager for macOS, Windows and Linux. Everything you copy lands on a
 visual shelf that slides up with one shortcut. Find it by typing, pick it with the arrow keys,
@@ -29,37 +34,45 @@ not affiliated with any of them.
 
 ## Keyboard
 
-| Keys                                   | Does                                          |
-| -------------------------------------- | --------------------------------------------- |
-| `⇧⌘V` / `Ctrl+Shift+V`                 | Open or close the shelf (change in Settings)  |
-| `←` `→`                                | Move between cards (`⌘`/`Ctrl` jumps to ends) |
-| `Return`                               | Paste                                         |
-| `Shift+Return`                         | Paste as plain text (or with formatting, if plain text is your default) |
-| `⌘1`–`⌘9` / `Ctrl+1`–`Ctrl+9`          | Paste one of the first nine cards (hold the modifier to see numbers) |
-| Just type                              | Search                                        |
-| `Space`                                | Preview the selected card                     |
-| `⌘C` / `Ctrl+C`                        | Copy without pasting                          |
-| `⌘E` / `Ctrl+E`                        | Edit text                                     |
-| `⌘R` / `Ctrl+R`                        | Rename                                        |
-| `⌘P` / `Ctrl+P`                        | Pin to a pinboard                             |
-| `⌘⌫` / `Delete`                        | Delete (with undo)                            |
-| `Tab` / `Shift+Tab`                    | Switch pinboard                               |
-| `Esc`                                  | Clear the search, then close                  |
+| Keys                          | Does                                                                    |
+| ----------------------------- | ----------------------------------------------------------------------- |
+| `⇧⌘V` / `Ctrl+Shift+V`        | Open or close the shelf (change in Settings)                            |
+| `←` `→`                       | Move between cards (`⌘`/`Ctrl` jumps to ends)                           |
+| `Return`                      | Paste                                                                   |
+| `Shift+Return`                | Paste as plain text (or with formatting, if plain text is your default) |
+| `⌘1`–`⌘9` / `Ctrl+1`–`Ctrl+9` | Paste one of the first nine cards (hold the modifier to see numbers)    |
+| Just type                     | Search                                                                  |
+| `Space`                       | Preview the selected card                                               |
+| `⌘C` / `Ctrl+C`               | Copy without pasting                                                    |
+| `⌘E` / `Ctrl+E`               | Edit text                                                               |
+| `⌘R` / `Ctrl+R`               | Rename                                                                  |
+| `⌘P` / `Ctrl+P`               | Pin to a pinboard                                                       |
+| `⌘⌫` / `Delete`               | Delete (with undo)                                                      |
+| `Tab` / `Shift+Tab`           | Switch pinboard                                                         |
+| `Esc`                         | Clear the search, then close                                            |
 
 Right-click a card for every action. Drag a card onto a pinboard tab to pin it, or out of the shelf
 into another app.
 
 ## Install
 
-Grab the installer for your system from the [Releases](../../releases) page:
-`.dmg` for macOS, `.exe` for Windows, `.AppImage` or `.deb` for Linux.
+Download the installer for your system from the
+[latest release](https://github.com/alexsilver8/openpaste/releases/latest):
+
+| System               | File                                                              |
+| -------------------- | ----------------------------------------------------------------- |
+| macOS, Apple Silicon | `OpenPaste-<version>-arm64.dmg`                                   |
+| macOS, Intel         | `OpenPaste-<version>.dmg`                                         |
+| Windows              | `OpenPaste Setup <version>.exe`                                   |
+| Linux                | `OpenPaste-<version>.AppImage` or `openpaste_<version>_amd64.deb` |
 
 Supported: macOS 13 or later, Windows 10 or later, and current 64-bit Linux desktops.
 
-Builds are unsigned until a signing certificate is added to the release workflow, so:
+The installers aren't signed with a paid developer certificate yet, so the first launch needs one
+extra step:
 
-- **macOS** blocks the first launch. Open System Settings → Privacy & Security and choose
-  Open Anyway.
+- **macOS** says it can't check OpenPaste for malicious software. Open System Settings →
+  Privacy & Security, scroll down and choose Open Anyway.
 - **Windows** SmartScreen may warn about an unknown publisher: More info → Run anyway.
 
 ### Permissions
@@ -77,11 +90,11 @@ Builds are unsigned until a signing certificate is added to the release workflow
 
 History is stored only on your computer, in a plain folder you can open from Settings:
 
-| System  | Folder                                              |
-| ------- | --------------------------------------------------- |
-| macOS   | `~/Library/Application Support/OpenPaste/data`      |
-| Windows | `%APPDATA%\OpenPaste\data`                          |
-| Linux   | `~/.config/OpenPaste/data`                          |
+| System  | Folder                                         |
+| ------- | ---------------------------------------------- |
+| macOS   | `~/Library/Application Support/OpenPaste/data` |
+| Windows | `%APPDATA%\OpenPaste\data`                     |
+| Linux   | `~/.config/OpenPaste/data`                     |
 
 `history.json` is the index, `payloads/` holds the full text and formatting of each item, and
 `images/` holds copied images. Unpinned items are removed after 30 days or once you pass 2,000
