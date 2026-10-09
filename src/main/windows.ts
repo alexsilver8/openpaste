@@ -19,14 +19,14 @@ function preloadPath(): string {
 
 function loadRenderer(win: BrowserWindow, view: 'shelf' | 'settings'): void {
 	const devUrl = process.env['ELECTRON_RENDERER_URL']
-	if (!app.isPackaged && devUrl) void win.loadURL(`${devUrl}#${view}`)
-	else void win.loadFile(join(__dirname, '../renderer/index.html'), { hash: view })
+	if (!app.isPackaged && devUrl) win.loadURL(`${devUrl}#${view}`)
+	else win.loadFile(join(__dirname, '../renderer/index.html'), { hash: view })
 }
 
 /** Keeps windows on our own pages and sends web links to the default browser. */
 function lockDown(win: BrowserWindow): void {
 	win.webContents.setWindowOpenHandler(({ url }) => {
-		if (/^https?:\/\//.test(url)) void shell.openExternal(url)
+		if (/^https?:\/\//.test(url)) shell.openExternal(url)
 
 		return { action: 'deny' }
 	})
@@ -195,7 +195,7 @@ export function openSettingsWindow(): BrowserWindow {
 	lockDown(win)
 	loadRenderer(win, 'settings')
 	win.once('ready-to-show', () => {
-		if (isMac) void app.dock?.show()
+		if (isMac) app.dock?.show()
 		win.show()
 		if (isMac) app.focus({ steal: true })
 	})

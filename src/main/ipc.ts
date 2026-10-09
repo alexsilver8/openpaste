@@ -86,7 +86,9 @@ export function registerIpc(controller: Controller): void {
 	handle('op:copy', (id, options) =>
 		controller.copy(str(id), !!(options as { plain?: boolean } | undefined)?.plain)
 	)
-	handle('op:remove', (id) => void store.remove(str(id)))
+	handle('op:remove', (id) => {
+		store.remove(str(id))
+	})
 	handle('op:undo-remove', () => !!store.undoRemove())
 	handle('op:update-item', (id, patch) => {
 		const p = (patch && typeof patch === 'object' ? patch : {}) as Record<string, unknown>
@@ -121,14 +123,14 @@ export function registerIpc(controller: Controller): void {
 
 	on('op:open-accessibility', () => {
 		if (process.platform === 'darwin') {
-			void shell.openExternal(
+			shell.openExternal(
 				'x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility'
 			)
 		}
 	})
 	on('op:reveal-data', () => controller.revealDataFolder())
 	on('op:open-external', (_event, url) => {
-		if (typeof url === 'string' && /^https?:\/\//.test(url)) void shell.openExternal(url)
+		if (typeof url === 'string' && /^https?:\/\//.test(url)) shell.openExternal(url)
 	})
 	on('op:open-settings', () => controller.openSettings())
 	on('op:hide', () => controller.hideShelf())

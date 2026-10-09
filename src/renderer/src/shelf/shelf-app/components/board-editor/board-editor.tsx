@@ -67,8 +67,7 @@ const BoardEditor = (props: BoardEditorProps) => {
 
 	const handleFormKeyDown = (e: KeyboardEvent<HTMLFormElement>) => e.stopPropagation()
 
-	const handleNameChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
-		setName(e.target.value)
+	const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => setName(e.currentTarget.value)
 
 	const handleDeleteClick = () => (confirmDelete ? onDelete?.() : setConfirmDelete(true))
 

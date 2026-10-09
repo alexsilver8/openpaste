@@ -32,7 +32,7 @@ const Inspector = (props: InspectorProps) => {
 
 	useEffect(() => {
 		let alive = true
-		void api.getPayload(item.id).then((p) => {
+		api.getPayload(item.id).then((p) => {
 			if (!alive) return
 			setPayload(p)
 			setDraft(p?.text ?? item.preview)
@@ -53,10 +53,10 @@ const Inspector = (props: InspectorProps) => {
 
 	const saveTitle = (): void => {
 		if ((item.title ?? '') !== title.trim())
-			void api.updateItem(item.id, { title: title.trim() || null })
+			api.updateItem(item.id, { title: title.trim() || null })
 	}
 	const saveText = (): void => {
-		void api.updateItem(item.id, { text: draft })
+		api.updateItem(item.id, { text: draft })
 		setEditing(false)
 	}
 
@@ -92,8 +92,8 @@ const Inspector = (props: InspectorProps) => {
 	const text = payload?.text ?? item.preview
 	const color = item.kind === 'color' ? describeColor(item.color ?? item.preview) : null
 
-	const handleDraftChange = (e: ChangeEvent<HTMLTextAreaElement, HTMLTextAreaElement>) =>
-		setDraft(e.target.value)
+	const handleDraftChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
+		setDraft(e.currentTarget.value)
 
 	const handleOpenLinkClick = () => api.openExternal(item.url!)
 
@@ -193,11 +193,11 @@ const Inspector = (props: InspectorProps) => {
 		if (item.rich) details.push(['Format', 'Rich text (formatting kept)'])
 	}
 
-	const handlePinToggle = (boardId: string, pinned: boolean) =>
-		void api.setPinned(item.id, boardId, pinned)
+	const handlePinToggle = (boardId: string, pinned: boolean) => {
+		api.setPinned(item.id, boardId, pinned)
+	}
 
-	const handleTitleChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
-		setTitle(e.target.value)
+	const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
 
 	const handleTitleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {

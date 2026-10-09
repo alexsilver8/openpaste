@@ -13,8 +13,9 @@ import logoUrl from '@resources/icon.png'
 import { IgnoredApp } from './components/ignored-app'
 import { Row } from './components/row'
 import { ShortcutRecorder } from './components/shortcut-recorder'
-import { Toggle } from './components/toggle'
 import { Section } from './components/section'
+import { SettingSelect } from './components/setting-select'
+import { SettingToggle } from './components/setting-toggle'
 import { ThemeOption } from './components/theme-option'
 import { THEMES } from './settings-app.constants'
 import type { SettingsAppProps } from './settings-app.props'
@@ -31,10 +32,14 @@ const SettingsApp = (props: SettingsAppProps) => {
 	const [cleared, setCleared] = useState(false)
 
 	useEffect(() => {
-		const load = (): void => void api.getSettings().then(setSettings)
+		const load = (): void => {
+			api.getSettings().then(setSettings)
+		}
 		load()
-		void api.getEnv().then(setEnv)
-		const refreshPermissions = (): void => void api.getPermissions().then(setPermissions)
+		api.getEnv().then(setEnv)
+		const refreshPermissions = (): void => {
+			api.getPermissions().then(setPermissions)
+		}
 		refreshPermissions()
 		window.addEventListener('focus', refreshPermissions)
 		const off = api.on('settings-changed', load)
@@ -63,35 +68,22 @@ const SettingsApp = (props: SettingsAppProps) => {
 	const addIgnoredApp = (): void => {
 		const name = newApp.trim()
 		if (!name) return
-		void update({ ignoredApps: [...settings.ignoredApps, name] })
+		update({ ignoredApps: [...settings.ignoredApps, name] })
 		setNewApp('')
 	}
 
-	const handleThemeSelect = (theme: ThemeSetting) => void update({ theme })
+	const handleThemeSelect = (theme: ThemeSetting) => {
+		update({ theme })
+	}
 
-	const handleIgnoredAppRemove = (app: string) =>
-		void update({ ignoredApps: settings.ignoredApps.filter((a) => a !== app) })
-
-	const handleLaunchAtLoginChange = (v: boolean) => void update({ launchAtLogin: v })
-
-	const handlePasteDirectlyChange = (v: boolean) => void update({ pasteDirectly: v })
+	const handleIgnoredAppRemove = (app: string) => {
+		update({ ignoredApps: settings.ignoredApps.filter((a) => a !== app) })
+	}
 
 	const handleAccessibilityClick = () => api.openAccessibilitySettings()
 
-	const handlePlainTextByDefaultChange = (v: boolean) => void update({ plainTextByDefault: v })
-
-	const handleHistoryDaysChange = (e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) =>
-		void update({ historyDays: Number(e.target.value) })
-
-	const handleHistoryLimitChange = (e: ChangeEvent<HTMLSelectElement, HTMLSelectElement>) =>
-		void update({ historyLimit: Number(e.target.value) })
-
-	const handleCaptureImagesChange = (v: boolean) => void update({ captureImages: v })
-
-	const handleCaptureFilesChange = (v: boolean) => void update({ captureFiles: v })
-
-	const handleKeepPinnedChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
-		setKeepPinned(e.target.checked)
+	const handleKeepPinnedChange = (e: ChangeEvent<HTMLInputElement>) =>
+		setKeepPinned(e.currentTarget.checked)
 
 	const handleClearCancelClick = () => setConfirmClear(false)
 
@@ -106,20 +98,17 @@ const SettingsApp = (props: SettingsAppProps) => {
 		setConfirmClear(true)
 	}
 
-	const handlePausedChange = (v: boolean) => void update({ paused: v })
-
-	const handleIgnoreConcealedChange = (v: boolean) => void update({ ignoreConcealed: v })
-
 	const handleAddAppSubmit = (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		addIgnoredApp()
 	}
 
-	const handleNewAppChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
-		setNewApp(e.target.value)
+	const handleNewAppChange = (e: ChangeEvent<HTMLInputElement>) =>
+		setNewApp(e.currentTarget.value)
 
-	const handleResetIgnoredAppsClick = () =>
-		void update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
+	const handleResetIgnoredAppsClick = () => {
+		update({ ignoredApps: DEFAULT_SETTINGS.ignoredApps })
+	}
 
 	const handleRevealDataFolderClick = () => api.revealDataFolder()
 
@@ -139,10 +128,11 @@ const SettingsApp = (props: SettingsAppProps) => {
 					<ShortcutRecorder value={settings.shortcut} onChange={setShortcut} />
 				</Row>
 				<Row label="Open at login" htmlFor="s-login">
-					<Toggle
+					<SettingToggle
 						id="s-login"
-						checked={settings.launchAtLogin}
-						onChange={handleLaunchAtLoginChange}
+						setting="launchAtLogin"
+						settings={settings}
+						onChange={update}
 					/>
 				</Row>
 				<Row label="Appearance">
@@ -166,10 +156,11 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="When off, choosing an item copies it and you paste it yourself."
 					htmlFor="s-direct"
 				>
-					<Toggle
+					<SettingToggle
 						id="s-direct"
-						checked={settings.pasteDirectly}
-						onChange={handlePasteDirectlyChange}
+						setting="pasteDirectly"
+						settings={settings}
+						onChange={update}
 					/>
 				</Row>
 				{isMac && settings.pasteDirectly && permissions.accessibility === false && (
@@ -189,10 +180,11 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="Strips fonts, colors and links. Hold Shift while pasting to do the opposite."
 					htmlFor="s-plain"
 				>
-					<Toggle
+					<SettingToggle
 						id="s-plain"
-						checked={settings.plainTextByDefault}
-						onChange={handlePlainTextByDefaultChange}
+						setting="plainTextByDefault"
+						settings={settings}
+						onChange={update}
 					/>
 				</Row>
 			</Section>
@@ -203,38 +195,29 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="Items saved to a pinboard are kept until you delete them."
 					htmlFor="s-days"
 				>
-					<select
+					<SettingSelect
 						id="s-days"
-						className="select"
-						value={settings.historyDays}
-						onChange={handleHistoryDaysChange}
-					>
-						{HISTORY_DAY_OPTIONS.map((o) => (
-							<option key={o.value} value={o.value}>
-								{o.label}
-							</option>
-						))}
-					</select>
+						setting="historyDays"
+						options={HISTORY_DAY_OPTIONS}
+						settings={settings}
+						onChange={update}
+					/>
 				</Row>
 				<Row label="Keep at most" htmlFor="s-limit">
-					<select
+					<SettingSelect
 						id="s-limit"
-						className="select"
-						value={settings.historyLimit}
-						onChange={handleHistoryLimitChange}
-					>
-						{HISTORY_LIMIT_OPTIONS.map((o) => (
-							<option key={o.value} value={o.value}>
-								{o.label}
-							</option>
-						))}
-					</select>
+						setting="historyLimit"
+						options={HISTORY_LIMIT_OPTIONS}
+						settings={settings}
+						onChange={update}
+					/>
 				</Row>
 				<Row label="Save images" htmlFor="s-images">
-					<Toggle
+					<SettingToggle
 						id="s-images"
-						checked={settings.captureImages}
-						onChange={handleCaptureImagesChange}
+						setting="captureImages"
+						settings={settings}
+						onChange={update}
 					/>
 				</Row>
 				<Row
@@ -242,10 +225,11 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="Stores the file locations, not copies of the files."
 					htmlFor="s-files"
 				>
-					<Toggle
+					<SettingToggle
 						id="s-files"
-						checked={settings.captureFiles}
-						onChange={handleCaptureFilesChange}
+						setting="captureFiles"
+						settings={settings}
+						onChange={update}
 					/>
 				</Row>
 				<Row
@@ -293,17 +277,23 @@ const SettingsApp = (props: SettingsAppProps) => {
 					note="Nothing new is recorded until you turn this off."
 					htmlFor="s-paused"
 				>
-					<Toggle id="s-paused" checked={settings.paused} onChange={handlePausedChange} />
+					<SettingToggle
+						id="s-paused"
+						setting="paused"
+						settings={settings}
+						onChange={update}
+					/>
 				</Row>
 				<Row
 					label="Skip passwords"
 					note="Ignores anything password managers mark as private when they copy it."
 					htmlFor="s-concealed"
 				>
-					<Toggle
+					<SettingToggle
 						id="s-concealed"
-						checked={settings.ignoreConcealed}
-						onChange={handleIgnoreConcealedChange}
+						setting="ignoreConcealed"
+						settings={settings}
+						onChange={update}
 					/>
 				</Row>
 				<div className="row-setting row-setting--stack">

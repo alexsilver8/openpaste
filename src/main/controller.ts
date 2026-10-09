@@ -41,14 +41,13 @@ export class Controller {
 
 	toggleShelf(): void {
 		if (this.shelf.visible) this.hideShelf()
-		else void this.showShelf()
+		else this.showShelf()
 	}
 
 	hideShelf(): void {
 		const previous = this.shelf.previous
 		this.shelf.hide({ restoreFocus: true })
-		if (process.platform === 'win32' && previous?.window)
-			void this.helper?.activate(previous.window)
+		if (process.platform === 'win32' && previous?.window) this.helper?.activate(previous.window)
 	}
 
 	// ── Clipboard actions ──────────────────────────────────────────────────
@@ -162,11 +161,11 @@ export class Controller {
 	}
 
 	revealDataFolder(): void {
-		void shell.openPath(this.store.dir)
+		shell.openPath(this.store.dir)
 	}
 
 	about(): void {
-		void dialog.showMessageBox({
+		dialog.showMessageBox({
 			type: 'info',
 			message: `OpenPaste ${app.getVersion()}`,
 			detail: 'An open-source clipboard manager.\nMIT licensed. Your clipboard history never leaves this computer.',

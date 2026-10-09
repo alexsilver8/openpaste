@@ -45,6 +45,9 @@ pnpm format
 - Imports from outside the current folder use an alias, never `../`: `@renderer/…` for
   `src/renderer/src`, `@shared/…` for `src/shared` and `@resources/…` for `resources`. Use `./`
   only for files in the same folder or below it.
+- Don't use the `void` operator. Call a function whose result you don't need as a plain
+  statement (`load()`), and give an arrow function that shouldn't return anything a block body
+  (`() => { load() }`).
 
 ## Component layout
 
@@ -89,12 +92,16 @@ export default memo(Card)
   functions declared in the component body above the JSX that uses them, like
   `onClick={handleClick}`, never `onClick={() => …}`.
 - Type each handler's event with React's event type for that element, such as
-  `MouseEvent<HTMLButtonElement>`, `ChangeEvent<HTMLInputElement, HTMLInputElement>` or
-  `SubmitEvent<HTMLFormElement>`. Never use `FormEvent`, which React's types deprecate. In a file
-  that also uses the browser's own event types (in a `window.addEventListener` callback, say),
-  write those as `globalThis.MouseEvent` so they don't clash with React's.
+  `MouseEvent<HTMLButtonElement>`, `ChangeEvent<HTMLInputElement>` or
+  `SubmitEvent<HTMLFormElement>`, and read the element through `e.currentTarget`. Never use
+  `FormEvent`, which React's types deprecate. In a file that also uses the browser's own event
+  types (in a `window.addEventListener` callback, say), write those as `globalThis.MouseEvent` so
+  they don't clash with React's.
 - When an item rendered in a `.map()` needs its own handlers, make it a sub-component (like
   `BoardTab` in `top-bar/components/`) rather than writing handlers inside the loop.
+- Don't write near-duplicate handlers. When several controls differ only in which value they
+  change, make a component that takes the key instead: settings switches are
+  `<SettingToggle setting="launchAtLogin" … />`, not one `handle…Change` per setting.
 - Props go in `<name>.props.ts` as `<Name>Props`, along with any types that only describe a prop
   (like `MenuEntry` for `Menu`'s entries). A component with no props has no props file.
 - Top-level constants go in `<name>.constants.ts` (`.tsx` if they contain JSX), and helper

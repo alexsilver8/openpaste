@@ -34,4 +34,4 @@ async function boot(): Promise<void> {
 	)
 }
 
-void boot()
+boot()

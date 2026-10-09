@@ -48,8 +48,10 @@ export class ClipboardWatcher extends EventEmitter {
 	start(): void {
 		if (this.timer) return
 		// Baseline on start: whatever is on the clipboard now isn't a new copy.
-		void this.exclusive(() => this.check({ baselineOnly: true }))
-		this.timer = setInterval(() => void this.tick(), this.options.interval ?? 500)
+		this.exclusive(() => this.check({ baselineOnly: true }))
+		this.timer = setInterval(() => {
+			this.tick()
+		}, this.options.interval ?? 500)
 	}
 
 	stop(): void {

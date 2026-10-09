@@ -79,7 +79,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 	useEffect(() => {
 		filters.current = { search, board, kind }
 		setSelectedId(null)
-		void load()
+		load()
 	}, [search, board, kind, load])
 
 	useEffect(() => {
@@ -89,12 +89,18 @@ const ShelfApp = (props: ShelfAppProps) => {
 	}, [query])
 
 	useEffect(() => {
-		const loadBoards = (): void => void api.listBoards().then(setBoards)
-		const loadSettings = (): void => void api.getSettings().then(setSettings)
+		const loadBoards = (): void => {
+			api.listBoards().then(setBoards)
+		}
+		const loadSettings = (): void => {
+			api.getSettings().then(setSettings)
+		}
 		loadBoards()
 		loadSettings()
 		const offs = [
-			api.on('history-changed', () => void load()),
+			api.on('history-changed', () => {
+				load()
+			}),
 			api.on('boards-changed', loadBoards),
 			api.on('settings-changed', loadSettings)
 		]
@@ -142,7 +148,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 	useEffect(() => {
 		if (!selected || payloadCache.current.has(selected.id)) return
 		if (selected.kind === 'image' || selected.kind === 'file') return
-		void api.getPayload(selected.id).then((p) => payloadCache.current.set(selected.id, p))
+		api.getPayload(selected.id).then((p) => payloadCache.current.set(selected.id, p))
 	}, [selected])
 
 	const select = useCallback(
@@ -204,7 +210,7 @@ const ShelfApp = (props: ShelfAppProps) => {
 	const copy = useCallback(
 		(i: number) => {
 			const item = items[i]
-			if (item) void api.copy(item.id, { plain: settings.plainTextByDefault })
+			if (item) api.copy(item.id, { plain: settings.plainTextByDefault })
 		},
 		[items, settings.plainTextByDefault]
 	)
@@ -216,14 +222,19 @@ const ShelfApp = (props: ShelfAppProps) => {
 			const next = items[i + 1] ?? items[i - 1]
 			setSelectedId(next?.id ?? null)
 			setInspect(null)
-			void api.remove(item.id)
-			showToast('Deleted', { label: 'Undo', run: () => void api.undoRemove() })
+			api.remove(item.id)
+			showToast('Deleted', {
+				label: 'Undo',
+				run: () => {
+					api.undoRemove()
+				}
+			})
 		},
 		[items, showToast]
 	)
 
 	const togglePin = useCallback((item: ClipView, boardId: string) => {
-		void api.setPinned(item.id, boardId, !item.pinboards.includes(boardId))
+		api.setPinned(item.id, boardId, !item.pinboards.includes(boardId))
 	}, [])
 
 	const cardRect = (i: number): DOMRect | undefined =>
@@ -261,7 +272,9 @@ const ShelfApp = (props: ShelfAppProps) => {
 				label: settings.pasteDirectly ? 'Paste' : 'Copy and close',
 				icon: 'paste',
 				shortcut: ENTER,
-				onSelect: () => void paste(i, false)
+				onSelect: () => {
+					paste(i, false)
+				}
 			}
 		]
 		if (textual && (item.rich || settings.plainTextByDefault)) {
@@ -270,7 +283,9 @@ const ShelfApp = (props: ShelfAppProps) => {
 					? 'Paste with formatting'
 					: 'Paste as plain text',
 				shortcut: `${SHIFT}${ENTER}`,
-				onSelect: () => void paste(i, true)
+				onSelect: () => {
+					paste(i, true)
+				}
 			})
 		}
 		entries.push(
@@ -358,10 +373,10 @@ const ShelfApp = (props: ShelfAppProps) => {
 				select(items.length - 1)
 			} else if (key === 'Enter') {
 				handled()
-				void paste(index, e.shiftKey)
+				paste(index, e.shiftKey)
 			} else if (mod && /^[1-9]$/.test(key)) {
 				handled()
-				void paste(Number(key) - 1, e.shiftKey)
+				paste(Number(key) - 1, e.shiftKey)
 			} else if (mod && key === 'c') {
 				const hasTextSelection =
 					inInput && input && input.selectionStart !== input.selectionEnd
@@ -439,7 +454,12 @@ const ShelfApp = (props: ShelfAppProps) => {
 		[select]
 	)
 
-	const onActivate = useCallback((i: number) => void paste(i, false), [paste])
+	const onActivate = useCallback(
+		(i: number) => {
+			paste(i, false)
+		},
+		[paste]
+	)
 
 	const onDragStart = useCallback(
 		(i: number, e: DragEvent) => {
@@ -477,14 +497,16 @@ const ShelfApp = (props: ShelfAppProps) => {
 	const boardName = boards.find((b) => b.id === board)?.name
 	const emptyReason = search ? 'search' : board ? 'board' : kind !== 'all' ? 'kind' : 'history'
 
-	const handleResume = () => void api.setSettings({ paused: false })
+	const handleResume = () => {
+		api.setSettings({ paused: false })
+	}
 
 	const handleNewBoard = (anchor: DOMRect) => setEditor({ anchor })
 
 	const handleEditBoard = (b: Pinboard, anchor: DOMRect) => setEditor({ anchor, board: b })
 
 	const handleDropOnBoard = (boardId: string, itemId: string) => {
-		void api.setPinned(itemId, boardId, true)
+		api.setPinned(itemId, boardId, true)
 		showToast(`Pinned to ${boards.find((b) => b.id === boardId)?.name ?? 'pinboard'}`)
 	}
 
@@ -501,7 +523,9 @@ const ShelfApp = (props: ShelfAppProps) => {
 		inputRef.current?.focus()
 	}
 
-	const handleInspectorPaste = (invert: boolean) => void paste(index, invert)
+	const handleInspectorPaste = (invert: boolean) => {
+		paste(index, invert)
+	}
 
 	const handleInspectorCopy = () => copy(index)
 

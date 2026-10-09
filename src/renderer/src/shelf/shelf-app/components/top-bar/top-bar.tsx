@@ -26,8 +26,7 @@ const TopBar = (props: TopBarProps) => {
 
 	const [dropTarget, setDropTarget] = useState<string | null>(null)
 
-	const handleQueryChange = (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) =>
-		onQuery(e.target.value)
+	const handleQueryChange = (e: ChangeEvent<HTMLInputElement>) => onQuery(e.currentTarget.value)
 
 	const handleButtonMouseDown = (e: MouseEvent<HTMLButtonElement>) => e.preventDefault()
 

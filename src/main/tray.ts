@@ -16,8 +16,8 @@ export interface TrayActions {
 }
 
 // Referenced so the @2x variants ship next to the 1x images; Electron picks them on HiDPI screens.
-void trayTemplateIcon2x
-void trayColorIcon2x
+trayTemplateIcon2x
+trayColorIcon2x
 
 export class AppTray {
 	private tray: Tray

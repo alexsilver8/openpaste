@@ -21,7 +21,7 @@ if (!app.requestSingleInstanceLock()) {
 	app.quit()
 } else {
 	registerSchemePrivileges()
-	void start()
+	start()
 }
 
 async function start(): Promise<void> {
@@ -32,7 +32,7 @@ async function start(): Promise<void> {
 		if (!controller) return
 		if (argv.includes('--settings')) controller.openSettings()
 		else if (argv.includes('--toggle')) controller.toggleShelf()
-		else void controller.showShelf()
+		else controller.showShelf()
 	})
 
 	await app.whenReady()
@@ -93,7 +93,9 @@ async function start(): Promise<void> {
 		toggleShelf: () => ctl.toggleShelf(),
 		openSettings: () => ctl.openSettings(),
 		setPaused: (paused) => ctl.updateSettings({ paused }),
-		clearHistory: () => void ctl.confirmClearHistory(),
+		clearHistory: () => {
+			ctl.confirmClearHistory()
+		},
 		about: () => ctl.about(),
 		quit: () => app.quit()
 	})
@@ -125,11 +127,10 @@ async function start(): Promise<void> {
 			argv.includes('--toggle') ||
 			(!argv.includes('--hidden') && !app.isPackaged)
 		) {
-			void ctl.showShelf()
+			ctl.showShelf()
 		}
 		if (firstRun) settings.set({ firstRun: false })
-		if (process.env.OPENPASTE_SCREENSHOT)
-			void screenshot(shelf, process.env.OPENPASTE_SCREENSHOT)
+		if (process.env.OPENPASTE_SCREENSHOT) screenshot(shelf, process.env.OPENPASTE_SCREENSHOT)
 	})
 
 	app.on('window-all-closed', () => {
