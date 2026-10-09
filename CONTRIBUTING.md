@@ -36,11 +36,17 @@ pnpm format
 
 ## Commits and pull requests
 
-`main` is protected: every change goes through a pull request, and the `check` workflow
-(typecheck, tests and build) must pass before it can merge.
+`main` is protected: every change goes through a pull request, and two checks must pass before
+it can merge:
 
-Commit messages and pull request titles use [gitmoji](https://gitmoji.dev) with
-[Conventional Commits](https://www.conventionalcommits.org):
+- `check`: typecheck, tests and build
+- `title`: the pull request title follows the format below
+
+Pull requests are squash-merged, and the title becomes the commit message on `main`, so the title
+matters more than the commits on your branch. Pull request titles and commit messages use
+[gitmoji](https://gitmoji.dev) with [Conventional Commits](https://www.conventionalcommits.org).
+Only emojis from the official gitmoji list are accepted, typed as the emoji itself (`✨`, not
+`:sparkles:`):
 
 ```
 <gitmoji> <type>(<scope>): <summary>
@@ -57,7 +63,12 @@ Commit messages and pull request titles use [gitmoji](https://gitmoji.dev) with
 | `🔧 chore: switch from npm to pnpm`                        | Tooling and config           |
 
 The scope is optional; use the area of the app you touched (`shelf`, `settings`, `store`, `capture`,
-`search`, `ci`).
+`search`, `ci`). Add `!` after the type or scope for a breaking change (`💥 feat(api)!: …`). The full
+rules live in `scripts/check-pr-title.mjs`; to try a title locally:
+
+```bash
+PR_TITLE="✨ feat(search): filter by source app" node scripts/check-pr-title.mjs
+```
 
 ## Testing pasting on each platform
 

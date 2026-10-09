@@ -1,0 +1,23 @@
+name: PR title
+
+# Pull requests are squash-merged with their title as the commit message, so this keeps
+# main's history in "<emoji> <type>(<scope>): <summary>" form. See CONTRIBUTING.md.
+on:
+  pull_request:
+    # "edited" re-runs the check when the title changes; "synchronize" reports it on new commits.
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  # "title" is a required status check on main; keep this job name in sync with the ruleset.
+  title:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+      - run: node scripts/check-pr-title.mjs
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
