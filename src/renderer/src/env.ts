@@ -7,8 +7,10 @@ export const isDemo = typeof window !== 'undefined' && !window.openpaste
 
 /** The platform whose shortcut conventions we display (the demo follows the visitor's OS). */
 export const platform: Platform =
-  boot?.platform ??
-  (typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent) ? 'darwin' : 'win32')
+	boot?.platform ??
+	(typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)
+		? 'darwin'
+		: 'win32')
 
 export const isMac = platform === 'darwin'
 
@@ -17,7 +19,7 @@ export const nativeMaterial = boot?.material ?? false
 
 /** ⌘ on macOS, Ctrl elsewhere. */
 export function isMod(event: { metaKey: boolean; ctrlKey: boolean }): boolean {
-  return isMac ? event.metaKey : event.ctrlKey
+	return isMac ? event.metaKey : event.ctrlKey
 }
 
 export const MOD = isMac ? '⌘' : 'Ctrl+'

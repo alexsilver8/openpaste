@@ -1,63 +1,63 @@
 {
-  "name": "openpaste",
-  "productName": "OpenPaste",
-  "version": "1.0.0",
-  "description": "An open-source clipboard manager: a visual history shelf, pinboards and instant search for everything you copy.",
-  "main": "./out/main/index.js",
-  "author": "Alexander Silver",
-  "homepage": "https://github.com/alexsilver8/openpaste",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexsilver8/openpaste.git"
-  },
-  "bugs": "https://github.com/alexsilver8/openpaste/issues",
-  "keywords": [
-    "clipboard",
-    "clipboard-manager",
-    "clipboard-history",
-    "electron",
-    "macos",
-    "windows",
-    "linux"
-  ],
-  "desktopName": "openpaste.desktop",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "postinstall": "install-electron",
-    "dev": "electron-vite dev",
-    "start": "electron-vite preview",
-    "build": "electron-vite build",
-    "typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "format": "prettier --write .",
-    "demo": "vite --config vite.demo.config.ts",
-    "demo:build": "vite build --config vite.demo.config.ts",
-    "dist": "pnpm build && electron-builder",
-    "dist:mac": "pnpm build && electron-builder --mac",
-    "dist:win": "pnpm build && electron-builder --win",
-    "dist:linux": "pnpm build && electron-builder --linux",
-    "release": "node scripts/release.mjs"
-  },
-  "engines": {
-    "node": ">=22.12"
-  },
-  "packageManager": "pnpm@12.10.1",
-  "devDependencies": {
-    "@tanstack/react-virtual": "^3.14.13",
-    "@types/node": "^24.19.1",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "^5.2.0",
-    "electron": "^44.7.0",
-    "electron-builder": "^26.15.3",
-    "electron-vite": "^5.0.0",
-    "prettier": "^3.9.9",
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0",
-    "typescript": "^6.0.3",
-    "vite": "^7.3.7",
-    "vitest": "~4.1.11"
-  }
+	"name": "openpaste",
+	"productName": "OpenPaste",
+	"version": "1.0.0",
+	"description": "An open-source clipboard manager: a visual history shelf, pinboards and instant search for everything you copy.",
+	"main": "./out/main/index.js",
+	"author": "Alexander Silver",
+	"homepage": "https://github.com/alexsilver8/openpaste",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/alexsilver8/openpaste.git"
+	},
+	"bugs": "https://github.com/alexsilver8/openpaste/issues",
+	"keywords": [
+		"clipboard",
+		"clipboard-manager",
+		"clipboard-history",
+		"electron",
+		"macos",
+		"windows",
+		"linux"
+	],
+	"desktopName": "openpaste.desktop",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"postinstall": "install-electron",
+		"dev": "electron-vite dev",
+		"start": "electron-vite preview",
+		"build": "electron-vite build",
+		"typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"format": "prettier --write .",
+		"demo": "vite --config vite.demo.config.ts",
+		"demo:build": "vite build --config vite.demo.config.ts",
+		"dist": "pnpm build && electron-builder",
+		"dist:mac": "pnpm build && electron-builder --mac",
+		"dist:win": "pnpm build && electron-builder --win",
+		"dist:linux": "pnpm build && electron-builder --linux",
+		"release": "node scripts/release.mjs"
+	},
+	"engines": {
+		"node": ">=22.12"
+	},
+	"packageManager": "pnpm@12.10.1",
+	"devDependencies": {
+		"@tanstack/react-virtual": "^3.14.13",
+		"@types/node": "^24.19.1",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@vitejs/plugin-react": "^5.2.0",
+		"electron": "^44.7.0",
+		"electron-builder": "^26.15.3",
+		"electron-vite": "^5.0.0",
+		"prettier": "^3.9.9",
+		"react": "^19.3.0",
+		"react-dom": "^19.3.0",
+		"typescript": "^6.0.3",
+		"vite": "^7.3.7",
+		"vitest": "~4.1.11"
+	}
 }

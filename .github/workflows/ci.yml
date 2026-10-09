@@ -1,24 +1,24 @@
 name: CI
 
 on:
-  push:
-    branches: [main]
-  pull_request:
+    push:
+        branches: [main]
+    pull_request:
 
 jobs:
-  # "check" is a required status check on main; keep this job name in sync with the ruleset.
-  check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      # Installs Node 22 and the pnpm version from package.json, then runs
-      # `pnpm install --frozen-lockfile`.
-      - uses: pnpm/setup@v3
-        with:
-          runtime: node@22
-          cache: true
-          require-lockfile: true
-      - run: pnpm typecheck
-      - run: pnpm test
-      - run: pnpm build
-      - run: pnpm demo:build
+    # "check" is a required status check on main; keep this job name in sync with the ruleset.
+    check:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            # Installs Node 22 and the pnpm version from package.json, then runs
+            # `pnpm install --frozen-lockfile`.
+            - uses: pnpm/setup@v3
+              with:
+                  runtime: node@22
+                  cache: true
+                  require-lockfile: true
+            - run: pnpm typecheck
+            - run: pnpm test
+            - run: pnpm build
+            - run: pnpm demo:build

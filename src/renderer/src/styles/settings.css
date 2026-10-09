@@ -1,20 +1,20 @@
 /* ── Settings window ────────────────────────────────────────────────────── */
 
 :root[data-view='settings'] body {
-  background: var(--settings-bg);
-  overflow: auto;
+	background: var(--settings-bg);
+	overflow: auto;
 }
 
 .settings {
-  max-width: 660px;
-  margin: 0 auto;
-  padding: 28px 24px 56px;
+	max-width: 660px;
+	margin: 0 auto;
+	padding: 28px 24px 56px;
 }
 :root[data-platform='darwin'][data-view='settings'] .settings {
-  padding-top: 44px; /* room for the inset traffic lights */
+	padding-top: 44px; /* room for the inset traffic lights */
 }
 :root[data-view='settings'] .settings-header {
-  -webkit-app-region: drag;
+	-webkit-app-region: drag;
 }
 
 /*
@@ -23,262 +23,262 @@
  * content scrolls underneath it.
  */
 .titlebar {
-  display: none;
+	display: none;
 }
 :root[data-platform='darwin'][data-view='settings'] .titlebar {
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 44px; /* matches the page's top padding, so there's no gap above the header */
-  z-index: 10;
-  background: var(--settings-bg);
-  -webkit-app-region: drag;
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 44px; /* matches the page's top padding, so there's no gap above the header */
+	z-index: 10;
+	background: var(--settings-bg);
+	-webkit-app-region: drag;
 }
 .settings.is-embedded {
-  padding: 26px 24px 32px;
+	padding: 26px 24px 32px;
 }
 
 .settings-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 8px;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 8px;
 }
 .settings-logo {
-  width: 52px;
-  height: 52px;
-  flex: none;
+	width: 52px;
+	height: 52px;
+	flex: none;
 }
 .settings-header h1 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 650;
-  letter-spacing: -0.012em;
+	margin: 0;
+	font-size: 20px;
+	font-weight: 650;
+	letter-spacing: -0.012em;
 }
 .settings-header p {
-  margin: 2px 0 0;
-  color: var(--ink-2);
+	margin: 2px 0 0;
+	color: var(--ink-2);
 }
 
 .settings-section h2 {
-  margin: 26px 4px 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink-2);
+	margin: 26px 4px 8px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--ink-2);
 }
 .settings-group {
-  border-radius: 12px;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  overflow: hidden;
+	border-radius: 12px;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	overflow: hidden;
 }
 
 .row-setting {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 12px 16px;
-  min-height: 52px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 18px;
+	padding: 12px 16px;
+	min-height: 52px;
 }
 .row-setting + .row-setting,
 .callout + .row-setting,
 .row-setting + .callout {
-  border-top: 1px solid var(--line);
+	border-top: 1px solid var(--line);
 }
 .row-setting-text {
-  min-width: 0;
+	min-width: 0;
 }
 .row-setting-label {
-  font-weight: 500;
-  font-size: 13.5px;
+	font-weight: 500;
+	font-size: 13.5px;
 }
 .row-setting-note {
-  margin: 2px 0 0;
-  color: var(--ink-3);
-  font-size: 12.5px;
-  max-width: 52ch;
+	margin: 2px 0 0;
+	color: var(--ink-3);
+	font-size: 12.5px;
+	max-width: 52ch;
 }
 .row-setting-control {
-  flex: none;
-  display: flex;
-  justify-content: flex-end;
+	flex: none;
+	display: flex;
+	justify-content: flex-end;
 }
 .row-setting--stack {
-  flex-direction: column;
-  align-items: stretch;
-  gap: 10px;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 10px;
 }
 
 .toggle {
-  width: 40px;
-  height: 24px;
-  padding: 2px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--line-strong);
-  transition: background 0.15s;
+	width: 40px;
+	height: 24px;
+	padding: 2px;
+	border: 0;
+	border-radius: 999px;
+	background: var(--line-strong);
+	transition: background 0.15s;
 }
 .toggle-knob {
-  display: block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
-  transition: transform 0.15s var(--ease-out);
+	display: block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: #fff;
+	box-shadow: 0 1px 3px rgb(0 0 0 / 0.25);
+	transition: transform 0.15s var(--ease-out);
 }
 .toggle[aria-checked='true'] {
-  background: var(--accent);
+	background: var(--accent);
 }
 .toggle[aria-checked='true'] .toggle-knob {
-  transform: translateX(16px);
+	transform: translateX(16px);
 }
 
 .select {
-  height: 30px;
-  padding: 0 8px;
-  border-radius: 8px;
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  min-width: 140px;
+	height: 30px;
+	padding: 0 8px;
+	border-radius: 8px;
+	border: 1px solid var(--line-strong);
+	background: var(--surface);
+	min-width: 140px;
 }
 
 .segmented {
-  display: inline-flex;
-  padding: 2px;
-  border-radius: 9px;
-  background: var(--field);
+	display: inline-flex;
+	padding: 2px;
+	border-radius: 9px;
+	background: var(--field);
 }
 .segmented button {
-  height: 26px;
-  padding: 0 12px;
-  border: 0;
-  border-radius: 7px;
-  background: transparent;
-  color: var(--ink-2);
-  font-weight: 500;
+	height: 26px;
+	padding: 0 12px;
+	border: 0;
+	border-radius: 7px;
+	background: transparent;
+	color: var(--ink-2);
+	font-weight: 500;
 }
 .segmented button[aria-checked='true'] {
-  background: var(--surface);
-  color: var(--ink);
-  box-shadow: 0 1px 2px rgb(16 16 32 / 0.14);
+	background: var(--surface);
+	color: var(--ink);
+	box-shadow: 0 1px 2px rgb(16 16 32 / 0.14);
 }
 
 .shortcut {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 4px;
 }
 .shortcut-button {
-  min-width: 132px;
-  height: 32px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid var(--line-strong);
-  background: var(--surface);
-  color: var(--ink-2);
+	min-width: 132px;
+	height: 32px;
+	padding: 0 12px;
+	border-radius: 8px;
+	border: 1px solid var(--line-strong);
+	background: var(--surface);
+	color: var(--ink-2);
 }
 .shortcut-button kbd {
-  font-size: 13px;
-  background: transparent;
-  color: var(--ink);
-  padding: 0;
+	font-size: 13px;
+	background: transparent;
+	color: var(--ink);
+	padding: 0;
 }
 .shortcut-button.is-recording {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
-  color: var(--accent);
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px var(--accent-soft);
+	color: var(--accent);
 }
 .field-note {
-  font-size: 12px;
-  color: var(--ink-3);
+	font-size: 12px;
+	color: var(--ink-3);
 }
 .field-note.is-error {
-  color: var(--danger);
-  max-width: 34ch;
-  text-align: right;
+	color: var(--danger);
+	max-width: 34ch;
+	text-align: right;
 }
 
 .callout {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: var(--accent-soft);
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 16px;
+	background: var(--accent-soft);
 }
 .callout svg {
-  flex: none;
-  color: var(--accent);
+	flex: none;
+	color: var(--accent);
 }
 .callout p {
-  margin: 0;
-  flex: 1;
+	margin: 0;
+	flex: 1;
 }
 
 .chips {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
 }
 .chips .chip {
-  padding-right: 4px;
+	padding-right: 4px;
 }
 .chips .chip button {
-  width: 18px;
-  height: 18px;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  display: grid;
-  place-items: center;
-  color: var(--ink-3);
+	width: 18px;
+	height: 18px;
+	border: 0;
+	border-radius: 50%;
+	background: transparent;
+	display: grid;
+	place-items: center;
+	color: var(--ink-3);
 }
 .chips .chip button:hover {
-  background: var(--hover);
-  color: var(--ink);
+	background: var(--hover);
+	color: var(--ink);
 }
 .add-app {
-  display: flex;
-  gap: 8px;
+	display: flex;
+	gap: 8px;
 }
 .add-app .text-input {
-  max-width: 300px;
+	max-width: 300px;
 }
 
 .confirm {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 .check {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-right: 4px;
-  color: var(--ink-2);
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-right: 4px;
+	color: var(--ink-2);
 }
 .check input {
-  accent-color: var(--accent);
+	accent-color: var(--accent);
 }
 
 @media (max-width: 560px) {
-  .row-setting {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .row-setting-control,
-  .shortcut {
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-  .confirm {
-    flex-wrap: wrap;
-  }
+	.row-setting {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.row-setting-control,
+	.shortcut {
+		justify-content: flex-start;
+		align-items: flex-start;
+	}
+	.confirm {
+		flex-wrap: wrap;
+	}
 }

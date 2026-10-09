@@ -54,15 +54,15 @@ Only emojis from the official gitmoji list are accepted, typed as the emoji itse
 <gitmoji> <type>(<scope>): <summary>
 ```
 
-| Example                                                   | When                         |
-| --------------------------------------------------------- | ---------------------------- |
-| `✨ feat(search): filter by source app`                   | A new feature                |
-| `🐛 fix(shelf): keep focus in the app you were using`      | A bug fix                    |
-| `💄 style(settings): make the top strip draggable`         | UI or styling only           |
-| `♻️ refactor(store): split payloads from the index`        | Code change, same behavior   |
-| `✅ test(classify): cover shell commands`                  | Tests                        |
-| `📝 docs: explain Wayland shortcuts`                       | Documentation                |
-| `🔧 chore: switch from npm to pnpm`                        | Tooling and config           |
+| Example                                               | When                       |
+| ----------------------------------------------------- | -------------------------- |
+| `✨ feat(search): filter by source app`               | A new feature              |
+| `🐛 fix(shelf): keep focus in the app you were using` | A bug fix                  |
+| `💄 style(settings): make the top strip draggable`    | UI or styling only         |
+| `♻️ refactor(store): split payloads from the index`   | Code change, same behavior |
+| `✅ test(classify): cover shell commands`             | Tests                      |
+| `📝 docs: explain Wayland shortcuts`                  | Documentation              |
+| `🔧 chore: switch from npm to pnpm`                   | Tooling and config         |
 
 The scope is optional; use the area of the app you touched (`shelf`, `settings`, `store`, `capture`,
 `search`, `ci`). Add `!` after the type or scope for a breaking change (`💥 feat(api)!: …`). The full
@@ -74,13 +74,13 @@ PR_TITLE="✨ feat(search): filter by source app" node scripts/check-pr-title.mj
 
 ## Testing pasting on each platform
 
-| OS      | What to check                                                                 |
-| ------- | ----------------------------------------------------------------------------- |
+| OS      | What to check                                                                                            |
+| ------- | -------------------------------------------------------------------------------------------------------- |
 | macOS   | First paste prompts for Accessibility; after allowing, Return pastes into TextEdit, Slack and a browser. |
-| Windows | Return pastes into Notepad and a browser; focus returns to the app you came from. |
+| Windows | Return pastes into Notepad and a browser; focus returns to the app you came from.                        |
 | Linux   | With `xdotool` (X11) or `wtype` (Wayland) installed, Return pastes; in a terminal it sends Ctrl+Shift+V. |
 
-Also check that copying from a password manager is *not* recorded, and that images and files
+Also check that copying from a password manager is _not_ recorded, and that images and files
 copied from the file manager show up with the right card.
 
 ## Releasing
