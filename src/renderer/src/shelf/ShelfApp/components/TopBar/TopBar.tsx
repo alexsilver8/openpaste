@@ -1,19 +1,8 @@
 import { useState, type RefObject } from 'react'
 import type { ClipKind, Pinboard } from '@shared/types'
-import { Icon, type IconName } from '../../components/Icon'
-import { MOD } from '../../env'
-
-export const DRAG_TYPE = 'application/x-openpaste-id'
-
-const KINDS: { kind: ClipKind | 'all'; icon: IconName; label: string }[] = [
-	{ kind: 'all', icon: 'all', label: 'All types' },
-	{ kind: 'text', icon: 'text', label: 'Text' },
-	{ kind: 'link', icon: 'link', label: 'Links' },
-	{ kind: 'image', icon: 'image', label: 'Images' },
-	{ kind: 'code', icon: 'code', label: 'Code' },
-	{ kind: 'color', icon: 'color', label: 'Colors' },
-	{ kind: 'file', icon: 'file', label: 'Files' }
-]
+import { Icon } from '../../../../components/Icon'
+import { MOD } from '../../../../env'
+import { DRAG_TYPE, KINDS } from './TopBar.constants'
 
 interface TopBarProps {
 	inputRef: RefObject<HTMLInputElement | null>

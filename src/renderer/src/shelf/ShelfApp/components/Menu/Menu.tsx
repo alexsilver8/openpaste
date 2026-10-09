@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
-import { Icon, type IconName } from '../../components/Icon'
+import { Icon, type IconName } from '../../../../components/Icon'
 
 export type MenuEntry =
 	| {

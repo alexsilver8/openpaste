@@ -32,10 +32,31 @@ pnpm format
 - Add or update tests in `tests/` when you change classification, search, settings or the store.
 - Platform-specific code lives in `src/main/platform/`. If you can only test on one OS, say which
   in the pull request so someone else can check the others.
-- Each React component in `src/renderer/src` has its own folder named after it, with an `index.ts`
-  that exports it, like `shelf/Card/Card.tsx` and `shelf/Card/index.ts`. Import the folder
-  (`'../Card'`), not the file inside it.
+- React components follow the layout below.
 - UI copy is sentence case and says what things do ("Paste as plain text", not "Submit").
+
+## Component layout
+
+Every React component in `src/renderer/src` has its own folder, named after it:
+
+```
+Card/
+├── Card.tsx            the component, and nothing else
+├── Card.constants.ts   constants it uses
+├── Card.utils.ts       helper functions it uses
+├── index.ts            exports the component, plus anything other folders need
+└── components/         components only Card uses, each laid out the same way
+    ├── AppMark/
+    └── Body/
+```
+
+- One component per file. A component's file exports that one component, plus any types other
+  files need.
+- Top-level constants go in `<Name>.constants.ts` (`.tsx` if they contain JSX), and helper
+  functions in `<Name>.utils.ts`. Leave out the files a component doesn't need.
+- A component used only by one parent lives in that parent's `components/` folder. Components
+  used in several places live in `src/renderer/src/components/`.
+- Import a component's folder (`'./components/Card'`), not the files inside it.
 
 ## Commits and pull requests
 

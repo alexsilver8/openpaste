@@ -1,78 +1,20 @@
-import { useCallback, useEffect, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import {
 	DEFAULT_IGNORED_APPS,
 	DEFAULT_SETTINGS,
 	HISTORY_DAY_OPTIONS,
 	HISTORY_LIMIT_OPTIONS
 } from '@shared/settings'
-import type { AppEnv, Permissions, Settings, ThemeSetting } from '@shared/types'
+import type { AppEnv, Permissions, Settings } from '@shared/types'
 import { api } from '../../api'
 import { Icon } from '../../components/Icon'
 import { isMac } from '../../env'
-import { ShortcutRecorder } from '../ShortcutRecorder'
 import logoUrl from '../../../../../resources/icon.png'
-
-function Row({
-	label,
-	note,
-	children,
-	htmlFor
-}: {
-	label: string
-	note?: ReactNode
-	children: ReactNode
-	htmlFor?: string
-}) {
-	return (
-		<div className="row-setting">
-			<div className="row-setting-text">
-				<label className="row-setting-label" htmlFor={htmlFor}>
-					{label}
-				</label>
-				{note && <p className="row-setting-note">{note}</p>}
-			</div>
-			<div className="row-setting-control">{children}</div>
-		</div>
-	)
-}
-
-function Toggle({
-	id,
-	checked,
-	onChange
-}: {
-	id: string
-	checked: boolean
-	onChange(v: boolean): void
-}) {
-	return (
-		<button
-			id={id}
-			type="button"
-			role="switch"
-			aria-checked={checked}
-			className="toggle"
-			onClick={() => onChange(!checked)}
-		>
-			<span className="toggle-knob" />
-		</button>
-	)
-}
-
-function Section({ title, children }: { title: string; children: ReactNode }) {
-	return (
-		<section className="settings-section" aria-label={title}>
-			<h2>{title}</h2>
-			<div className="settings-group">{children}</div>
-		</section>
-	)
-}
-
-const THEMES: { value: ThemeSetting; label: string }[] = [
-	{ value: 'system', label: 'Match system' },
-	{ value: 'light', label: 'Light' },
-	{ value: 'dark', label: 'Dark' }
-]
+import { Row } from './components/Row'
+import { ShortcutRecorder } from './components/ShortcutRecorder'
+import { Toggle } from './components/Toggle'
+import { Section } from './components/Section'
+import { THEMES } from './SettingsApp.constants'
 
 export function SettingsApp({ embedded = false }: { embedded?: boolean }) {
 	const [settings, setSettings] = useState<Settings | null>(null)

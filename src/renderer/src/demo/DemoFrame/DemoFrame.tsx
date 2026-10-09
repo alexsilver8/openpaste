@@ -1,19 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { formatAccelerator } from '@shared/accelerator'
-import { DEFAULT_SETTINGS } from '@shared/settings'
 import { ShelfApp } from '../../shelf/ShelfApp'
 import { SettingsApp } from '../../settings/SettingsApp'
 import { Icon } from '../../components/Icon'
 import { isMod, platform } from '../../env'
 import { demoBus, demoCapture, demoShow, type DemoPasteDetail } from '../mockApi'
-
-const SHORTCUT = formatAccelerator(DEFAULT_SETTINGS.shortcut, platform)
-
-const escapeHtml = (text: string): string =>
-	text.replace(
-		/[&<>"']/g,
-		(c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!
-	)
+import { SHORTCUT } from './DemoFrame.constants'
+import { escapeHtml } from './DemoFrame.utils'
 
 /**
  * The browser demo: a pretend desktop with a notes window, so you can copy text on

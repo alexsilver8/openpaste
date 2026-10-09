@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { formatAccelerator, keyEventToAccelerator } from '@shared/accelerator'
 import { DEFAULT_SETTINGS } from '@shared/settings'
-import { api } from '../../api'
-import { platform } from '../../env'
+import { api } from '../../../../api'
+import { platform } from '../../../../env'
 
 interface ShortcutRecorderProps {
 	value: string

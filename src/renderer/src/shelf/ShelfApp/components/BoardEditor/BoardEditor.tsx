@@ -1,17 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
 import { createPortal } from 'react-dom'
 import type { Pinboard } from '@shared/types'
-
-export const BOARD_COLORS = [
-	'#5b4cf5',
-	'#0891b2',
-	'#16a34a',
-	'#ca8a04',
-	'#ea580c',
-	'#db2777',
-	'#7c3aed',
-	'#64748b'
-]
+import { BOARD_COLORS } from './BoardEditor.constants'
 
 interface BoardEditorProps {
 	anchor: DOMRect

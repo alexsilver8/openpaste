@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { kindLabel } from '@shared/classify'
 import type { ClipPayload, ClipView, Pinboard } from '@shared/types'
-import { api } from '../../api'
-import { describeColor } from '../../lib/colors'
-import { absoluteTime, formatBytes, formatCount, hostOf } from '../../lib/format'
-import { highlightCode } from '../../lib/highlight'
-import { Icon } from '../../components/Icon'
-import { ENTER, MOD, SHIFT, isMod } from '../../env'
+import { api } from '../../../../api'
+import { describeColor } from '../../../../lib/colors'
+import { absoluteTime, formatBytes, formatCount, hostOf } from '../../../../lib/format'
+import { highlightCode } from '../../../../lib/highlight'
+import { Icon } from '../../../../components/Icon'
+import { ENTER, MOD, SHIFT, isMod } from '../../../../env'
+import { TEXT_KINDS } from './Inspector.constants'
 
 interface InspectorProps {
 	item: ClipView
@@ -18,8 +19,6 @@ interface InspectorProps {
 	onCopy(): void
 	onDelete(): void
 }
-
-const TEXT_KINDS = new Set(['text', 'code', 'link', 'color'])
 
 /** A larger look at one item, with editing, renaming and pinboard membership. */
 export function Inspector({

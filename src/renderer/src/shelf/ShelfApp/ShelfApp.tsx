@@ -13,17 +13,15 @@ import type { ClipKind, ClipPayload, ClipView, Pinboard, Settings } from '@share
 import { DEFAULT_SETTINGS } from '@shared/settings'
 import { api } from '../../api'
 import { DELETE_KEY, ENTER, MOD, SHIFT, isDemo, isMod } from '../../env'
-import { BoardEditor } from '../BoardEditor'
-import { CARD_GAP, CARD_WIDTH, Card } from '../Card'
-import { EmptyState } from '../EmptyState'
-import { Inspector } from '../Inspector'
-import { Menu, type MenuEntry } from '../Menu'
-import { Toast, type ToastState } from '../Toast'
-import { DRAG_TYPE, TopBar } from '../TopBar'
-
-const TEXT_KINDS = new Set<ClipKind>(['text', 'code', 'link', 'color'])
-const prefersReducedMotion = (): boolean =>
-	window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import { BoardEditor } from './components/BoardEditor'
+import { CARD_GAP, CARD_WIDTH, Card } from './components/Card'
+import { EmptyState } from './components/EmptyState'
+import { Inspector } from './components/Inspector'
+import { Menu, type MenuEntry } from './components/Menu'
+import { Toast, type ToastState } from './components/Toast'
+import { DRAG_TYPE, TopBar } from './components/TopBar'
+import { TEXT_KINDS } from './ShelfApp.constants'
+import { prefersReducedMotion } from './ShelfApp.utils'
 
 interface MenuState {
 	x: number
