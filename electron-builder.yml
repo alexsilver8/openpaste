@@ -1,0 +1,46 @@
+appId: dev.openpaste.app
+productName: OpenPaste
+copyright: Copyright © 2026 Alexander Silver
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**
+  - resources/**
+  - package.json
+  - '!**/*.map'
+asarUnpack:
+  - resources/**
+mac:
+  category: public.app-category.productivity
+  icon: build/icon.png
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+  extendInfo:
+    # Runs as a menu bar app: no Dock icon until Settings is open.
+    LSUIElement: true
+    NSAppleEventsUsageDescription: OpenPaste uses System Events as a fallback to paste into the app you were using.
+  hardenedRuntime: true
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+win:
+  icon: build/icon.png
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  shortcutName: OpenPaste
+linux:
+  icon: build/icon.png
+  category: Utility
+  maintainer: Alexander Silver
+  synopsis: Clipboard history manager
+  target:
+    - AppImage
+    - deb
+publish: null
