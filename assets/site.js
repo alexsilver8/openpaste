@@ -138,11 +138,17 @@
       { kind: 'color', hex: '#0B7F8C', app: 'Figma', t: now - 9 * HR, boards: ['brand'] },
       { kind: 'text', text: "Happy to help! Here's the guide that walks through the setup step by step.", app: 'Slack', t: now - 20 * HR, boards: ['replies'] },
       { kind: 'link', url: 'https://www.electronjs.org/docs/latest/api/clipboard', app: 'Notes', t: now - 26 * HR },
-      { kind: 'image', name: 'onboarding-flow.png', meta: '1440 × 900 image', app: 'Figma', t: now - 28 * HR, bars: [70, 52, 80, 44, 62, 36, 58] },
+      { kind: 'image', name: 'onboarding-flow.png', meta: '1440 × 900 image', app: 'Figma', t: now - 28 * HR, art: 'ui' },
       { kind: 'code', text: 'git switch -c feat/paste-stacks', app: 'Terminal', t: now - 30 * HR, boards: ['snippets'] },
       { kind: 'file', name: 'invoice-october.pdf', meta: 'PDF document', app: 'Finder', t: now - 2 * DAY },
       { kind: 'color', hex: '#F5B642', app: 'Figma', t: now - 2 * DAY - 3 * HR },
-      { kind: 'text', text: 'Pinned items are never cleaned up automatically.', app: 'Notes', t: now - 3 * DAY }
+      { kind: 'text', text: 'Pinned items are never cleaned up automatically.', app: 'Notes', t: now - 3 * DAY },
+      { kind: 'image', name: 'openpaste-shelf.png', meta: '1440 × 873 image', app: 'Screenshot', t: now - 50 * MIN, src: 'assets/screenshot.png' },
+      { kind: 'image', name: 'lake-weekend.jpg', meta: '4032 × 3024 photo', app: 'Photos', t: now - 7 * HR, art: 'photo' },
+      { kind: 'image', name: 'app-icon.png', meta: '256 × 256 image', app: 'Finder', t: now - 2 * DAY - 6 * HR, src: 'assets/icon.png', fit: 'contain' },
+      { kind: 'file', name: 'release-notes.md', meta: 'Markdown document', app: 'VS Code', t: now - 90 * MIN },
+      { kind: 'file', name: 'budget-2026.xlsx', meta: 'Spreadsheet', app: 'Finder', t: now - 31 * HR },
+      { kind: 'link', url: 'https://pnpm.io/installation', app: 'Slack', t: now - 10 * HR }
     ],
     subs: [],
     subscribe(fn) {
@@ -251,6 +257,19 @@
     return esc(code).replace(/\b(export|function|const|let|var|return|import|from|await|async|if|else)\b/g, '<span class="op-kw">$1</span>');
   }
 
+  // What an image card shows: a real picture when there is one, otherwise a small drawing.
+  function imageArt(it) {
+    if (it.src) return '<img src="' + esc(it.src) + '" alt="" loading="lazy" decoding="async">';
+    if (it.art === 'photo') {
+      return '<span class="op-photo"><i class="sun"></i><i class="hill back"></i><i class="hill front"></i><i class="water"></i></span>';
+    }
+    const shades = ['#a79fff', '#a79fff', '#8b80ff', '#8b80ff', '#6d5ff7', '#5b4cf5', '#5b4cf5'];
+    if (it.art === 'ui') {
+      return '<span class="op-ui"><i class="bar"></i><i class="line"></i><i class="line short"></i><i class="block"></i><i class="btn"></i></span>';
+    }
+    return it.bars.map((h, i) => '<i style="height:' + h + '%;background:' + shades[i % shades.length] + '"></i>').join('');
+  }
+
   function cardHTML(it, words, index, selected, numbered) {
     let body = '';
     let foot = '';
@@ -278,13 +297,14 @@
         '</b><small>rgb(' + c.r + ' ' + c.g + ' ' + c.b + ')</small></span>';
       foot = 'Color';
     } else if (it.kind === 'image') {
-      const shades = ['#a79fff', '#a79fff', '#8b80ff', '#8b80ff', '#6d5ff7', '#5b4cf5', '#5b4cf5'];
-      body = '<span class="op-body op-image" aria-hidden="true">' + it.bars.map((h, i) => '<i style="height:' + h + '%;background:' + shades[i % shades.length] + '"></i>').join('') + '</span>';
+      body = '<span class="op-body op-image' + (it.src ? ' op-image-real' + (it.fit === 'contain' ? ' contain' : '') : '') + '" aria-hidden="true">' + imageArt(it) + '</span>';
       foot = esc(it.meta);
     } else {
+      const ext = (it.name.split('.').pop() || '').toLowerCase();
+      const tagColor = { pdf: '#c8245f', md: '#3f3f46', xlsx: '#1d6b3a', csv: '#1d6b3a', zip: '#7b3fe4' }[ext] || '#5b6475';
       body =
-        '<span class="op-body op-file"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#3f3f46" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><b>' +
-        highlight(it.name, words) + '</b></span>';
+        '<span class="op-body op-file"><span class="op-doc" aria-hidden="true"><svg width="34" height="40" viewBox="0 0 34 40" fill="#ffffff" stroke="#3f3f46" stroke-width="1.4" stroke-linejoin="round"><path d="M4 2h18l9 9v25a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M22 2v9h9" fill="none"/><path d="M8 20h17M8 25h17M8 30h11" stroke="#d4d4da"/></svg>' +
+        '<span class="op-ext" style="background:' + tagColor + '">' + esc(ext.toUpperCase()) + '</span></span><b>' + highlight(it.name, words) + '</b></span>';
       foot = esc(it.meta);
     }
     const board = (it.boards || [])[0];
@@ -368,6 +388,18 @@
     this.input.value = q;
     this.sel = 0;
     this.render();
+  };
+
+  // Switches to a new query with a short card animation, for filter changes.
+  Shelf.prototype.swapTo = function (q) {
+    if (q === this.query) return;
+    this.setQuery(q);
+    if (reduceMotion) return;
+    clearTimeout(this.swapTimer);
+    this.cards.classList.remove('op-swap');
+    void this.cards.offsetWidth;
+    this.cards.classList.add('op-swap');
+    this.swapTimer = setTimeout(() => this.cards.classList.remove('op-swap'), 500);
   };
 
   Shelf.prototype.render = function (meta) {
@@ -509,7 +541,7 @@
     searchShelf = new Shelf(searchRoot, {
       layout: 'grid',
       query: 'is:link docs',
-      limit: 9,
+      limit: 8,
       wide: true,
       hints: true,
       placeholder: 'Try “is:color”, “app:figma” or any word',
@@ -523,22 +555,35 @@
         });
       }
     });
+    // Each filter shows its own results: on hover as a preview, on click or Return to keep.
+    // (Carrying words over, like "docs", left most filters empty.)
+    let hoverTimer = 0;
+    const show = (li) => {
+      const f = li.dataset.filter;
+      searchShelf.swapTo(f ? f + ' ' : '');
+    };
     filterItems.forEach((li) => {
       li.setAttribute('role', 'button');
       li.tabIndex = 0;
-      const apply = () => {
-        const words = searchShelf.query
-          .split(/\s+/)
-          .filter((t) => t && !/^(is|app):/i.test(t));
-        const q = [li.dataset.filter].concat(words).filter(Boolean).join(' ');
-        searchShelf.setQuery(q ? q + ' ' : '');
+      li.addEventListener('mouseenter', () => {
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => show(li), 60);
+      });
+      li.addEventListener('mouseleave', () => clearTimeout(hoverTimer));
+      li.addEventListener('focus', () => show(li));
+      li.addEventListener('click', () => {
+        show(li);
         searchShelf.focus();
-      };
-      li.addEventListener('click', apply);
+      });
       li.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          apply();
+          show(li);
+          searchShelf.focus();
+        } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const next = filterItems[filterItems.indexOf(li) + (e.key === 'ArrowDown' ? 1 : -1)];
+          if (next) next.focus();
         }
       });
     });
