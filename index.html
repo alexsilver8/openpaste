@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenPaste: a free, open-source clipboard manager</title>
+<meta name="description" content="Everything you copy waits on a visual shelf, one shortcut away. Type to find it, press Return to paste. Free and open source for macOS, Windows and Linux.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#fbfbfa">
+<link rel="canonical" href="https://alexsilver8.github.io/openpaste/">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OpenPaste: your clipboard, remembered">
+<meta property="og:description" content="A visual clipboard history for macOS, Windows and Linux. Free and open source.">
+<meta property="og:url" content="https://alexsilver8.github.io/openpaste/">
+<meta property="og:image" content="https://alexsilver8.github.io/openpaste/assets/social.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:#fbfbfa;-webkit-font-smoothing:antialiased}
+a{color:#111113;transition:opacity .15s ease, background-color .15s ease, border-color .15s ease}
+a:hover{color:#4a3be0}
+a[style*="background: #111113"]:hover,a[style*="background: #8b80ff"]:hover{opacity:.85;color:inherit}
+a[style*="background: #111113"]:hover{color:#ffffff}
+a[style*="background: #efeff2"]:hover{background:#e4e4ea !important;color:#111113}
+a[data-asset]:hover{border-color:#111113 !important;color:#111113}
+:focus-visible{outline:3px solid #5b4cf5;outline-offset:3px;border-radius:8px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:16px;background:#ffffff;padding:10px 14px;z-index:10;border-radius:8px}
+@media (max-width: 760px){.deco,.float-chip,.nav-links{display:none !important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div style="background: #fbfbfa; color: #111113; font-family: 'Geist', system-ui, sans-serif; font-size: 16px; line-height: 1.55; min-height: 100vh; overflow-x: hidden">
+
+<header style="max-width: 1180px; margin: 0 auto; padding: 18px 24px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; font-size: 14px">
+<nav class="nav-links" aria-label="Sections" style="display: flex; flex-wrap: wrap; gap: 4px 24px">
+<a href="#features" style="text-decoration: none; color: #55555c">Features</a>
+<a href="#privacy" style="text-decoration: none; color: #55555c">Privacy</a>
+<a href="demo/" style="text-decoration: none; color: #55555c">Live demo</a>
+</nav>
+<a href="#top" style="display: flex; align-items: center; gap: 8px; text-decoration: none; color: #111113; font-weight: 600; font-size: 16px">
+<img src="assets/icon.png" alt="" style="width: 28px; height: 28px">
+OpenPaste
+</a>
+<div style="display: flex; justify-content: flex-end; align-items: center; gap: 18px">
+<a href="https://github.com/alexsilver8/openpaste" style="text-decoration: none; color: #55555c">GitHub</a>
+<a href="#download" style="text-decoration: none; color: #ffffff; background: #111113; border-radius: 999px; padding: 10px 18px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; font-weight: 500">Download</a>
+</div>
+</header>
+<main id="main">
+
+<section id="top" style="position: relative; padding: 72px 24px 0; text-align: center">
+<h1 style="margin: 0 auto; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(56px, 8vw, 112px); line-height: 0.92; letter-spacing: -0.02em">Your clipboard,<br><em style="font-style: italic">remembered</em></h1>
+<p style="margin: 28px auto 0; max-width: 500px; font-size: 17px; color: #55555c">OpenPaste is a free, open-source clipboard manager. Everything you copy waits on a visual shelf, one shortcut away.</p>
+<div style="margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px">
+<a id="hero-download" data-download-button href="#download" style="text-decoration: none; color: #ffffff; background: #111113; border-radius: 999px; padding: 12px 20px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; font-size: 15px; font-weight: 500"><span data-download-label>Download for macOS</span></a>
+<a href="demo/" style="text-decoration: none; color: #111113; background: #efeff2; border-radius: 999px; padding: 12px 20px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 500">Try it in your browser <span aria-hidden="true">↗</span></a>
+</div>
+
+<div style="position: relative; max-width: 1040px; margin: 64px auto 0">
+<svg class="deco" aria-hidden="true" width="150" height="300" viewBox="0 0 120 240" fill="none" stroke="#1d1d22" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: -170px; bottom: 0"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M58 112 C46 104 38 92 36 78 C48 84 56 96 58 112 Z"></path><path d="M62 25 C58 14 60 6 62 2 C64 6 66 14 62 25 Z"></path><path d="M66 28 C76 22 84 22 88 24 C84 28 76 32 66 30 Z"></path><path d="M58 28 C48 22 40 22 36 24 C40 28 48 32 58 30 Z"></path><path d="M65 34 C72 42 74 50 74 54 C70 52 64 46 63 35 Z"></path><path d="M59 34 C52 42 50 50 50 54 C54 52 60 46 61 35 Z"></path><circle cx="62" cy="30" r="5" fill="#5b4cf5" stroke="#5b4cf5"></circle></svg>
+<svg class="deco" aria-hidden="true" width="150" height="214" viewBox="0 0 140 200" fill="none" stroke="#1d1d22" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: -170px; bottom: 0"><path d="M70 198 C70 150 60 110 40 70"></path><path d="M70 198 C72 140 84 100 108 58"></path><path d="M70 198 C68 160 70 120 72 40"></path><path d="M40 70 C30 60 26 50 26 40"></path><path d="M62 140 C52 136 46 128 44 120"></path><path d="M78 130 C88 126 94 118 96 110"></path><path d="M71 100 C62 94 58 86 58 78"></path><path d="M72 80 C80 74 84 66 84 58"></path><circle cx="72" cy="36" r="4" fill="#f5d76e"></circle><circle cx="108" cy="54" r="3.5" fill="#bfe3c8"></circle><circle cx="26" cy="36" r="3.5" fill="#ffffff"></circle></svg>
+<div style="background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 10px; box-shadow: 0 30px 60px rgba(17,17,19,0.08)">
+<img src="assets/screenshot.png" width="1440" height="873" alt="The OpenPaste shelf open below a notes window, with text, link, code, color and image cards" style="display: block; width: 100%; height: auto; border-radius: 10px">
+</div>
+<div class="float-chip" style="position: absolute; left: -48px; top: 26%; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 10px 30px rgba(17,17,19,0.10); text-align: left">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #5b4cf5"></span>
+<span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Copied #5B4CF5</span><span style="font-size: 12px; color: #6b6b72">from Figma · just now</span></span>
+</div>
+<div class="float-chip" style="position: absolute; right: -40px; bottom: 16%; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 10px 30px rgba(17,17,19,0.10); text-align: left">
+<span style="width: 32px; height: 32px; border-radius: 8px; background: #e9f4ec; display: grid; place-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d6b3a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 3h6l-1 6 4 4H6l4-4z"></path></svg></span>
+<span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Pinned to Snippets</span><span style="font-size: 12px; color: #6b6b72">kept until you remove it</span></span>
+</div>
+</div>
+
+<div style="max-width: 1040px; margin: 40px auto 0; display: flex; flex-wrap: wrap; gap: 16px; text-align: left">
+<a href="demo/" style="flex: 1 1 380px; min-width: 0; text-decoration: none; color: #111113; display: flex; align-items: center; gap: 16px; background: #ffffff; border: 1px solid #ececf0; border-radius: 16px; padding: 14px">
+<span style="flex: none; width: 128px; height: 76px; border-radius: 10px; background: #1c1c20; display: flex; align-items: center; justify-content: center; gap: 5px">
+<span style="font-family: 'Geist Mono', monospace; font-size: 14px; color: #ededf0; background: #2c2c33; border-radius: 6px; padding: 3px 7px; border-bottom: 2px solid #0a0a0c">⇧</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 14px; color: #ededf0; background: #2c2c33; border-radius: 6px; padding: 3px 7px; border-bottom: 2px solid #0a0a0c">⌘</span>
+<span style="font-family: 'Geist Mono', monospace; font-size: 14px; color: #111113; background: #8b80ff; border-radius: 6px; padding: 3px 7px; border-bottom: 2px solid #4a3be0">V</span>
+</span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">Try it in your browser</span><span style="font-size: 13px; color: #6b6b72">The real shelf with sample data. Copy something on the page, open the shelf, paste it back.</span></span>
+</a>
+<a href="https://github.com/alexsilver8/openpaste" style="flex: 1 1 380px; min-width: 0; text-decoration: none; color: #111113; display: flex; align-items: center; gap: 16px; background: #ffffff; border: 1px solid #ececf0; border-radius: 16px; padding: 14px">
+<span style="flex: none; width: 128px; height: 76px; border-radius: 10px; background: #e9f4ec; display: grid; place-items: center"><svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1d6b3a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4 1.5-4-2-6-2.5m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"></path></svg></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600; font-size: 15px">Built in the open</span><span style="font-size: 13px; color: #6b6b72">MIT licensed. Read every line, file an issue, or send a pull request.</span></span>
+</a>
+</div>
+</section>
+
+<section id="features" style="position: relative; margin-top: 112px; background: #e9f4ec; padding: 104px 24px 112px; text-align: center; overflow: hidden">
+<svg class="deco" aria-hidden="true" width="170" height="340" viewBox="0 0 120 240" fill="none" stroke="#1d1d22" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 4%; bottom: 0"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M58 112 C46 104 38 92 36 78 C48 84 56 96 58 112 Z"></path><path d="M62 25 C58 14 60 6 62 2 C64 6 66 14 62 25 Z"></path><path d="M66 28 C76 22 84 22 88 24 C84 28 76 32 66 30 Z"></path><path d="M58 28 C48 22 40 22 36 24 C40 28 48 32 58 30 Z"></path><circle cx="62" cy="30" r="5" fill="#f5d76e"></circle></svg>
+<svg class="deco" aria-hidden="true" width="190" height="270" viewBox="0 0 140 200" fill="none" stroke="#1d1d22" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 4%; bottom: 0"><path d="M70 198 C70 150 60 110 40 70"></path><path d="M70 198 C72 140 84 100 108 58"></path><path d="M70 198 C68 160 70 120 72 40"></path><path d="M62 140 C52 136 46 128 44 120"></path><path d="M78 130 C88 126 94 118 96 110"></path><path d="M71 100 C62 94 58 86 58 78"></path><path d="M72 80 C80 74 84 66 84 58"></path><circle cx="72" cy="36" r="4" fill="#5b4cf5"></circle><circle cx="108" cy="54" r="3.5" fill="#ffffff"></circle><circle cx="40" cy="66" r="3.5" fill="#f5d76e"></circle></svg>
+<h2 style="margin: 0 auto; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">A home for <em style="font-style: italic">everything</em><br>you copy</h2>
+<p style="margin: 22px auto 0; max-width: 560px; color: #3f4a42">Text, links, code, colors, images and files, each shown the way it looks, with the app it came from. Narrow it down with <code style="font-family: 'Geist Mono', monospace; font-size: 13px; background: #ffffff; border-radius: 6px; padding: 2px 6px">is:image</code> <code style="font-family: 'Geist Mono', monospace; font-size: 13px; background: #ffffff; border-radius: 6px; padding: 2px 6px">is:code</code> or <code style="font-family: 'Geist Mono', monospace; font-size: 13px; background: #ffffff; border-radius: 6px; padding: 2px 6px">app:slack</code>.</p>
+<div style="position: relative; max-width: 980px; margin: 56px auto 0; background: #f0f0f5; border: 1px solid rgba(24,24,27,0.08); border-radius: 18px; padding: 14px; box-shadow: 0 24px 60px rgba(29,60,40,0.12); text-align: left">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-bottom: 12px; font-size: 13px; color: #52525b">
+<div style="display: flex; align-items: center; gap: 8px; width: 220px; height: 34px; box-sizing: border-box; padding: 0 10px; border-radius: 9px; background: #ffffff; border: 2px solid #5b4cf5; color: #868692">
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+Search
+</div>
+<span style="background: #ffffff; color: #18181b; border-radius: 8px; padding: 5px 10px; box-shadow: 0 1px 2px rgba(16,16,32,0.08)">History</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #5b4cf5"></span>Snippets</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #c8245f"></span>Brand</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #0b7f8c"></span>Replies</span>
+</div>
+<div style="display: flex; gap: 12px; overflow-x: auto; padding: 3px">
+<div style="flex: none; width: 176px; height: 236px; border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(16,16,32,0.08), 0 3px 10px rgba(16,16,32,0.06); display: flex; flex-direction: column">
+<div style="background: #5a1f5c; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Text</div><div style="font-size: 11px; opacity: 0.85">2 min ago</div></div>
+<div style="flex: 1; padding: 11px; font-size: 12.5px; line-height: 1.5; color: #18181b">Can we move the design review to Thursday at 14:00? I'll bring the new onboarding flow.</div>
+<div style="padding: 7px 11px; border-top: 1px solid rgba(24,24,27,0.08); font-size: 11px; color: #868692">92 characters</div>
+</div>
+<div style="flex: none; width: 176px; height: 236px; border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(16,16,32,0.08), 0 3px 10px rgba(16,16,32,0.06); display: flex; flex-direction: column">
+<div style="background: #1f6fe6; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Link</div><div style="font-size: 11px; opacity: 0.9">6 min ago</div></div>
+<div style="flex: 1; padding: 11px"><div style="font-size: 15px; font-weight: 600; color: #18181b">developer.mozilla.org</div><div style="font-size: 11.5px; color: #52525b; margin-top: 4px">/en-US/docs/Web/API/Clipboard_API</div></div>
+<div style="padding: 7px 11px; border-top: 1px solid rgba(24,24,27,0.08); font-size: 11px; color: #868692">Web link</div>
+</div>
+<div style="flex: none; width: 176px; height: 236px; border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(16,16,32,0.08), 0 3px 10px rgba(16,16,32,0.06); display: flex; flex-direction: column">
+<div style="background: #0a5fa0; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Code</div><div style="font-size: 11px; opacity: 0.9">14 min ago</div></div>
+<div style="flex: 1; padding: 11px; background: #f4f4f8; font-family: 'Geist Mono', monospace; font-size: 10.5px; line-height: 1.7; color: #2a2a33; white-space: pre; overflow: hidden"><span style="color: #7c3aed">export function</span> debounce(fn, ms) {
+  <span style="color: #7c3aed">let</span> timer
+  <span style="color: #7c3aed">return</span> (...args) =&gt; {
+    clearTimeout(timer)
+    timer = setTimeout(
+      () =&gt; fn(...args), ms)
+  }
+}</div>
+<div style="padding: 7px 11px; border-top: 1px solid rgba(24,24,27,0.08); font-size: 11px; color: #868692">7 lines</div>
+</div>
+<div style="flex: none; width: 176px; height: 236px; border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 0 0 2.5px #5b4cf5; display: flex; flex-direction: column">
+<div style="background: #7b3fe4; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Color</div><div style="font-size: 11px; opacity: 0.9">22 min ago</div></div>
+<div style="flex: 1; padding: 12px; background: #5b4cf5; color: #ffffff; display: flex; flex-direction: column; justify-content: flex-end"><div style="font-size: 20px; font-weight: 600">#5B4CF5</div><div style="font-size: 11px; opacity: 0.85">rgb(91 76 245)</div></div>
+<div style="padding: 7px 11px; border-top: 1px solid rgba(24,24,27,0.08); font-size: 11px; color: #868692">Color</div>
+</div>
+<div style="flex: none; width: 176px; height: 236px; border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(16,16,32,0.08), 0 3px 10px rgba(16,16,32,0.06); display: flex; flex-direction: column">
+<div style="background: #5b6475; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Image</div><div style="font-size: 11px; opacity: 0.9">35 min ago</div></div>
+<div style="flex: 1; background: #f4f4f8; padding: 12px; display: flex; align-items: flex-end; gap: 5px">
+<span style="flex: 1; height: 30%; background: #a79fff; border-radius: 3px"></span><span style="flex: 1; height: 46%; background: #a79fff; border-radius: 3px"></span><span style="flex: 1; height: 40%; background: #8b80ff; border-radius: 3px"></span><span style="flex: 1; height: 64%; background: #8b80ff; border-radius: 3px"></span><span style="flex: 1; height: 58%; background: #6d5ff7; border-radius: 3px"></span><span style="flex: 1; height: 82%; background: #5b4cf5; border-radius: 3px"></span><span style="flex: 1; height: 94%; background: #5b4cf5; border-radius: 3px"></span>
+</div>
+<div style="padding: 7px 11px; border-top: 1px solid rgba(24,24,27,0.08); font-size: 11px; color: #868692">1280 × 800, 402 KB</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 0 24px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 1px; background: #ececf0; border: 1px solid #ececf0; border-top: 0">
+<div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div aria-hidden="true" style="position: relative; width: 260px; height: 200px">
+<div style="position: absolute; left: 30px; top: 30px; width: 120px; height: 150px; border-radius: 10px; background: #ffffff; border: 1px solid #1d1d22; transform: rotate(-9deg); overflow: hidden"><div style="height: 30px; background: #5a1f5c"></div></div>
+<div style="position: absolute; left: 70px; top: 16px; width: 120px; height: 150px; border-radius: 10px; background: #ffffff; border: 1px solid #1d1d22; transform: rotate(-2deg); overflow: hidden"><div style="height: 30px; background: #1f6fe6"></div><div style="margin: 14px 12px 0; height: 6px; border-radius: 3px; background: #e4e4ea"></div><div style="margin: 8px 12px 0; width: 60%; height: 6px; border-radius: 3px; background: #e4e4ea"></div></div>
+<div style="position: absolute; left: 112px; top: 26px; width: 120px; height: 150px; border-radius: 10px; background: #5b4cf5; border: 1px solid #1d1d22; transform: rotate(7deg); overflow: hidden"><div style="height: 30px; background: #7b3fe4"></div><div style="position: absolute; left: 12px; bottom: 12px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #ffffff">#5B4CF5</div></div>
+</div>
+<h3 style="margin: 24px 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 34px; line-height: 1.05">Remembers <em style="font-style: italic">everything</em></h3>
+<p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">Text, rich text, links, code, colors, images and files, with the app each came from and when. Copy it again and it moves to the front.</p>
+</div>
+<div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div aria-hidden="true" style="width: 260px; height: 200px; display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding-bottom: 10px; box-sizing: border-box">
+<span style="width: 30px; height: 96px; border-radius: 6px; background: #5b4cf5; border: 1px solid #1d1d22"></span>
+<span style="width: 30px; height: 150px; border-radius: 6px; background: #f5b642; border: 1px solid #1d1d22"></span>
+<span style="width: 30px; height: 120px; border-radius: 6px; background: #ffffff; border: 1px solid #1d1d22"></span>
+<span style="width: 30px; height: 178px; border-radius: 6px; background: #0b7f8c; border: 1px solid #1d1d22"></span>
+<span style="width: 30px; height: 70px; border-radius: 6px; background: #c8245f; border: 1px solid #1d1d22"></span>
+</div>
+<h3 style="margin: 24px 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 34px; line-height: 1.05">Shows it the way it <em style="font-style: italic">looks</em></h3>
+<p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">A copied color fills its card, images go edge to edge, links lead with the site name and code keeps its shape.</p>
+</div>
+<div style="grid-column: 1 / -1; background: #fbfbfa; padding: 64px 32px 72px; position: relative; overflow: hidden">
+<svg class="deco" aria-hidden="true" viewBox="0 0 1100 220" preserveAspectRatio="none" fill="none" stroke="#1d1d22" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="1 7" style="position: absolute; left: 0; top: 30px; width: 100%; height: 220px"><path d="M20 150 C140 40 240 40 320 110 C400 180 480 190 560 90 C640 -10 760 40 820 140 C880 220 980 170 1080 60"></path></svg>
+<div style="position: relative; display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start; gap: 20px">
+<div style="margin-top: 70px; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 8px 24px rgba(17,17,19,0.07)"><span style="width: 30px; height: 30px; border-radius: 8px; background: #efedff; color: #4a3be0; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 13px">1</span><span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Copy</span><span style="font-size: 12px; color: #6b6b72">a link in Slack</span></span></div>
+<div style="margin-top: 0; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 8px 24px rgba(17,17,19,0.07)"><span style="width: 30px; height: 30px; border-radius: 8px; background: #efedff; color: #4a3be0; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 13px">2</span><span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Press <span class="shortcut">⇧⌘V</span></span><span style="font-size: 12px; color: #6b6b72">the shelf slides up</span></span></div>
+<div style="margin-top: 96px; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 8px 24px rgba(17,17,19,0.07)"><span style="width: 30px; height: 30px; border-radius: 8px; background: #efedff; color: #4a3be0; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 13px">3</span><span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Type “docs”</span><span style="font-size: 12px; color: #6b6b72">results narrow as you type</span></span></div>
+<div style="margin-top: 20px; display: flex; align-items: center; gap: 10px; background: #ffffff; border: 1px solid #ececf0; border-radius: 12px; padding: 10px 14px 10px 10px; box-shadow: 0 8px 24px rgba(17,17,19,0.07)"><span style="width: 30px; height: 30px; border-radius: 8px; background: #5b4cf5; color: #ffffff; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 13px">4</span><span style="display: flex; flex-direction: column; line-height: 1.3"><span style="font-size: 13px; font-weight: 600">Press Return</span><span style="font-size: 12px; color: #6b6b72">pasted where you were</span></span></div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 120px 24px 0; text-align: center">
+<h2 style="margin: 0 auto; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">Finding made <em style="font-style: italic">effortless</em></h2>
+<p style="margin: 20px auto 0; max-width: 520px; color: #6b6b72">Start typing the moment the shelf opens. Search covers everything you've copied, and filters narrow it to one kind.</p>
+<div style="margin-top: 56px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; text-align: left">
+<div style="flex: 0 1 240px; min-width: 0; padding-top: 12px">
+<h3 style="margin: 0 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 28px">Filters</h3>
+<p style="margin: 0 0 20px; font-size: 14px; color: #6b6b72">Mix a filter with words: <code style="font-family: 'Geist Mono', monospace; font-size: 12.5px">is:link docs</code> finds links that mention docs.</p>
+<ul style="margin: 0; padding: 0; list-style: none; font-family: 'Geist Mono', monospace; font-size: 13.5px; color: #55555c; display: flex; flex-direction: column; gap: 2px">
+<li style="padding: 8px 12px; border-radius: 8px">Everything</li>
+<li style="padding: 8px 12px; border-radius: 8px; background: #efeff2; color: #111113">is:link</li>
+<li style="padding: 8px 12px; border-radius: 8px">is:image</li>
+<li style="padding: 8px 12px; border-radius: 8px">is:code</li>
+<li style="padding: 8px 12px; border-radius: 8px">is:color</li>
+<li style="padding: 8px 12px; border-radius: 8px">is:file</li>
+<li style="padding: 8px 12px; border-radius: 8px">app:slack</li>
+</ul>
+</div>
+<div style="flex: 1 1 600px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 18px; box-shadow: 0 24px 60px rgba(17,17,19,0.07)">
+<div style="display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px; border-radius: 10px; border: 2px solid #5b4cf5; font-family: 'Geist Mono', monospace; font-size: 14px; margin-bottom: 16px">
+<svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#868692" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+is:link docs
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px">
+<div style="border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 0 0 2.5px #5b4cf5"><div style="background: #1f6fe6; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Link</div><div style="font-size: 11px; opacity: 0.9">Slack · 2 min ago</div></div><div style="padding: 12px 11px 20px"><div style="font-size: 15px; font-weight: 600">docs.github.com</div><div style="font-size: 11.5px; color: #52525b; margin-top: 4px">/en/pages/quickstart</div></div></div>
+<div style="border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(16,16,32,0.08), 0 3px 10px rgba(16,16,32,0.06)"><div style="background: #1f6fe6; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Link</div><div style="font-size: 11px; opacity: 0.9">Chrome · 1 hr ago</div></div><div style="padding: 12px 11px 20px"><div style="font-size: 15px; font-weight: 600">vitest.dev</div><div style="font-size: 11.5px; color: #52525b; margin-top: 4px">/guide/mocking</div></div></div>
+<div style="border-radius: 11px; overflow: hidden; background: #ffffff; box-shadow: 0 1px 2px rgba(16,16,32,0.08), 0 3px 10px rgba(16,16,32,0.06)"><div style="background: #1f6fe6; color: #ffffff; padding: 9px 11px"><div style="font-weight: 600; font-size: 13px">Link</div><div style="font-size: 11px; opacity: 0.9">Notes · yesterday</div></div><div style="padding: 12px 11px 20px"><div style="font-size: 15px; font-weight: 600">electronjs.org</div><div style="font-size: 11.5px; color: #52525b; margin-top: 4px">/docs/latest/api/clipboard</div></div></div>
+</div>
+<div style="margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: #6b6b72">
+<span><kbd style="font-family: 'Geist Mono', monospace; background: #efeff2; border-radius: 5px; padding: 1px 6px; color: #111113">Return</kbd> paste</span>
+<span><kbd style="font-family: 'Geist Mono', monospace; background: #efeff2; border-radius: 5px; padding: 1px 6px; color: #111113">⇧ Return</kbd> paste as plain text</span>
+<span><kbd style="font-family: 'Geist Mono', monospace; background: #efeff2; border-radius: 5px; padding: 1px 6px; color: #111113">Space</kbd> preview</span>
+<span><kbd style="font-family: 'Geist Mono', monospace; background: #efeff2; border-radius: 5px; padding: 1px 6px; color: #111113">Esc</kbd> clear, then close</span>
+</div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 96px 24px 0">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr)); gap: 1px; background: #ececf0; border: 1px solid #ececf0">
+<div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div aria-hidden="true" style="position: relative; width: 280px; height: 200px">
+<div style="position: absolute; left: 10px; top: 20px; width: 200px; height: 140px; border-radius: 10px; background: #ffffff; border: 1px solid #1d1d22">
+<div style="display: flex; gap: 5px; padding: 9px 10px; border-bottom: 1px solid #1d1d22"><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #1d1d22"></span><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #1d1d22"></span><span style="width: 7px; height: 7px; border-radius: 50%; border: 1px solid #1d1d22"></span></div>
+<div style="margin: 16px 14px 0; height: 6px; border-radius: 3px; background: #e4e4ea"></div>
+<div style="margin: 8px 14px 0; width: 70%; height: 6px; border-radius: 3px; background: #e4e4ea"></div>
+<div style="margin: 14px 14px 0; display: flex; align-items: center; gap: 2px"><span style="height: 6px; width: 46%; border-radius: 3px; background: #c9c4ff"></span><span style="width: 2px; height: 16px; background: #5b4cf5"></span></div>
+</div>
+<div style="position: absolute; right: 6px; bottom: 14px; width: 104px; height: 64px; border-radius: 12px; background: #ffffff; border: 1px solid #1d1d22; border-bottom-width: 5px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 14px">⏎ Return</div>
+</div>
+<h3 style="margin: 24px 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 34px; line-height: 1.05">Pastes where you <em style="font-style: italic">were</em></h3>
+<p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">Pick a card and OpenPaste puts it straight back into the app you were using. Hold Shift to leave the formatting behind.</p>
+</div>
+<div style="background: #fbfbfa; padding: 56px 40px; display: flex; flex-direction: column; align-items: center; text-align: center">
+<div aria-hidden="true" style="position: relative; width: 240px; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end">
+<svg width="96" height="150" viewBox="0 0 120 240" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -6px"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M62 25 C58 14 60 6 62 2 C64 6 66 14 62 25 Z"></path><path d="M66 28 C76 22 84 22 88 24 C84 28 76 32 66 30 Z"></path><path d="M58 28 C48 22 40 22 36 24 C40 28 48 32 58 30 Z"></path><circle cx="62" cy="30" r="5" fill="#f5b642"></circle></svg>
+<div style="width: 150px; height: 56px; border-radius: 12px; background: #8b80ff; border: 1px solid #1d1d22; border-bottom-width: 5px; display: grid; place-items: center; font-family: 'Geist Mono', monospace; font-size: 18px; color: #111113"><span class="shortcut">⇧⌘V</span></div>
+</div>
+<h3 style="margin: 24px 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 34px; line-height: 1.05">Simple for anyone. Fast for <em style="font-style: italic">keyboards</em>.</h3>
+<p style="margin: 0; max-width: 380px; font-size: 15px; color: #6b6b72">Click and drag if you like, or never touch the mouse: arrows to move, <span class="mod">⌘</span>1–9 to paste one of the first nine, Tab to switch boards.</p>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 112px 24px; text-align: center">
+<blockquote style="margin: 0 auto; max-width: 860px">
+<p style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.18">“The shelf floats over other apps, so it stays quiet: one accent for selection and focus, every other color comes from content.”</p>
+<footer style="margin-top: 22px; font-size: 14px; color: #6b6b72">From OpenPaste's design notes</footer>
+</blockquote>
+</section>
+
+<section id="privacy" style="max-width: 1180px; margin: 0 auto; padding: 0 24px; text-align: center">
+<svg aria-hidden="true" width="360" height="190" viewBox="0 0 360 190" fill="none" stroke="#1d1d22" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" style="max-width: 100%; height: auto"><g transform="rotate(-6 80 95)"><rect x="20" y="40" width="120" height="96" rx="10" fill="#ffffff"></rect><path d="M20 66h120"></path><path d="M34 84h70M34 100h52"></path></g><g transform="rotate(5 280 100)"><rect x="220" y="52" width="120" height="96" rx="10" fill="#ffffff"></rect><path d="M220 78h120"></path><path d="M234 96h64M234 112h80"></path></g><path d="M142 98 C150 104 154 112 156 120" stroke-dasharray="1 6"></path><path d="M218 104 C210 110 206 116 204 122" stroke-dasharray="1 6"></path><path d="M162 104 v-16 a18 18 0 0 1 36 0 v16"></path><rect x="150" y="104" width="60" height="52" rx="9" fill="#efedff"></rect><circle cx="180" cy="126" r="5" fill="#5b4cf5" stroke="#5b4cf5"></circle><path d="M180 130 v10"></path><circle cx="300" cy="24" r="4" fill="#f5d76e"></circle><circle cx="56" cy="170" r="3.5" fill="#bfe3c8"></circle></svg>
+<h2 style="margin: 28px auto 0; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">Private <em style="font-style: italic">by default</em></h2>
+<p style="margin: 20px auto 0; max-width: 580px; color: #6b6b72">Your history never leaves your computer. No account, no cloud, nothing to sign in to.</p>
+<div style="margin-top: 56px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; text-align: left">
+<div style="flex: 0 1 260px; min-width: 0; padding-top: 12px">
+<h3 style="margin: 0 0 8px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 28px">What it skips</h3>
+<p style="margin: 0 0 20px; font-size: 14px; color: #6b6b72">Some things should never be in a clipboard history. OpenPaste leaves them out.</p>
+<ul style="margin: 0; padding: 0; list-style: none; font-size: 14px; color: #55555c; display: flex; flex-direction: column; gap: 2px">
+<li style="padding: 8px 12px; border-radius: 8px; background: #efeff2; color: #111113">Password manager copies</li>
+<li style="padding: 8px 12px; border-radius: 8px">Apps on your ignore list</li>
+<li style="padding: 8px 12px; border-radius: 8px">Anything while paused</li>
+<li style="padding: 8px 12px; border-radius: 8px">Old, unpinned items</li>
+</ul>
+</div>
+<div style="flex: 1 1 600px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: clamp(20px, 3vw, 32px); box-shadow: 0 24px 60px rgba(17,17,19,0.07)">
+<h4 style="margin: 0 0 4px; font-size: 18px; font-weight: 600">Privacy</h4>
+<p style="margin: 0 0 18px; font-size: 13px; color: #6b6b72">History is stored only on this computer, in a plain folder.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Skip copies marked private by password managers</span><span style="width: 40px; height: 24px; border-radius: 999px; background: #5b4cf5; position: relative"><span style="position: absolute; right: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #ffffff"></span></span></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Ignore these apps</span><span style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px"><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">1Password</span><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">Bitwarden</span><span style="background: #efeff2; border-radius: 6px; padding: 3px 8px">KeePassXC</span><span style="border: 1px dashed #c4c4cc; border-radius: 6px; padding: 2px 8px; color: #6b6b72">+ Add</span></span></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Remove unpinned items after</span><span style="font-size: 13px; background: #efeff2; border-radius: 8px; padding: 5px 10px">30 days</span></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">Keep at most</span><span style="font-size: 13px; background: #efeff2; border-radius: 8px; padding: 5px 10px">2,000 items</span></div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 0 0; border-top: 1px solid #ececf0"><span style="font-size: 14px">History folder</span><span style="font-size: 13px; color: #4a3be0">Open folder</span></div>
+</div>
+</div>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 112px 24px; text-align: center">
+<blockquote style="margin: 0 auto; max-width: 860px">
+<p style="margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-style: italic; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.18">“No native modules. Pasting uses each system's own tools, so there is nothing to compile and the app builds on any machine.”</p>
+<footer style="margin-top: 22px; font-size: 14px; color: #6b6b72">From the OpenPaste README</footer>
+</blockquote>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 0 24px">
+<h2 style="margin: 0 auto 48px; max-width: 760px; text-align: center; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 76px); line-height: 0.98; letter-spacing: -0.015em">Everything you need<br>in <em style="font-style: italic">one shortcut</em></h2>
+<div style="display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 2 1 460px; min-width: 0; min-height: 380px; box-sizing: border-box; background: #fbf5e1; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; gap: 24px">
+<div>
+<img src="assets/icon.png" alt="" style="width: 44px; height: 44px">
+<h3 style="margin: 14px 0 6px; font-size: 20px; font-weight: 600">Runs everywhere</h3>
+<p style="margin: 0; font-size: 14px; color: #5f5a48; max-width: 360px">macOS 13 and later, Windows 10 and later, and 64-bit Linux. The same shelf and the same shortcuts on each.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px">
+<span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 999px; padding: 6px 12px">macOS · Apple Silicon and Intel</span>
+<span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 999px; padding: 6px 12px">Windows · x64 and Arm</span>
+<span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 999px; padding: 6px 12px">Linux · AppImage and .deb</span>
+</div>
+</div>
+<div style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<div style="flex: 1; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"></path><path d="M9 3h6l-1 6 4 4H6l4-4z"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Pinboards</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Named, colored boards for snippets, replies and brand colors. Never cleaned up.</p></div>
+<div style="flex: 1; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7 10h2M11 10h2M15 10h2M8 14h8"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Quick paste</h3><p style="margin: 0; font-size: 13px; color: #6b6b72"><span class="mod">⌘</span>1 to <span class="mod">⌘</span>9 pastes one of the first nine cards.</p></div>
+</div>
+<div style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<div style="flex: 1; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Preview</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Space shows the whole card before you paste it.</p></div>
+<div style="flex: 1; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"></path><path d="M4 9h11a5 5 0 0 1 0 10h-3"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Undo delete</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Removed something by mistake? Bring it back.</p></div>
+</div>
+</div>
+<div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 1 1 220px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Edit and rename</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Fix the text before pasting, and name cards you'll want again.</p></div>
+<div style="flex: 1 1 220px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Drag and drop</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Drag a card onto a pinboard, or out into another app.</p></div>
+<div style="flex: 1 1 220px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 0 0 18z" fill="#1d1d22"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Light and dark</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Follows your system, or pick one in Settings.</p></div>
+<div style="flex: 1 1 220px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9"></path><path d="M6.4 6.4a8 8 0 1 0 11.2 0"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Opens at login</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Ready before you copy your first thing of the day.</p></div>
+</div>
+<div style="margin-top: 14px; display: flex; flex-wrap: wrap; gap: 14px">
+<div style="flex: 2 1 460px; min-width: 0; box-sizing: border-box; background: #e9f4ec; border-radius: 18px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<div><h3 style="margin: 0 0 6px; font-size: 20px; font-weight: 600">Search that understands kinds</h3><p style="margin: 0; font-size: 14px; color: #3f4a42">Type words, or ask for a kind of thing from a particular app.</p></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; font-family: 'Geist Mono', monospace; font-size: 13px">
+<span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:image</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:link</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:code</span><span style="background: #5b4cf5; color: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:color</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">is:file</span><span style="background: #ffffff; border: 1px solid #1d1d22; border-radius: 8px; padding: 5px 10px">app:figma</span>
+</div>
+</div>
+<div style="flex: 1 1 220px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="2"></rect><path d="M7 11h.01M11 11h.01M15 11h.01M8 15h8"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Your own shortcut</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Keep <span class="shortcut">⇧⌘V</span> or record any shortcut you like.</p></div>
+<div style="flex: 1 1 220px; min-width: 0; background: #ffffff; border: 1px solid #ececf0; border-radius: 18px; padding: 22px"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d1d22" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg><h3 style="margin: 12px 0 4px; font-size: 15px; font-weight: 600">Images and files</h3><p style="margin: 0; font-size: 13px; color: #6b6b72">Screenshots, photos and files, stored once even if copied twice.</p></div>
+</div>
+</section>
+
+<section style="max-width: 1180px; margin: 0 auto; padding: 112px 24px 0">
+<div style="position: relative; overflow: hidden; background: #111113; color: #f4f4f6; border-radius: 24px; padding: clamp(56px, 8vw, 104px) 24px; text-align: center">
+<svg class="deco" aria-hidden="true" width="150" height="300" viewBox="0 0 120 240" fill="none" stroke="#4a4a54" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; left: 6%; bottom: -10px"><path d="M60 238 C58 190 64 150 58 104 C55 80 60 58 62 40"></path><path d="M59 196 C44 188 30 172 26 150 C42 156 54 170 59 196 Z"></path><path d="M60 150 C74 142 90 126 96 104 C80 110 66 124 60 150 Z"></path><path d="M58 112 C46 104 38 92 36 78 C48 84 56 96 58 112 Z"></path><circle cx="62" cy="30" r="5" fill="#8b80ff" stroke="#8b80ff"></circle></svg>
+<svg class="deco" aria-hidden="true" width="160" height="230" viewBox="0 0 140 200" fill="none" stroke="#4a4a54" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; right: 6%; bottom: -10px"><path d="M70 198 C70 150 60 110 40 70"></path><path d="M70 198 C72 140 84 100 108 58"></path><path d="M70 198 C68 160 70 120 72 40"></path><path d="M62 140 C52 136 46 128 44 120"></path><path d="M78 130 C88 126 94 118 96 110"></path><circle cx="72" cy="36" r="4" fill="#f5d76e" stroke="#f5d76e"></circle></svg>
+<img src="assets/icon.png" alt="" style="width: 56px; height: 56px; margin: 0 auto">
+<h2 style="margin: 22px auto 0; max-width: 680px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(44px, 5.6vw, 72px); line-height: 0.98; letter-spacing: -0.015em">Built in the <em style="font-style: italic">open</em></h2>
+<p style="margin: 20px auto 0; max-width: 480px; font-size: 15px; color: #a1a1aa">OpenPaste is MIT licensed. Sync between computers, link previews and paste stacks are on the roadmap, and contributions are welcome.</p>
+<a href="https://github.com/alexsilver8/openpaste" style="margin-top: 28px; text-decoration: none; color: #111113; background: #8b80ff; border-radius: 999px; padding: 12px 22px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; font-size: 15px; font-weight: 500">Contribute on GitHub</a>
+</div>
+</section>
+
+<section id="download" style="max-width: 1180px; margin: 0 auto; padding: 120px 24px; text-align: center">
+<svg aria-hidden="true" width="200" height="220" viewBox="0 0 200 220" fill="none" stroke="#1d1d22" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="max-width: 100%; height: auto"><rect x="40" y="30" width="110" height="160" rx="14" fill="#ffffff"></rect><rect x="70" y="18" width="50" height="22" rx="7" fill="#fbfbfa"></rect><circle cx="95" cy="27" r="3"></circle><path d="M60 70h70M60 90h56M60 110h64"></path><path d="M120 112h46a8 8 0 0 1 8 8v42l-22 22h-32a8 8 0 0 1-8-8v-56a8 8 0 0 1 8-8z" fill="#efedff"></path><path d="M152 184v-14a8 8 0 0 1 8-8h14"></path><path d="M124 132h36M124 146h24"></path><circle cx="30" cy="196" r="3.5" fill="#bfe3c8"></circle><circle cx="176" cy="40" r="4" fill="#f5d76e"></circle></svg>
+<h2 style="margin: 24px auto 0; max-width: 760px; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(48px, 6vw, 84px); line-height: 0.98; letter-spacing: -0.015em">Get started for <em style="font-style: italic">free</em></h2>
+<p style="margin: 18px auto 0; max-width: 540px; color: #6b6b72">Version <span data-version>1.0.0</span> for macOS, Windows and Linux. No account needed.</p>
+<div style="margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px">
+<a data-download-button href="https://github.com/alexsilver8/openpaste/releases/latest" style="text-decoration: none; color: #ffffff; background: #111113; border-radius: 999px; padding: 12px 20px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; font-size: 15px; font-weight: 500"><span data-download-label>Download for macOS</span></a>
+<a href="demo/" style="text-decoration: none; color: #111113; background: #efeff2; border-radius: 999px; padding: 12px 20px; min-height: 46px; box-sizing: border-box; display: inline-flex; align-items: center; font-size: 15px; font-weight: 500">Try the live demo</a>
+</div>
+<div style="margin: 36px auto 0; max-width: 820px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-size: 13.5px">
+<a data-asset="mac-arm" href="https://github.com/alexsilver8/openpaste/releases/download/v1.0.0/OpenPaste-1.0.0-arm64.dmg" style="text-decoration: none; color: #111113; background: #ffffff; border: 1px solid #ececf0; border-radius: 999px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">macOS, Apple Silicon <span style="margin-left: 6px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6b6b72">.dmg</span></a>
+<a data-asset="mac-intel" href="https://github.com/alexsilver8/openpaste/releases/download/v1.0.0/OpenPaste-1.0.0.dmg" style="text-decoration: none; color: #111113; background: #ffffff; border: 1px solid #ececf0; border-radius: 999px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">macOS, Intel <span style="margin-left: 6px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6b6b72">.dmg</span></a>
+<a data-asset="win" href="https://github.com/alexsilver8/openpaste/releases/download/v1.0.0/OpenPaste.Setup.1.0.0.exe" style="text-decoration: none; color: #111113; background: #ffffff; border: 1px solid #ececf0; border-radius: 999px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Windows <span style="margin-left: 6px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6b6b72">.exe</span></a>
+<a data-asset="appimage" href="https://github.com/alexsilver8/openpaste/releases/download/v1.0.0/OpenPaste-1.0.0.AppImage" style="text-decoration: none; color: #111113; background: #ffffff; border: 1px solid #ececf0; border-radius: 999px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Linux <span style="margin-left: 6px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6b6b72">.AppImage</span></a>
+<a data-asset="deb" href="https://github.com/alexsilver8/openpaste/releases/download/v1.0.0/openpaste_1.0.0_amd64.deb" style="text-decoration: none; color: #111113; background: #ffffff; border: 1px solid #ececf0; border-radius: 999px; padding: 10px 14px; min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center">Debian, Ubuntu <span style="margin-left: 6px; font-family: 'Geist Mono', monospace; font-size: 12px; color: #6b6b72">.deb</span></a>
+</div>
+<p style="margin: 20px auto 0; max-width: 560px; font-size: 13px; color: #6b6b72">The installers aren't signed with a paid certificate yet. On first launch, choose Open Anyway in Privacy &amp; Security (macOS) or More info → Run anyway (Windows).</p>
+</section>
+
+</main>
+<footer style="border-top: 1px solid #ececf0">
+<div style="max-width: 1180px; margin: 0 auto; padding: 48px 24px 32px; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; font-size: 14px">
+<div style="flex: 1 1 260px; min-width: 0">
+<a href="#top" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #111113; font-weight: 600"><img src="assets/icon.png" alt="" style="width: 24px; height: 24px">OpenPaste</a>
+<p style="margin: 10px 0 0; color: #6b6b72; max-width: 260px">A free, open-source clipboard manager for macOS, Windows and Linux.</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 56px">
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-weight: 600">Product</span><a href="#features" style="text-decoration: none; color: #6b6b72">Features</a><a href="demo/" style="text-decoration: none; color: #6b6b72">Live demo</a><a href="#download" style="text-decoration: none; color: #6b6b72">Download</a><a href="https://github.com/alexsilver8/openpaste/releases" style="text-decoration: none; color: #6b6b72">Release notes</a></div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span style="font-weight: 600">Project</span><a href="https://github.com/alexsilver8/openpaste" style="text-decoration: none; color: #6b6b72">GitHub</a><a href="https://github.com/alexsilver8/openpaste/issues" style="text-decoration: none; color: #6b6b72">Issues</a><a href="https://github.com/alexsilver8/openpaste/blob/main/CONTRIBUTING.md" style="text-decoration: none; color: #6b6b72">Contributing</a><a href="https://github.com/alexsilver8/openpaste/blob/main/LICENSE" style="text-decoration: none; color: #6b6b72">MIT License</a></div>
+</div>
+</div>
+<div style="max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #6b6b72">
+<span>© 2026 Alexander Silver</span>
+<span>An independent project, not affiliated with any other clipboard manager.</span>
+</div>
+</footer>
+
+</div>
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  var platform = ((navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '').toLowerCase();
+  var mobile = /android|iphone|ipad|ipod/i.test(ua);
+  var os = mobile ? null
+    : (/mac/.test(platform) || /Macintosh/.test(ua)) ? 'mac'
+    : (/win/.test(platform) || /Windows/.test(ua)) ? 'win'
+    : (/linux|x11/.test(platform) || /Linux/.test(ua)) ? 'linux'
+    : null;
+
+  // Ctrl on Windows and Linux, the Command key on macOS.
+  if (os && os !== 'mac') {
+    document.querySelectorAll('.shortcut').forEach(function (el) { el.textContent = 'Ctrl+Shift+V'; });
+    document.querySelectorAll('.mod').forEach(function (el) { el.textContent = 'Ctrl+'; });
+  }
+
+  var asset = { mac: 'mac-arm', win: 'win' }[os];
+  var label = { mac: 'Download for macOS', win: 'Download for Windows', linux: 'Download for Linux' }[os] || 'Download';
+
+  function applyButtons() {
+    var link = asset && document.querySelector('[data-asset="' + asset + '"]');
+    document.querySelectorAll('[data-download-button]').forEach(function (btn) {
+      btn.href = link ? link.href : '#download';
+      var text = btn.querySelector('[data-download-label]');
+      if (text) text.textContent = label;
+    });
+  }
+  applyButtons();
+
+  // Follow the newest release, so this page never needs editing for a version bump.
+  var patterns = {
+    'mac-arm': /-arm64\.dmg$/,
+    'mac-intel': /^OpenPaste-[\d.]+\.dmg$/,
+    'win': /\.exe$/,
+    'appimage': /\.AppImage$/,
+    'deb': /_amd64\.deb$/
+  };
+  fetch('https://api.github.com/repos/alexsilver8/openpaste/releases/latest', { headers: { Accept: 'application/vnd.github+json' } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (release) {
+      if (!release || !release.assets) return;
+      var version = String(release.tag_name || '').replace(/^v/, '');
+      if (version) document.querySelectorAll('[data-version]').forEach(function (el) { el.textContent = version; });
+      Object.keys(patterns).forEach(function (key) {
+        var match = release.assets.find(function (a) { return patterns[key].test(a.name); });
+        var link = document.querySelector('[data-asset="' + key + '"]');
+        if (match && link) link.href = match.browser_download_url;
+      });
+      applyButtons();
+    })
+    .catch(function () { /* the built-in v1.0.0 links still work */ });
+})();
+</script>
+</body>
+</html>
