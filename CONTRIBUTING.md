@@ -26,7 +26,12 @@ Set `OPENPASTE_DATA_DIR=/some/folder` to keep a development history separate fro
 pnpm typecheck
 pnpm test
 pnpm format
+pnpm cleaner
 ```
+
+`pnpm cleaner` checks the conventions below that Prettier and TypeScript don't, and tells you
+how to fix anything it finds. Right now it checks that component files declare no interfaces or
+types.
 
 - Keep pull requests focused: one fix or feature each.
 - Add or update tests in `tests/` when you change classification, search, settings or the store.
