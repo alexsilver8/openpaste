@@ -1,6 +1,6 @@
 # OpenPaste website
 
-This branch is the published site for <https://alexsilver8.github.io/openpaste/>, served by GitHub Pages.
+This branch is the published site for <https://openpaste.alexsilver.dev/>, served by GitHub Pages.
 
 - `index.html`: the landing page
 - `demo/`: the browser demo, built from `main` with `pnpm demo:build`
