@@ -11,6 +11,11 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+            # Checks the conventions Prettier and TypeScript don't (see CONTRIBUTING.md), with the
+            # shared rules from alexsilver8/cleaner. Problems show up as annotations on the PR.
+            - uses: alexsilver8/cleaner@v1
+              with:
+                  paths: src/renderer/src
             # Installs Node 22 and the pnpm version from package.json, then runs
             # `pnpm install --frozen-lockfile`.
             - uses: pnpm/setup@v3

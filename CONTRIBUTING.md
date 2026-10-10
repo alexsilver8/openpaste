@@ -31,7 +31,9 @@ pnpm cleaner
 
 `pnpm cleaner` checks the conventions below that Prettier and TypeScript don't, and tells you
 how to fix anything it finds. Right now it checks that component files declare no interfaces or
-types.
+types. CI runs the same check on every pull request and marks each problem on its line. The rules
+live in [alexsilver8/cleaner](https://github.com/alexsilver8/cleaner), shared with other
+projects, so new rules are added there rather than in this repository.
 
 - Keep pull requests focused: one fix or feature each.
 - Add or update tests in `tests/` when you change classification, search, settings or the store.
