@@ -34,22 +34,26 @@ not affiliated with any of them.
 
 ## Keyboard
 
-| Keys                          | Does                                                                    |
-| ----------------------------- | ----------------------------------------------------------------------- |
-| `⇧⌘V` / `Ctrl+Shift+V`        | Open or close the shelf (change in Settings)                            |
-| `←` `→`                       | Move between cards (`⌘`/`Ctrl` jumps to ends)                           |
-| `Return`                      | Paste                                                                   |
-| `Shift+Return`                | Paste as plain text (or with formatting, if plain text is your default) |
-| `⌘1`–`⌘9` / `Ctrl+1`–`Ctrl+9` | Paste one of the first nine cards (hold the modifier to see numbers)    |
-| Just type                     | Search                                                                  |
-| `Space`                       | Preview the selected card                                               |
-| `⌘C` / `Ctrl+C`               | Copy without pasting                                                    |
-| `⌘E` / `Ctrl+E`               | Edit text                                                               |
-| `⌘R` / `Ctrl+R`               | Rename                                                                  |
-| `⌘P` / `Ctrl+P`               | Pin to a pinboard                                                       |
-| `⌘⌫` / `Delete`               | Delete (with undo)                                                      |
-| `Tab` / `Shift+Tab`           | Switch pinboard                                                         |
-| `Esc`                         | Clear the search, then close                                            |
+| Keys                          | Does                                                                           |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| `⇧⌘V` / `Ctrl+Shift+V`        | Open or close the shelf (change in Settings)                                   |
+| `←` `→`                       | Move between cards (`⌘`/`Ctrl` jumps to ends)                                  |
+| `Home` / `End`                | Jump to the first or last card (when the search field is empty or not focused) |
+| `Return`                      | Paste                                                                          |
+| `Shift+Return`                | Paste as plain text (or with formatting, if plain text is your default)        |
+| `⌘1`–`⌘9` / `Ctrl+1`–`Ctrl+9` | Paste one of the first nine cards (hold the modifier to see numbers)           |
+| Just type                     | Search                                                                         |
+| `⌘F` / `Ctrl+F`               | Focus the search field                                                         |
+| `Space`                       | Preview the selected card                                                      |
+| `⌘O` / `Ctrl+O`               | Open the selected link in the browser                                          |
+| `⌘C` / `Ctrl+C`               | Copy without pasting                                                           |
+| `⌘E` / `Ctrl+E`               | Edit text                                                                      |
+| `⌘R` / `Ctrl+R`               | Rename                                                                         |
+| `⌘P` / `Ctrl+P`               | Pin to a pinboard                                                              |
+| `⌘⌫` / `Delete`               | Delete (with undo)                                                             |
+| `Tab` / `Shift+Tab`           | Switch pinboard                                                                |
+| `⌘,` / `Ctrl+,`               | Open Settings                                                                  |
+| `Esc`                         | Clear the search, then close                                                   |
 
 Right-click a card for every action. Drag a card onto a pinboard tab to pin it, or out of the shelf
 into another app.
