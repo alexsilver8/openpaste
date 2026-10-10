@@ -1,7 +1,7 @@
 {
 	"name": "openpaste",
 	"productName": "OpenPaste",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "An open-source clipboard manager: a visual history shelf, pinboards and instant search for everything you copy.",
 	"main": "./out/main/index.js",
 	"author": "Alexander Silver",
