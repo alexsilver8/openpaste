@@ -147,34 +147,33 @@ it can merge:
 - `title`: the pull request title follows the format below
 
 Pull requests are squash-merged, and the title becomes the commit message on `main`, so the title
-matters more than the commits on your branch. The title also sets the pull request's label
-(`fix` → `bug`, `feat` → `enhancement`, `docs` → `documentation`, and the type's own name for the
-rest, plus `breaking change` for `!`), and whoever opens a pull request is assigned to it. Pull request titles and commit messages use
-[gitmoji](https://gitmoji.dev) with [Conventional Commits](https://www.conventionalcommits.org).
-Only emojis from the official gitmoji list are accepted, typed as the emoji itself (`✨`, not
-`:sparkles:`):
+matters more than the commits on your branch. Releases are made from those titles too: they pick
+the next version and become the changelog (see [Releasing](#releasing)). The title also sets the
+pull request's label (`fix` → `bug`, `feat` → `enhancement`, `docs` → `documentation`, and the
+type's own name for the rest, plus `breaking change` for `!`), and whoever opens a pull request is
+assigned to it.
+
+Titles follow [Conventional Commits](https://www.conventionalcommits.org), with a summary that
+starts with a lowercase letter:
 
 ```
-<gitmoji> <type>(<scope>): <summary>
+<type>(<scope>): <summary>
 ```
 
-| Example                                               | When                       |
-| ----------------------------------------------------- | -------------------------- |
-| `✨ feat(search): filter by source app`               | A new feature              |
-| `🐛 fix(shelf): keep focus in the app you were using` | A bug fix                  |
-| `💄 style(settings): make the top strip draggable`    | UI or styling only         |
-| `♻️ refactor(store): split payloads from the index`   | Code change, same behavior |
-| `✅ test(classify): cover shell commands`             | Tests                      |
-| `📝 docs: explain Wayland shortcuts`                  | Documentation              |
-| `🔧 chore: switch from npm to pnpm`                   | Tooling and config         |
+| Example                                            | When                       |
+| -------------------------------------------------- | -------------------------- |
+| `feat(search): filter by source app`               | A new feature              |
+| `fix(shelf): keep focus in the app you were using` | A bug fix                  |
+| `perf(store): load the history in pages`           | Faster or lighter          |
+| `style(settings): make the top strip draggable`    | UI or styling only         |
+| `refactor(store): split payloads from the index`   | Code change, same behavior |
+| `test(classify): cover shell commands`             | Tests                      |
+| `docs: explain Wayland shortcuts`                  | Documentation              |
+| `chore: switch from npm to pnpm`                   | Tooling and config         |
 
 The scope is optional; use the area of the app you touched (`shelf`, `settings`, `store`, `capture`,
-`search`, `ci`). Add `!` after the type or scope for a breaking change (`💥 feat(api)!: …`). The full
-rules live in `scripts/check-pr-title.mjs`; to try a title locally:
-
-```bash
-PR_TITLE="✨ feat(search): filter by source app" node scripts/check-pr-title.mjs
-```
+`search`, `ci`). Add `!` after the type or scope for a breaking change (`feat(api)!: …`). If the
+title doesn't fit, the `title` check says what's wrong; edit the title and it runs again.
 
 ## Testing pasting on each platform
 
@@ -189,32 +188,29 @@ copied from the file manager show up with the right card.
 
 ## Releasing
 
-Once the pull requests you want to ship are merged, run this from `main`:
+Releases are automatic. [release-please](https://github.com/googleapis/release-please) keeps a
+release pull request open, titled like `chore(main): release 1.1.0`, and updates it as pull
+requests merge. It lists them in `CHANGELOG.md` under Features, Bug Fixes, Performance, Look and
+Feel, Reverts and Documentation, and picks the next version from their titles: a `!` makes it a
+major release, any `feat` a minor one, anything else in the changelog a patch. Refactors, tests,
+build, CI and chores are left out of the changelog and don't start a release on their own.
 
-```bash
-pnpm release
-```
+When you're ready to ship, merge the release pull request. That creates a draft GitHub release
+and its tag. The Release workflow then builds the installers on macOS, Windows and Linux, attaches
+them to the draft, and publishes it with the changelog as its notes. It only publishes if all three
+builds succeed.
 
-It looks at the pull requests merged since the last release and picks the next version from their
-titles: a `!` makes it a major release, any `feat` a minor one, anything else a patch. It shows
-you the changelog it wrote and asks before going further. Then it bumps `package.json`, adds the
-section to `CHANGELOG.md`, and opens a release pull request with auto-merge turned on.
+To choose the version yourself, set `"release-as": "2.0.0"` on the `"."` package in
+`release-please-config.json` in a pull request, and remove it after that release.
 
-When that pull request's checks pass, it merges by itself. The Release workflow then builds the
-installers on macOS, Windows and Linux and publishes the GitHub release with the changelog as its
-notes. It only publishes if all three builds succeed.
+If a build fails, open the run in the Actions tab and choose **Re-run failed jobs**; the draft
+stays unpublished until all three builds pass. If it needs a code change, merge the fix as a
+`fix:` pull request, ship it in the next release, and delete the stuck draft from the Releases page.
 
-Options:
-
-```bash
-pnpm release --dry-run   # show the version and changelog without changing anything
-pnpm release minor       # choose the bump yourself: patch, minor or major
-pnpm release 2.0.0       # or an exact version
-```
-
-If a build fails, fix it in a normal pull request. Merging the fix runs the Release workflow
-again, and it picks up where it left off because that version still hasn't been released. You can
-also re-run it from the Actions tab.
+Pull requests opened with the default `GITHUB_TOKEN` don't start other workflows, so the `check`
+and `title` checks won't run on the release pull request by themselves. To have them run, add a
+fine-grained personal access token with read and write access to Contents and Pull requests as a
+`RELEASE_PLEASE_TOKEN` repository secret.
 
 To sign builds, add `CSC_LINK` and `CSC_KEY_PASSWORD` (and for macOS notarization `APPLE_ID`,
 `APPLE_APP_SPECIFIC_PASSWORD`, `APPLE_TEAM_ID`) as repository secrets.

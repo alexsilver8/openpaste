@@ -1,7 +1,7 @@
 /**
  * Labels a pull request from its title and assigns it to the person who opened it.
  *
- * The type in the title picks the label: "🐛 fix(shelf): …" gets `bug`, "✨ feat: …" gets
+ * The type in the title picks the label: "fix(shelf): …" gets `bug`, "feat: …" gets
  * `enhancement`, and a "!" adds `breaking change`. When the title is edited, labels follow.
  * Labels are created the first time they're needed.
  *
@@ -10,11 +10,13 @@
  */
 import { readFileSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
-import { checkTitle } from './check-pr-title.mjs'
 
 /** @typedef {{ name: string, color: string, description: string }} Label */
 
-/** The label for each Conventional Commits type. The first three are GitHub's defaults. */
+/**
+ * The label for each Conventional Commits type the title check accepts. The first three are
+ * GitHub's defaults.
+ */
 export const TYPE_LABELS = /** @type {Record<string, Label>} */ ({
 	feat: { name: 'enhancement', color: 'a2eeef', description: 'New feature or request' },
 	fix: { name: 'bug', color: 'd73a4a', description: "Something isn't working" },
@@ -42,6 +44,23 @@ export const BREAKING_LABEL = {
 
 const MANAGED = new Set([...Object.values(TYPE_LABELS), BREAKING_LABEL].map((l) => l.name))
 
+// "<type>(<scope>)!: <summary>", where the scope and "!" are optional.
+const TITLE = /^([a-z]+)(?:\([^()]+\))?(!)?: \S/
+
+/**
+ * Reads the type from a title like "fix(shelf): keep focus". Returns null when the title doesn't
+ * follow the format or the type isn't a known one.
+ *
+ * @param {string} title
+ * @returns {{ type: string, breaking: boolean } | null}
+ */
+export function parseTitle(title) {
+	const match = TITLE.exec(title)
+	if (!match || !Object.hasOwn(TYPE_LABELS, match[1])) return null
+
+	return { type: match[1], breaking: Boolean(match[2]) }
+}
+
 /**
  * Works out which labels a pull request should gain and lose for its title. Only labels this
  * script manages are ever removed.
@@ -51,12 +70,12 @@ const MANAGED = new Set([...Object.values(TYPE_LABELS), BREAKING_LABEL].map((l) 
  * @returns {{ add: Label[], remove: string[] }}
  */
 export function planLabels(title, current) {
-	const result = checkTitle(title)
+	const parsed = parseTitle(title)
 	/** @type {Label[]} */
 	const wanted = []
-	if (result.ok) {
-		wanted.push(TYPE_LABELS[result.type])
-		if (result.breaking) wanted.push(BREAKING_LABEL)
+	if (parsed) {
+		wanted.push(TYPE_LABELS[parsed.type])
+		if (parsed.breaking) wanted.push(BREAKING_LABEL)
 	}
 	const wantedNames = new Set(wanted.map((l) => l.name))
 
