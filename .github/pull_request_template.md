@@ -1,8 +1,8 @@
 <!--
-Title format: <gitmoji> <type>(<scope>): <summary>
-  🐛 fix(shelf): float over full-screen apps without switching Spaces
-  ✨ feat(search): filter by source app
-  🔧 chore: switch from npm to pnpm
+Title format: <type>(<scope>): <summary>
+  fix(shelf): float over full-screen apps without switching Spaces
+  feat(search): filter by source app
+  chore: switch from npm to pnpm
 -->
 
 ## What changed

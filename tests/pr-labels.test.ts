@@ -1,31 +1,31 @@
 import { describe, expect, it } from 'vitest'
-import { BREAKING_LABEL, TYPE_LABELS, planLabels, run } from '../scripts/pr-labels.mjs'
+import { BREAKING_LABEL, TYPE_LABELS, parseTitle, planLabels, run } from '../scripts/pr-labels.mjs'
 
 const names = (labels: { name: string }[]): string[] => labels.map((l) => l.name)
 
 describe('planLabels', () => {
 	it('picks the label for the title type', () => {
-		expect(names(planLabels('🐛 fix(shelf): keep focus', []).add)).toEqual(['bug'])
-		expect(names(planLabels('✨ feat: add pinboards', []).add)).toEqual(['enhancement'])
-		expect(names(planLabels('👷 ci: label pull requests', []).add)).toEqual(['ci'])
+		expect(names(planLabels('fix(shelf): keep focus', []).add)).toEqual(['bug'])
+		expect(names(planLabels('feat: add pinboards', []).add)).toEqual(['enhancement'])
+		expect(names(planLabels('ci: label pull requests', []).add)).toEqual(['ci'])
 	})
 
 	it('adds a breaking change label for "!"', () => {
-		expect(names(planLabels('💥 feat(api)!: rename channels', []).add)).toEqual([
+		expect(names(planLabels('feat(api)!: rename channels', []).add)).toEqual([
 			'enhancement',
 			'breaking change'
 		])
 	})
 
 	it('swaps labels when the type changes and keeps labels it does not manage', () => {
-		expect(planLabels('✨ feat: add search', ['bug', 'good first issue'])).toEqual({
+		expect(planLabels('feat: add search', ['bug', 'good first issue'])).toEqual({
 			add: [TYPE_LABELS.feat],
 			remove: ['bug']
 		})
 	})
 
 	it('does nothing when labels already match', () => {
-		expect(planLabels('🐛 fix: keep focus', ['bug'])).toEqual({ add: [], remove: [] })
+		expect(planLabels('fix: keep focus', ['bug'])).toEqual({ add: [], remove: [] })
 	})
 
 	it('removes type labels when the title no longer follows the format', () => {
@@ -35,10 +35,49 @@ describe('planLabels', () => {
 		})
 	})
 
-	it('has a label for every type the title check accepts', async () => {
-		const { TYPES } = await import('../scripts/check-pr-title.mjs')
-		expect(Object.keys(TYPE_LABELS).sort()).toEqual([...TYPES].sort())
+	it('has a label for every type the title check accepts', () => {
+		// The default types of amannn/action-semantic-pull-request, used in pr-title.yml.
+		const types = [
+			'feat',
+			'fix',
+			'docs',
+			'style',
+			'refactor',
+			'perf',
+			'test',
+			'build',
+			'ci',
+			'chore',
+			'revert'
+		]
+		expect(Object.keys(TYPE_LABELS).sort()).toEqual(types.sort())
 		expect(BREAKING_LABEL.name).toBe('breaking change')
+	})
+})
+
+describe('parseTitle', () => {
+	it('reads the type, with or without a scope', () => {
+		expect(parseTitle('fix(shelf): keep focus')).toEqual({ type: 'fix', breaking: false })
+		expect(parseTitle('docs: explain Wayland shortcuts')).toEqual({
+			type: 'docs',
+			breaking: false
+		})
+	})
+
+	it('spots a breaking change', () => {
+		expect(parseTitle('feat(api)!: rename channels')).toEqual({ type: 'feat', breaking: true })
+		expect(parseTitle('feat!: drop Windows 10')).toEqual({ type: 'feat', breaking: true })
+	})
+
+	it.each([
+		'fix stuff',
+		'Fix: capital type',
+		'fix:no space',
+		'feature: unknown type',
+		'🐛 fix: leading emoji',
+		'fix(): empty scope'
+	])('ignores "%s"', (title) => {
+		expect(parseTitle(title)).toBeNull()
 	})
 })
 
@@ -75,7 +114,7 @@ function fakeGitHub(options: { existingLabels?: string[]; assignable?: boolean }
 
 const pr = (overrides: Record<string, unknown> = {}) => ({
 	number: 7,
-	title: '🐛 fix(shelf): keep focus',
+	title: 'fix(shelf): keep focus',
 	labels: [],
 	assignees: [],
 	user: { login: 'alexsilver8', type: 'User' },
@@ -110,9 +149,9 @@ describe('run', () => {
 		await run({
 			event: {
 				action: 'edited',
-				changes: { title: { from: '🐛 fix: old' } },
+				changes: { title: { from: 'fix: old' } },
 				pull_request: pr({
-					title: '✨ feat(search): filter by app',
+					title: 'feat(search): filter by app',
 					labels: [{ name: 'bug' }]
 				})
 			},
@@ -143,9 +182,9 @@ describe('run', () => {
 		await run({
 			event: {
 				action: 'edited',
-				changes: { title: { from: '💥 feat!: x' } },
+				changes: { title: { from: 'feat!: x' } },
 				pull_request: pr({
-					title: '✨ feat: x',
+					title: 'feat: x',
 					labels: [{ name: 'enhancement' }, { name: 'breaking change' }]
 				})
 			},
