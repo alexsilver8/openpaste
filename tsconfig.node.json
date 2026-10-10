@@ -17,6 +17,7 @@
 		"skipLibCheck": true,
 		"paths": {
 			"@shared/*": ["./src/shared/*"],
+			"@renderer/*": ["./src/renderer/src/*"],
 			"@resources/*": ["./resources/*"]
 		}
 	},
@@ -26,6 +27,7 @@
 		"vitest.config.ts",
 		"src/main/**/*",
 		"src/preload/**/*",
+		"src/renderer/src/lib/format.ts",
 		"src/shared/**/*",
 		"scripts/**/*",
 		"tests/**/*"

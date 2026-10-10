@@ -48,13 +48,22 @@ export function absoluteTime(timestamp: number): string {
 	})
 }
 
+// A lone % is not an escape, so decodeURI throws on it. Show that path as written.
+function decodeEscapes(path: string): string {
+	try {
+		return decodeURI(path)
+	} catch {
+		return path
+	}
+}
+
 export function hostOf(url: string): { host: string; rest: string } {
 	try {
 		const u = new URL(url)
 		if (u.protocol === 'mailto:') return { host: u.pathname, rest: 'Email address' }
 		const rest = `${u.pathname === '/' ? '' : u.pathname}${u.search}${u.hash}`
 
-		return { host: u.hostname.replace(/^www\./, '') || u.protocol, rest: decodeURI(rest) }
+		return { host: u.hostname.replace(/^www\./, '') || u.protocol, rest: decodeEscapes(rest) }
 	} catch {
 		return { host: url, rest: '' }
 	}
