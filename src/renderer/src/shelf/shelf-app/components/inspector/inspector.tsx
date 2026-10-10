@@ -184,7 +184,7 @@ const Inspector = (props: InspectorProps) => {
 	const handleTitleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			saveTitle()
-			;(e.target as HTMLInputElement).blur()
+			e.currentTarget.blur()
 		}
 	}
 
