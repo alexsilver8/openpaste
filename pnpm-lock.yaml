@@ -191,6 +191,9 @@ importers:
 
   .:
     devDependencies:
+      '@alexsilver8/cleaner':
+        specifier: github:alexsilver8/cleaner#v1
+        version: git+https://github.com/alexsilver8/cleaner.git#a3007528eafc2ca250e5725841a7095216f949ae
       '@tanstack/react-virtual':
         specifier: ^3.14.13
         version: 3.14.13(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -215,9 +218,6 @@ importers:
       electron-vite:
         specifier: ^5.0.0
         version: 5.0.0(supports-color@7.2.0)(vite@7.3.7(@types/node@24.19.1)(jiti@2.7.0))
-      picocolors:
-        specifier: ^1.1.1
-        version: 1.1.1
       prettier:
         specifier: ^3.9.9
         version: 3.9.9
@@ -238,6 +238,12 @@ importers:
         version: 4.1.11(@types/node@24.19.1)(vite@7.3.7(@types/node@24.19.1)(jiti@2.7.0))
 
 packages:
+
+  '@alexsilver8/cleaner@git+https://github.com/alexsilver8/cleaner.git#a3007528eafc2ca250e5725841a7095216f949ae':
+    resolution: {commit: a3007528eafc2ca250e5725841a7095216f949ae, repo: https://github.com/alexsilver8/cleaner.git, type: git}
+    version: 1.0.0
+    engines: {node: '>=22.12'}
+    hasBin: true
 
   '@babel/code-frame@7.29.7':
     resolution: {integrity: sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw==}
@@ -2158,6 +2164,8 @@ packages:
     engines: {node: '>=10'}
 
 snapshots:
+
+  '@alexsilver8/cleaner@git+https://github.com/alexsilver8/cleaner.git#a3007528eafc2ca250e5725841a7095216f949ae': {}
 
   '@babel/code-frame@7.29.7':
     dependencies:
