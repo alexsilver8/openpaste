@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy · OpenPaste</title>
+<meta name="description" content="OpenPaste keeps your clipboard history on your computer and sends nothing anywhere. What the app stores, and what this website loads.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#fbfbfa">
+<link rel="canonical" href="https://openpaste.alexsilver.dev/privacy/">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="OpenPaste privacy policy">
+<meta property="og:description" content="Your clipboard history never leaves your computer.">
+<meta property="og:url" content="https://openpaste.alexsilver.dev/privacy/">
+<meta property="og:image" content="https://openpaste.alexsilver.dev/assets/social.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/legal.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="page">
+
+<header class="top">
+<nav class="nav-links" aria-label="Sections">
+<a href="/#features">Features</a>
+<a href="/#privacy">Privacy</a>
+<a href="/demo/">Live demo</a>
+</nav>
+<a class="brand" href="/"><img src="/assets/icon.png" alt="" width="28" height="28">OpenPaste</a>
+<div class="top-end">
+<a class="quiet" href="https://github.com/alexsilver8/openpaste">GitHub</a>
+<a class="pill" href="/#download">Download</a>
+</div>
+</header>
+
+<main id="main" class="legal">
+<h1>Privacy <em>policy</em></h1>
+<p class="updated">Last updated 10 October 2026</p>
+
+<p class="lead">The OpenPaste app keeps your clipboard history on your computer and sends nothing anywhere. This website uses no cookies, no analytics and no tracking.</p>
+
+<h2>The app</h2>
+
+<h3>What it stores</h3>
+<p>OpenPaste records what you copy: text and its formatting, links, colors, images and the paths of copied files. With each item it keeps the app it came from, that app's icon, and when you copied or pasted it. It also stores your pinboards and your settings.</p>
+<p>All of it lives in a plain folder on your computer, which you can open from Settings:</p>
+<table>
+<thead><tr><th scope="col">System</th><th scope="col">Folder</th></tr></thead>
+<tbody>
+<tr><td>macOS</td><td><code>~/Library/Application Support/OpenPaste/data</code></td></tr>
+<tr><td>Windows</td><td><code>%APPDATA%\OpenPaste\data</code></td></tr>
+<tr><td>Linux</td><td><code>~/.config/OpenPaste/data</code></td></tr>
+</tbody>
+</table>
+<p>By default, unpinned items are removed after 30 days or once you pass 2,000 items; you can change both in Settings. Clear history in Settings deletes your history, and deleting the folder removes everything.</p>
+
+<h3>What it never records</h3>
+<ul>
+<li>Copies that password managers mark as private, using each system's convention for this. This is on by default.</li>
+<li>Anything copied in an app on your ignore list. 1Password, Bitwarden, KeePassXC and other password managers are on it by default.</li>
+<li>Anything you copy while capturing is paused.</li>
+</ul>
+
+<h3>What it sends</h3>
+<p>Nothing. The app makes no network requests: no account, no analytics, no crash reports and no update checks. A link you open from a card opens in your browser.</p>
+
+<h3>Permissions</h3>
+<p>On macOS, OpenPaste asks for Accessibility access so it can press ⌘V in the app you were using. It uses it for nothing else. Without it, OpenPaste copies the item and you paste it yourself.</p>
+
+<h2>This website</h2>
+<p>The site has no cookies, local storage, analytics or ads. A few things load from other services, and each of them sees your IP address and browser details, as any web server does:</p>
+<ul>
+<li><strong>GitHub Pages</strong> hosts the site, and the installers download from GitHub. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.</li>
+<li><strong>GitHub's public API</strong> supplies the latest version and star count: your browser asks for them when the page loads.</li>
+<li><strong>Google Fonts</strong> serves the typefaces. See <a href="https://policies.google.com/privacy">Google's privacy policy</a>.</li>
+</ul>
+<p>The shelf on the home page and the live demo only see what you copy or paste on the page itself. They keep it in the page's memory and forget it when you close the tab.</p>
+
+<h2>Changes and questions</h2>
+<p>If this policy changes, this page will show the new date, and every change is public in the <a href="https://github.com/alexsilver8/openpaste/commits/gh-pages">site's history on GitHub</a>. OpenPaste is made by Alexander Silver. For questions, <a href="https://github.com/alexsilver8/openpaste/issues">open an issue on GitHub</a>.</p>
+</main>
+
+<footer class="site-footer">
+<div class="footer-main">
+<div class="footer-about">
+<a class="brand" href="/"><img src="/assets/icon.png" alt="" width="24" height="24">OpenPaste</a>
+<p>A free, open-source clipboard manager for macOS, Windows and Linux.</p>
+</div>
+<div class="footer-cols">
+<div><span>Product</span><a href="/#features">Features</a><a href="/demo/">Live demo</a><a href="/#download">Download</a><a href="https://github.com/alexsilver8/openpaste/releases">Release notes</a></div>
+<div><span>Project</span><a href="https://github.com/alexsilver8/openpaste">GitHub</a><a href="https://github.com/alexsilver8/openpaste/issues">Issues</a><a href="https://github.com/alexsilver8/openpaste/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/alexsilver8/openpaste/blob/main/LICENSE">MIT License</a></div>
+<div><span>Legal</span><a href="/privacy/" aria-current="page">Privacy policy</a><a href="/terms/">Terms of use</a></div>
+</div>
+</div>
+<div class="footer-base">
+<span>© 2026 Alexander Silver</span>
+<span>An independent project, not affiliated with any other clipboard manager.</span>
+</div>
+</footer>
+
+</div>
+</body>
+</html>

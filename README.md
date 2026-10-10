@@ -4,6 +4,7 @@ This branch is the published site for <https://openpaste.alexsilver.dev/>, serve
 
 - `index.html`: the landing page
 - `assets/site.js`, `assets/site.css`: the interactive layer (live shelf, search, the ⇧⌘V overlay, privacy controls)
+- `privacy/`, `terms/`: the privacy policy and terms of use, styled by `assets/legal.css` and linked from every footer
 - `demo/`: the browser demo, built from `main` with `pnpm demo:build`
 - `assets/`: the icon, screenshot and social card
 
